@@ -2592,7 +2592,12 @@
 <div id="app">
  <div class="header">
   <div class="header-brand">Investor Portal · Maddie's Secret</div>
-  <div class="header-meta">Investor Portal · Confidential</div>
+  <div class="header-meta" style="display: flex; align-items: center; gap: 16px;">
+   <span>Investor Portal · Confidential</span>
+   <button onclick="showKeyboardHelp()" style="background: transparent; border: 1px solid var(--gray-3); color: var(--gray-4); padding: 4px 10px; font-size: 9px; font-weight: 600; text-transform: uppercase; cursor: pointer; letter-spacing: 0.04em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; transition: all 0.2s;">
+    Press <kbd style="background: var(--gray-1); padding: 1px 4px; border-radius: 2px; font-size: 9px; margin: 0 2px;">?</kbd> for shortcuts
+   </button>
+  </div>
  </div>
 
  <div class="tabs-row">
@@ -4435,13 +4440,13 @@
   <div class="tab-panel" id="panel-dump">
    <div class="page-header">
     <div class="page-title">Dump</div>
-    <div class="page-subtitle">drag images · auto organizes · instant layouts</div>
+    <div class="page-subtitle">drag images · organizes by date · shuffles layout</div>
    </div>
 
    <!-- UPLOAD ZONE -->
    <div id="dump-upload-zone" style="margin-bottom: 40px; padding: 80px 40px; border: 2px dashed var(--gray-3); background: var(--gray-1); text-align: center; cursor: pointer; transition: all 0.2s;">
     <div style="font-size: 13px; color: var(--gray-4); margin-bottom: 8px;">Drag images here or click to upload</div>
-    <div style="font-size: 11px; color: var(--gray-4); text-transform: uppercase; letter-spacing: 0.04em;">JPG, PNG, WEBP · Any folder from desktop</div>
+    <div style="font-size: 11px; color: var(--gray-4); text-transform: uppercase; letter-spacing: 0.04em;">JPG, PNG, WEBP · Reads EXIF dates · Auto-organizes by day</div>
     <input type="file" id="dump-file-input" accept="image/*" multiple style="display: none;">
    </div>
 
@@ -4451,21 +4456,21 @@
    <!-- LAYOUT GRID -->
    <div id="dump-grid" style="display: none;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink);">Generated Layout</div>
+     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink);">Organized by Date</div>
      <div style="display: flex; gap: 8px;">
-      <button onclick="regenerateLayout()" style="background: transparent; border: 1px solid var(--ink); color: var(--ink); padding: 8px 16px; font-size: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; letter-spacing: 0.04em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Regenerate</button>
+      <button onclick="shuffleLayout()" style="background: transparent; border: 1px solid var(--ink); color: var(--ink); padding: 8px 16px; font-size: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; letter-spacing: 0.04em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Shuffle Layout</button>
       <button onclick="downloadLayout()" style="background: var(--pink); border: none; color: var(--white); padding: 8px 16px; font-size: 10px; font-weight: 600; text-transform: uppercase; cursor: pointer; letter-spacing: 0.04em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Download HTML</button>
      </div>
     </div>
 
-    <!-- AI-generated grid will appear here -->
+    <!-- Day-organized grid will appear here -->
     <div id="dump-grid-container" style="display: grid; gap: 2px; background: var(--ink); border: 1px solid var(--ink);">
      <!-- Grid cells dynamically generated -->
     </div>
 
     <!-- Image details below grid -->
     <div id="dump-image-details" style="margin-top: 40px;">
-     <!-- AI analysis of images will appear here -->
+     <!-- Summary of images will appear here -->
     </div>
    </div>
 
@@ -7867,18 +7872,25 @@ function toggleStratStep(header) {
    document.getElementById('dump-status').style.display = 'block';
    document.getElementById('dump-status').textContent = `Processing ${imageFiles.length} images...`;
 
-   // Load images
+   // Load images with EXIF data
    for (const file of imageFiles) {
      const dataUrl = await readFileAsDataURL(file);
+     const exifDate = await extractExifDate(file);
+     
      dumpImages.push({
        name: file.name,
        dataUrl: dataUrl,
-       file: file
+       file: file,
+       date: exifDate || file.lastModified, // Use EXIF date or file modified date
+       dateObj: exifDate ? new Date(exifDate) : new Date(file.lastModified)
      });
    }
 
-   // Generate layout with AI
-   await generateLayoutWithAI();
+   // Sort by date (oldest to newest)
+   dumpImages.sort((a, b) => a.dateObj - b.dateObj);
+
+   // Group by day
+   await organizeAndGenerateLayouts();
  }
 
  function readFileAsDataURL(file) {
@@ -7890,129 +7902,235 @@ function toggleStratStep(header) {
    });
  }
 
- async function generateLayoutWithAI() {
-   document.getElementById('dump-status').textContent = 'Analyzing images and generating layout...';
-
-   try {
-     // Prepare images for backend
-     const images = dumpImages.slice(0, 5).map(img => ({
-       data: img.dataUrl.split(',')[1]
-     }));
-     
-     const response = await fetch('/api/generate-layout', {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         images: images,
-         imageCount: dumpImages.length
-       })
-     });
-
-     const layout = await response.json();
-     
-     if (layout.error) {
-       throw new Error(layout.error);
-     }
-     
-     renderGrid(layout);
-     
-     document.getElementById('dump-status').style.display = 'none';
-     document.getElementById('dump-grid').style.display = 'block';
-
-   } catch (error) {
-     console.error('AI layout error:', error);
-     document.getElementById('dump-status').textContent = 'Layout generation failed. Showing simple grid instead.';
-     renderSimpleGrid();
-   }
- }
-
- function renderGrid(layout) {
-   const container = document.getElementById('dump-grid-container');
-   
-   // Simple 3-column grid with varying sizes
-   let html = '';
-   layout.cells.forEach((cell, i) => {
-     const img = dumpImages[cell.image_index];
-     if (img) {
-       const rowSpan = cell.span_rows || 1;
-       const colSpan = cell.span_cols || 1;
-       
-       html += `<div style="grid-row: span ${rowSpan}; grid-column: span ${colSpan}; background: var(--white); overflow: hidden; aspect-ratio: ${colSpan}/${rowSpan};">`;
-       html += `<img src="${img.dataUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="${img.name}">`;
-       html += `</div>`;
-     }
+ async function extractExifDate(file) {
+   return new Promise((resolve) => {
+     const reader = new FileReader();
+     reader.onload = function(e) {
+       try {
+         const view = new DataView(e.target.result);
+         
+         // Check for JPEG marker
+         if (view.getUint16(0, false) !== 0xFFD8) {
+           resolve(null);
+           return;
+         }
+         
+         let offset = 2;
+         while (offset < view.byteLength) {
+           if (view.getUint16(offset, false) === 0xFFE1) {
+             // Found APP1 (EXIF) marker
+             const exifOffset = offset + 10;
+             if (exifOffset + 8 > view.byteLength) break;
+             
+             // Look for DateTime tag (0x0132)
+             const tiffOffset = exifOffset;
+             const littleEndian = view.getUint16(tiffOffset, false) === 0x4949;
+             const ifdOffset = view.getUint32(tiffOffset + 4, littleEndian) + tiffOffset;
+             const numEntries = view.getUint16(ifdOffset, littleEndian);
+             
+             for (let i = 0; i < numEntries; i++) {
+               const entryOffset = ifdOffset + 2 + (i * 12);
+               const tag = view.getUint16(entryOffset, littleEndian);
+               
+               if (tag === 0x0132 || tag === 0x9003) { // DateTime or DateTimeOriginal
+                 const valueOffset = view.getUint32(entryOffset + 8, littleEndian) + tiffOffset;
+                 let dateStr = '';
+                 for (let j = 0; j < 19; j++) {
+                   dateStr += String.fromCharCode(view.getUint8(valueOffset + j));
+                 }
+                 // Parse EXIF date format: "2024:03:15 14:30:00"
+                 const parts = dateStr.match(/(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})/);
+                 if (parts) {
+                   resolve(new Date(parts[1], parts[2]-1, parts[3], parts[4], parts[5], parts[6]).getTime());
+                   return;
+                 }
+               }
+             }
+             break;
+           }
+           offset += 2 + view.getUint16(offset + 2, false);
+         }
+       } catch (err) {
+         console.log('EXIF parsing error:', err);
+       }
+       resolve(null);
+     };
+     reader.onerror = () => resolve(null);
+     reader.readAsArrayBuffer(file.slice(0, 64 * 1024)); // Read first 64KB for EXIF
    });
-   
-   container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-   container.innerHTML = html;
-
-   // Show analysis + SEO filename suggestions
-   let detailsHTML = `
-     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 12px;">Analysis</div>
-     <div style="font-size: 13px; line-height: 1.7; color: var(--gray-5); margin-bottom: 24px;">${layout.analysis || 'Layout generated.'}</div>
-   `;
-
-   // Add SEO filename suggestions
-   if (layout.seo_filenames && layout.seo_filenames.length > 0) {
-     detailsHTML += `
-       <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 12px; margin-top: 32px;">SEO-Friendly Filename Suggestions</div>
-       <div style="font-size: 12px; line-height: 1.8; color: var(--gray-5);">`;
-     
-     layout.seo_filenames.forEach((suggestion, i) => {
-       const originalName = dumpImages[i]?.name || `image-${i}`;
-       detailsHTML += `
-         <div style="margin-bottom: 12px; padding: 12px; background: var(--gray-1); border-left: 2px solid var(--pink);">
-           <div style="font-size: 10px; color: var(--gray-4); text-transform: uppercase; margin-bottom: 4px;">Original: ${originalName}</div>
-           <div style="font-weight: 600; color: var(--ink);">${suggestion}</div>
-         </div>`;
-     });
-     
-     detailsHTML += `</div>`;
-   }
-
-   document.getElementById('dump-image-details').innerHTML = detailsHTML;
  }
 
- function renderSimpleGrid() {
-   const container = document.getElementById('dump-grid-container');
-   container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-   
-   let html = '';
+ async function organizeAndGenerateLayouts() {
+   document.getElementById('dump-status').textContent = 'Organizing by date and generating layouts...';
+
+   // Group images by day
+   const dayGroups = {};
    dumpImages.forEach(img => {
-     html += `<div style="background: var(--white); overflow: hidden; aspect-ratio: 1/1;">`;
-     html += `<img src="${img.dataUrl}" style="width: 100%; height: 100%; object-fit: cover;" alt="${img.name}">`;
-     html += `</div>`;
+     const dateKey = img.dateObj.toLocaleDateString('en-US', { 
+       year: 'numeric', 
+       month: 'long', 
+       day: 'numeric' 
+     });
+     if (!dayGroups[dateKey]) {
+       dayGroups[dateKey] = [];
+     }
+     dayGroups[dateKey].push(img);
    });
-   
-   container.innerHTML = html;
+
+   // Generate layouts for each day
+   const container = document.getElementById('dump-grid-container');
+   container.innerHTML = '';
+   container.style.display = 'block';
+   container.style.gridTemplateColumns = '1fr';
+   container.style.gap = '48px';
+   container.style.background = 'transparent';
+   container.style.border = 'none';
+
+   const sortedDays = Object.keys(dayGroups).sort((a, b) => {
+     return new Date(b) - new Date(a); // Newest first
+   });
+
+   for (const day of sortedDays) {
+     const images = dayGroups[day];
+     const daySection = document.createElement('div');
+     daySection.style.cssText = 'margin-bottom: 40px;';
+     
+     // Day header
+     const header = document.createElement('div');
+     header.style.cssText = 'font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--pink);';
+     header.textContent = `${day} · ${images.length} image${images.length > 1 ? 's' : ''}`;
+     daySection.appendChild(header);
+
+     // Grid for this day
+     const grid = document.createElement('div');
+     grid.style.cssText = 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--ink); border: 1px solid var(--ink);';
+     
+     // Generate smart layout
+     const layout = generateSmartLayout(images.length);
+     
+     images.forEach((img, i) => {
+       const cell = layout[i];
+       const imgDiv = document.createElement('div');
+       imgDiv.style.cssText = `grid-row: span ${cell.rows}; grid-column: span ${cell.cols}; background: var(--white); overflow: hidden; position: relative; aspect-ratio: ${cell.cols}/${cell.rows};`;
+       
+       const imgEl = document.createElement('img');
+       imgEl.src = img.dataUrl;
+       imgEl.style.cssText = 'width: 100%; height: 100%; object-fit: cover;';
+       imgEl.alt = img.name;
+       
+       // Add filename overlay on hover
+       const overlay = document.createElement('div');
+       overlay.style.cssText = 'position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); color: white; padding: 8px; font-size: 10px; opacity: 0; transition: opacity 0.2s; pointer-events: none;';
+       overlay.textContent = img.name;
+       
+       imgDiv.addEventListener('mouseenter', () => overlay.style.opacity = '1');
+       imgDiv.addEventListener('mouseleave', () => overlay.style.opacity = '0');
+       
+       imgDiv.appendChild(imgEl);
+       imgDiv.appendChild(overlay);
+       grid.appendChild(imgDiv);
+     });
+     
+     daySection.appendChild(grid);
+     container.appendChild(daySection);
+   }
+
+   document.getElementById('dump-status').style.display = 'none';
    document.getElementById('dump-grid').style.display = 'block';
+   
+   // Update details section
+   const details = document.getElementById('dump-image-details');
+   details.innerHTML = `
+     <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 12px;">Summary</div>
+     <div style="font-size: 13px; line-height: 1.7; color: var(--gray-5);">
+       <strong>${dumpImages.length} total images</strong> organized across <strong>${sortedDays.length} day${sortedDays.length > 1 ? 's' : ''}</strong>.
+       Date range: ${sortedDays[sortedDays.length - 1]} to ${sortedDays[0]}.
+     </div>
+   `;
  }
 
- function regenerateLayout() {
-   generateLayoutWithAI();
+ function generateSmartLayout(imageCount) {
+   // Smart layout patterns based on number of images
+   const layouts = {
+     1: [{rows: 2, cols: 2}],
+     2: [{rows: 2, cols: 1}, {rows: 2, cols: 2}],
+     3: [{rows: 2, cols: 2}, {rows: 1, cols: 1}, {rows: 1, cols: 1}],
+     4: [{rows: 2, cols: 2}, {rows: 1, cols: 1}, {rows: 1, cols: 1}, {rows: 2, cols: 1}],
+     5: [{rows: 2, cols: 1}, {rows: 1, cols: 2}, {rows: 1, cols: 1}, {rows: 1, cols: 1}, {rows: 1, cols: 1}],
+     6: [{rows: 2, cols: 2}, {rows: 1, cols: 1}, {rows: 1, cols: 1}, {rows: 1, cols: 1}, {rows: 1, cols: 1}, {rows: 1, cols: 1}],
+   };
+   
+   if (layouts[imageCount]) {
+     return layouts[imageCount];
+   }
+   
+   // For more than 6, create a varied pattern
+   const pattern = [];
+   for (let i = 0; i < imageCount; i++) {
+     if (i === 0) {
+       pattern.push({rows: 2, cols: 2}); // First image is hero
+     } else if (i % 7 === 0) {
+       pattern.push({rows: 2, cols: 1}); // Every 7th is tall
+     } else if (i % 5 === 0) {
+       pattern.push({rows: 1, cols: 2}); // Every 5th is wide
+     } else {
+       pattern.push({rows: 1, cols: 1}); // Rest are standard
+     }
+   }
+   return pattern;
+ }
+
+ function shuffleLayout() {
+   // Re-generate layouts with randomized patterns
+   organizeAndGenerateLayouts();
  }
 
  function downloadLayout() {
-   // Create standalone HTML file with the layout
+   // Create standalone HTML file with all day-organized layouts
    const container = document.getElementById('dump-grid-container');
    const html = `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radish Image Grid</title>
+<title>Radish Image Grid · ${new Date().toLocaleDateString()}</title>
 <style>
-body { margin: 0; padding: 40px; background: #FFFFF8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #000; border: 1px solid #000; }
-.grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+body { 
+  margin: 0; 
+  padding: 40px; 
+  background: #FFFFF8; 
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+.day-section { 
+  margin-bottom: 60px; 
+}
+.day-header {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #FF10F0;
+}
+.grid { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 2px; 
+  background: #000; 
+  border: 1px solid #000; 
+}
+.grid img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+}
 </style>
 </head>
 <body>
-<div class="grid">
 ${container.innerHTML}
-</div>
 </body>
 </html>`;
 
@@ -8020,7 +8138,7 @@ ${container.innerHTML}
    const url = URL.createObjectURL(blob);
    const a = document.createElement('a');
    a.href = url;
-   a.download = 'radish-grid-' + new Date().getTime() + '.html';
+   a.download = 'radish-grid-' + new Date().toISOString().split('T')[0] + '.html';
    a.click();
  }
 
@@ -8083,26 +8201,186 @@ ${container.innerHTML}
    sendBtn.style.opacity = '1';
  }
 
- // Allow Enter to send in backend chat
+ // ═══════════════════════════════════════════════════════════════════════
+ // KEYBOARD SHORTCUTS
+ // ═══════════════════════════════════════════════════════════════════════
+ 
  document.addEventListener('DOMContentLoaded', function() {
+   
+   // Backend chat - Enter to send
    const backendInput = document.getElementById('backend-input');
    if (backendInput) {
      backendInput.addEventListener('keydown', function(e) {
-       if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+       if (e.key === 'Enter' && !e.shiftKey) {
+         e.preventDefault();
          sendBackendMessage();
        }
      });
    }
    
-   // Allow Enter to search in journal
+   // Journal search - Enter to search
    const journalSearch = document.getElementById('journal-search');
    if (journalSearch) {
      journalSearch.addEventListener('keydown', function(e) {
        if (e.key === 'Enter') {
+         e.preventDefault();
          searchJournal();
        }
      });
    }
+   
+   // Journal textarea - Cmd/Ctrl+Enter to save raw, Cmd/Ctrl+Shift+Enter to process
+   const journalInput = document.getElementById('journal-raw-input');
+   if (journalInput) {
+     journalInput.addEventListener('keydown', function(e) {
+       if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+         e.preventDefault();
+         if (e.shiftKey) {
+           processJournalEntry(); // Cmd+Shift+Enter = process
+         } else {
+           saveRawEntry(); // Cmd+Enter = save raw
+         }
+       }
+     });
+   }
+   
+   // Global keyboard shortcuts
+   document.addEventListener('keydown', function(e) {
+     // Only trigger if not typing in an input/textarea
+     const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+     
+     // Cmd/Ctrl + K = Focus search (journal)
+     if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !isTyping) {
+       e.preventDefault();
+       const searchInput = document.getElementById('journal-search');
+       if (searchInput && activePage === 'journal') {
+         searchInput.focus();
+         searchInput.select();
+       }
+     }
+     
+     // Cmd/Ctrl + J = Jump to journal
+     if ((e.metaKey || e.ctrlKey) && e.key === 'j' && !isTyping) {
+       e.preventDefault();
+       showPage('journal');
+       const journalTextarea = document.getElementById('journal-raw-input');
+       if (journalTextarea) {
+         setTimeout(() => journalTextarea.focus(), 100);
+       }
+     }
+     
+     // Cmd/Ctrl + D = Jump to dump (image tool)
+     if ((e.metaKey || e.ctrlKey) && e.key === 'd' && !isTyping) {
+       e.preventDefault();
+       showPage('dump');
+     }
+     
+     // Cmd/Ctrl + B = Jump to backend chat
+     if ((e.metaKey || e.ctrlKey) && e.key === 'b' && !isTyping) {
+       e.preventDefault();
+       showPage('backend');
+       const backendChatInput = document.getElementById('backend-input');
+       if (backendChatInput) {
+         setTimeout(() => backendChatInput.focus(), 100);
+       }
+     }
+     
+     // Cmd/Ctrl + 1-9 = Navigate to tabs by number
+     if ((e.metaKey || e.ctrlKey) && e.key >= '1' && e.key <= '9' && !isTyping) {
+       e.preventDefault();
+       const tabs = ['overview', 'calendar', 'todo', 'fragrance', 'babyt', 'necklace', 'journal', 'dump', 'backend'];
+       const index = parseInt(e.key) - 1;
+       if (tabs[index]) {
+         showPage(tabs[index]);
+       }
+     }
+     
+     // Esc = Clear search / close preview
+     if (e.key === 'Escape') {
+       const preview = document.getElementById('journal-preview');
+       if (preview && preview.style.display !== 'none') {
+         cancelPreview();
+       } else if (activePage === 'journal') {
+         clearSearch();
+       }
+     }
+     
+     // ? = Show keyboard shortcuts help
+     if (e.key === '?' && !isTyping) {
+       e.preventDefault();
+       showKeyboardHelp();
+     }
+   });
+   
+   // Add keyboard shortcuts help modal
+   function showKeyboardHelp() {
+     const existingModal = document.getElementById('keyboard-help-modal');
+     if (existingModal) {
+       existingModal.remove();
+       return;
+     }
+     
+     const modal = document.createElement('div');
+     modal.id = 'keyboard-help-modal';
+     modal.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 20px;';
+     modal.innerHTML = `
+       <div style="background: var(--white); max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 32px; border: 2px solid var(--pink);">
+         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+           <div style="font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink);">Keyboard Shortcuts</div>
+           <button onclick="document.getElementById('keyboard-help-modal').remove()" style="background: transparent; border: none; font-size: 24px; color: var(--gray-4); cursor: pointer; padding: 0; line-height: 1;">&times;</button>
+         </div>
+         
+         <div style="margin-bottom: 24px;">
+           <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--pink); margin-bottom: 12px;">Navigation</div>
+           <div style="font-size: 13px; line-height: 2; color: var(--ink);">
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ J</kbd> Jump to journal</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ D</kbd> Jump to image dump</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ B</kbd> Jump to backend chat</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ 1-9</kbd> Navigate to tab by number</div>
+           </div>
+         </div>
+         
+         <div style="margin-bottom: 24px;">
+           <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--pink); margin-bottom: 12px;">Journal</div>
+           <div style="font-size: 13px; line-height: 2; color: var(--ink);">
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ Enter</kbd> Save raw entry</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ Shift Enter</kbd> Process & save entry</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">⌘ K</kbd> Focus search</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">Esc</kbd> Clear search / close preview</div>
+           </div>
+         </div>
+         
+         <div style="margin-bottom: 24px;">
+           <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--pink); margin-bottom: 12px;">Backend Chat</div>
+           <div style="font-size: 13px; line-height: 2; color: var(--ink);">
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">Enter</kbd> Send message</div>
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">Shift Enter</kbd> New line</div>
+           </div>
+         </div>
+         
+         <div>
+           <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--pink); margin-bottom: 12px;">Other</div>
+           <div style="font-size: 13px; line-height: 2; color: var(--ink);">
+             <div><kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: monospace;">?</kbd> Show this help</div>
+           </div>
+         </div>
+         
+         <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-2); font-size: 11px; color: var(--gray-4);">
+           Press <kbd style="background: var(--gray-1); padding: 2px 8px; border-radius: 3px; font-size: 10px; font-family: monospace;">Esc</kbd> or click outside to close
+         </div>
+       </div>
+     `;
+     
+     modal.addEventListener('click', function(e) {
+       if (e.target === modal) {
+         modal.remove();
+       }
+     });
+     
+     document.body.appendChild(modal);
+   }
+   
+   window.showKeyboardHelp = showKeyboardHelp;
  });
 </script>
 </body>
