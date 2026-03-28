@@ -1,108 +1,116 @@
-// Vercel serverless function for DUMP image layout generation
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
+  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { images, imageCount } = req.body;
 
-  if (!imageCount || imageCount < 1) {
-    return res.status(400).json({ error: 'No images provided' });
-  }
-
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-
-  if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured' });
+  if (!images || images.length === 0) {
+    return res.status(400).json({ error: 'Images are required' });
   }
 
   try {
-    const messageContent = [
-      {
-        type: 'text',
-        text: `You are a layout designer creating Bêhance-style editorial grid layouts. I have ${imageCount} images.
-
-Create an asymmetric grid layout inspired by the reference (minimal, editorial, spare). Also analyze the images and suggest SEO-friendly filenames.
-
-Return ONLY raw JSON (no markdown, no backticks):
-
-{"grid_template":"CSS grid-template-areas string","cells":[{"area":"a","span_rows":2,"span_cols":1,"image_index":0},...],"analysis":"brief description of what you see in the images","seo_filenames":["radish-fragrance-bottle-close-up.jpg","maddie-secret-film-still-scene-3.jpg",...]}
-
-Rules:
-- Use 3-column grid
-- Vary cell sizes (some 1x1, some 2x1, some 1x2, some 2x2)
-- Create visual rhythm with asymmetry
-- Leave some empty cells for breathing room
-- Distribute all ${imageCount} images across the grid
-- For seo_filenames: lowercase, hyphens (not underscores), descriptive, include relevant keywords (radish, maddie-secret, fragrance, film, etc.), keep under 60 chars
-
-Return ONLY the JSON object.`
+    // Prepare image content for Claude
+    const imageContent = images.map(img => ({
+      type: 'image',
+      source: {
+        type: 'base64',
+        media_type: 'image/jpeg',
+        data: img.data
       }
-    ];
+    }));
 
-    if (images && images.length > 0) {
-      images.slice(0, 5).forEach(img => {
-        messageContent.push({
-          type: 'image',
-          source: {
-            type: 'base64',
-            media_type: 'image/jpeg',
-            data: img.data
-          }
-        });
-      });
-    }
-
+    // Call Anthropic API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 2000,
-        messages: [{
-          role: 'user',
-          content: messageContent
-        }]
+        messages: [
+          {
+            role: 'user',
+            content: [
+              ...imageContent,
+              {
+                type: 'text',
+                text: `Analyze these ${imageCount} images and create an editorial grid layout.
+
+Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
+
+{
+  "analysis": "Brief 1-2 sentence description of the images and layout rationale",
+  "cells": [
+    { "image_index": 0, "span_rows": 1, "span_cols": 1 },
+    { "image_index": 1, "span_rows": 2, "span_cols": 1 },
+    ...
+  ],
+  "seo_filenames": [
+    "descriptive-seo-friendly-name-1.jpg",
+    "descriptive-seo-friendly-name-2.jpg",
+    ...
+  ]
+}
+
+Rules:
+- Create exactly ${imageCount} cells (one per image)
+- Use a 3-column grid
+- Vary span_rows (1-3) and span_cols (1-2) for visual interest
+- Feature hero images with larger spans (2x2 or 1x3)
+- Balance the layout - don't cluster all large spans together
+- SEO filenames: lowercase, hyphens, descriptive, no spaces
+- Make filenames specific to what you see in each image`
+              }
+            ]
+          }
+        ]
       })
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Anthropic API error:', errorText);
+      return res.status(response.status).json({ 
+        error: 'API request failed',
+        details: errorText
+      });
+    }
+
     const data = await response.json();
+    const textContent = data.content.find(block => block.type === 'text')?.text || '';
 
-    if (data.error) {
-      console.error('Anthropic API error:', data.error);
-      return res.status(500).json({ error: 'Processing failed', details: data.error });
+    // Parse the JSON response
+    let layoutData;
+    try {
+      // Remove any markdown code fences if present
+      const cleanJson = textContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      layoutData = JSON.parse(cleanJson);
+    } catch (parseError) {
+      console.error('JSON parse error:', parseError);
+      // Fallback to simple grid
+      layoutData = {
+        analysis: 'Generated simple grid layout',
+        cells: Array.from({ length: imageCount }, (_, i) => ({
+          image_index: i,
+          span_rows: 1,
+          span_cols: 1
+        })),
+        seo_filenames: Array.from({ length: imageCount }, (_, i) => `image-${i + 1}.jpg`)
+      };
     }
 
-    const aiText = data.content.find(block => block.type === 'text')?.text || '';
-    
-    let cleanedText = aiText.trim();
-    if (cleanedText.startsWith('```json')) {
-      cleanedText = cleanedText.replace(/^```json\n/, '').replace(/\n```$/, '');
-    } else if (cleanedText.startsWith('```')) {
-      cleanedText = cleanedText.replace(/^```\n/, '').replace(/\n```$/, '');
-    }
-    
-    const parsed = JSON.parse(cleanedText);
-
-    return res.status(200).json(parsed);
+    return res.status(200).json(layoutData);
 
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Layout generation error:', error);
     return res.status(500).json({ 
-      error: 'Processing failed', 
-      details: error.message 
+      error: 'Internal server error',
+      message: error.message
     });
   }
 }
