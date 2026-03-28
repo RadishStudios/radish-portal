@@ -1,0 +1,16 @@
+{
+  "functions": {
+    "api/process-journal.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/generate-layout.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    },
+    "api/backend-chat.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+}
