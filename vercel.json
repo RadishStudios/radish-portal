@@ -1,16 +1,11 @@
 {
   "functions": {
-    "api/process-journal.js": {
+    "api/**/*.js": {
       "memory": 1024,
-      "maxDuration": 10
-    },
-    "api/generate-layout.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    },
-    "api/backend-chat.js": {
-      "memory": 1024,
-      "maxDuration": 10
+      "maxDuration": 30
     }
+  },
+  "env": {
+    "ANTHROPIC_API_KEY": "@anthropic-api-key"
   }
 }
