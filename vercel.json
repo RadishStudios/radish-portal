@@ -1,13 +1,8 @@
 {
   "functions": {
-    "api/backend-chat.js": {
-      "maxDuration": 30
-    },
-    "api/process-journal.js": {
-      "maxDuration": 30
-    },
     "api/**/*.js": {
-      "memory": 1024
+      "memory": 1024,
+      "maxDuration": 60
     }
   }
 }
