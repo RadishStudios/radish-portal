@@ -481,16 +481,111 @@ tr:hover td{background:#fafafa;}
 .fitem .nolink{color:var(--dimmer);}
 
 /* ---------- FLOATING MESSENGER ---------- */
+/* ================= THE VIEWER ================= */
+.light{position:fixed;inset:0;z-index:400;background:rgba(255,255,255,.985);
+  display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  animation:lightin .18s ease both;}
+@keyframes lightin{from{opacity:0;}to{opacity:1;}}
+.light-top{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;flex:none;border-bottom:.5px solid var(--rule-soft);}
+.light-who{display:flex;align-items:center;gap:9px;min-width:0;}
+.lw-av{width:30px;height:30px;border-radius:50%;background:var(--pc);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:9.5px;}
+.lw-txt b{display:block;font-size:12px;font-weight:500;}
+.lw-txt span{display:block;font-size:9px;letter-spacing:.06em;color:var(--dim);
+  text-transform:uppercase;margin-top:1px;}
+.light-x{font-size:26px;line-height:1;color:var(--ink);padding:2px 6px;flex:none;}
+.light-x:hover{color:var(--pink);}
+.light-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:18px;min-height:0;}
+.light-stage img,.light-stage video{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+.light-bar{flex:none;display:flex;gap:20px;justify-content:center;
+  padding:16px 18px 22px;border-top:.5px solid var(--rule-soft);}
+.light-bar button{font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  border-bottom:1px solid var(--ink);padding-bottom:3px;}
+.light-bar button:hover{color:var(--pink);border-color:var(--pink);}
+.bmedia{cursor:zoom-in;}
+.playbadge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;
+  font-size:15px;display:flex;align-items:center;justify-content:center;}
+.b.hasmedia{position:relative;}
+.lv-shot{position:relative;display:inline-block;}
+.folderpick{display:flex;flex-wrap:wrap;gap:6px;}
+.folderpick button{display:flex;align-items:center;gap:7px;border:.5px solid var(--rule);
+  padding:6px 11px;font-size:11px;}
+.folderpick button span{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.folderpick button.on{border-color:var(--ink);}
+.folderpick button.clear{border-style:dashed;color:var(--dim);}
+.newfold{display:flex;gap:8px;align-items:center;}
+.newfold input{flex:1;border:none;border-bottom:.5px solid var(--rule);background:none;padding:4px 0;}
+.lv-folders{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 2px;flex:none;}
+.lv-fold{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim);
+  border:.5px solid var(--rule-soft);padding:4px 9px;}
+.lv-fold span{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.lv-fold.on{color:var(--ink);border-color:var(--ink);}
+
+  .light-bar button{font-size:11px;}
+  .lw-txt b{font-size:13px;}
+  .lv-fold{font-size:11.5px;padding:5px 11px;}
+
+
+/* ================= LIVE ================= */
+.lv{display:flex;flex-direction:column;height:calc(100vh - 190px);min-height:420px;max-width:760px;}
+.lv-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:9px;flex:none;}
+.lv-title{display:flex;align-items:center;gap:8px;font-size:15px;}
+.lv-dot{width:7px;height:7px;border-radius:50%;background:#FF10F0;
+  animation:lvpulse 1.9s ease-in-out infinite;}
+@keyframes lvpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.8);}}
+.lv-stats{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+.lv-bar{display:flex;align-items:center;gap:14px;padding:11px 0 12px;flex:none;
+  border-bottom:.5px solid var(--rule-soft);}
+.lv-f{font-size:10px;letter-spacing:.06em;color:var(--dim);padding-bottom:3px;
+  border-bottom:1.5px solid transparent;}
+.lv-f:hover{color:var(--ink);}
+.lv-f.on{color:var(--ink);border-bottom-color:var(--ink);}
+#lv-say{color:var(--ink);border-bottom-color:var(--rule);}
+
+.lv-feed{flex:1;overflow-y:auto;padding:6px 0 20px;-webkit-overflow-scrolling:touch;}
+.lv-day{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer);
+  text-align:center;margin:22px 0 14px;}
+.lv-item{display:flex;gap:12px;padding:3px 0;}
+.lv-side{width:30px;flex:none;}
+.lv-av{width:30px;height:30px;border-radius:50%;background:var(--pc);display:flex;
+  align-items:center;justify-content:center;font-size:9.5px;color:var(--ink);}
+.lv-main{flex:1;min-width:0;padding-bottom:5px;}
+.lv-meta{display:flex;align-items:baseline;gap:8px;margin:5px 0 4px;flex-wrap:wrap;}
+.lv-meta b{font-weight:500;font-size:11.5px;}
+.lv-meta span{font-size:9px;color:var(--dimmer);letter-spacing:.06em;}
+.lv-where{text-transform:uppercase;}
+.lv-text{font-size:12.5px;line-height:1.45;}
+.lv-shot{margin:4px 0 6px;}
+.lv-shot .bmedia{max-width:100%;width:auto;max-height:420px;border-radius:3px;
+  border:.5px solid var(--rule-soft);}
+.lv-tag{display:inline-block;font-size:8px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);border-bottom:2px solid var(--tc,var(--rule));margin-top:5px;}
+
+  .lv{height:calc(100vh - 210px);}
+  .lv-title{font-size:17px;}
+  .lv-text{font-size:14px;}
+  .lv-meta b{font-size:13px;}
+  .lv-meta span{font-size:10px;}
+  .lv-f{font-size:11.5px;}
+  .lv-av{width:34px;height:34px;font-size:11px;}
+  .lv-side{width:34px;}
+  .lv-shot .bmedia{max-height:360px;}
+
+
 /* ================= APP SHELL ================= */
 /* Bottom tab bar. Appears on narrow screens; desktop keeps the header nav. */
 .tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:100;
   background:var(--paper);border-top:1px solid var(--ink);
   padding-bottom:env(safe-area-inset-bottom);}
-.tb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+.tb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;
   padding:9px 0 7px;color:var(--dimmer);min-height:50px;}
 .tb-i{position:relative;display:block;width:20px;height:20px;}
 .tb-i svg{width:20px;height:20px;display:block;}
-.tb-l{font-size:8px;letter-spacing:.1em;text-transform:uppercase;}
+.tb-l{font-size:7.5px;letter-spacing:.06em;text-transform:uppercase;}
 .tb.on{color:var(--ink);}
 .tb.on .tb-l{color:var(--ink);}
 .tb-badge{position:absolute;top:-4px;right:-7px;background:var(--pink);color:#fff;
@@ -543,7 +638,9 @@ main{-webkit-overflow-scrolling:touch;}
   body{padding-bottom:calc(80px + env(safe-area-inset-bottom));}
   .dock{bottom:calc(20px + env(safe-area-inset-bottom));}
 }
-.dock{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.dock{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+  pointer-events:none;}   /* the container is a frame, not a surface */
+.dock-panel,.dock-pill{pointer-events:auto;}
 .dock-pill{border:.5px solid var(--ink);background:var(--paper);padding:8px 14px;font-size:9px;letter-spacing:.14em;
   text-transform:uppercase;display:flex;gap:9px;align-items:center;box-shadow:0 1px 0 rgba(0,0,0,.06);}
 .dock-pill:hover{border-color:var(--pink);color:var(--pink);}
@@ -554,7 +651,10 @@ main{-webkit-overflow-scrolling:touch;}
 .dock-panel[hidden]{display:none;}
 
 .im-head{display:flex;align-items:center;gap:9px;padding:9px 11px;border-bottom:.5px solid var(--rule-soft);flex:none;min-height:42px;}
-.im-head .ttl{font-size:10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.im-head .ttl{font-size:10px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hdid{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
+.hdid .ttl{line-height:1.2;}
+.hdid .sub{display:block;}
 .im-head .sub{font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);}
 .im-head button{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);flex:none;}
 .im-head button:hover{color:var(--pink);}
@@ -563,9 +663,23 @@ main{-webkit-overflow-scrolling:touch;}
 .im-back{font-size:14px!important;line-height:1;color:var(--pink)!important;}
 .im-head .who-sel{border:none;background:none;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);padding:0;max-width:74px;}
 
-.im-search{flex:none;padding:7px 11px;border-bottom:.5px solid var(--rule-soft);}
-.im-search input{width:100%;border:none;background:#f2f2f2;border-radius:12px;padding:5px 10px;font-size:10px;}
-.im-search input::placeholder{color:var(--dimmer);}
+/* Search and compose sit at the bottom, in thumb reach, the way Messages has them */
+.list-foot{flex:none;display:flex;align-items:center;gap:10px;padding:8px 11px;
+  border-top:.5px solid var(--rule-soft);}
+.list-foot[hidden]{display:none;}
+.lf-search{flex:1;display:flex;align-items:center;gap:7px;background:#f2f2f2;
+  border-radius:16px;padding:6px 12px;}
+.lf-mag{width:11px;height:11px;flex:none;border:1.4px solid var(--dimmer);border-radius:50%;
+  position:relative;}
+.lf-mag:after{content:'';position:absolute;right:-4px;bottom:-3px;width:5px;height:1.4px;
+  background:var(--dimmer);transform:rotate(45deg);}
+.lf-search input{flex:1;min-width:0;border:none;background:none;padding:0;font-size:11px;}
+.lf-search input::placeholder{color:var(--dimmer);}
+.lf-new{width:34px;height:34px;flex:none;display:flex;align-items:center;justify-content:center;
+  color:var(--ink);transition:transform .12s ease,color .15s ease;}
+.lf-new svg{width:21px;height:21px;display:block;}
+.lf-new:hover{color:var(--pink);}
+.lf-new:active{transform:scale(.88);}
 
 .im-body{flex:1;overflow-y:auto;}
 .im-list{display:flex;flex-direction:column;}
@@ -591,7 +705,7 @@ main{-webkit-overflow-scrolling:touch;}
 .trow .ttime{font-size:8px;color:var(--dimmer);letter-spacing:.04em;}
 .trow .tdot{width:7px;height:7px;border-radius:50%;background:var(--pink);}
 
-.im-thread{padding:12px 11px 6px;display:flex;flex-direction:column;}
+.im-thread{padding:12px 11px 6px;display:flex;flex-direction:column;overflow-x:hidden;}
 .daydiv{text-align:center;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);margin:12px 0 9px;}
 .mwrap{display:flex;flex-direction:column;max-width:78%;margin-bottom:2px;position:relative;
   height:auto;min-height:0;overflow:visible;border:none;background:none;}
@@ -702,6 +816,25 @@ main{-webkit-overflow-scrolling:touch;}
   background:#f6f6f6;border-radius:14px;text-align:center;}
 .daydiv b{font-weight:500;color:var(--dim);}
 
+/* ---- your own status, at the top of the list where AIM had it ---- */
+.mestrip{display:flex;align-items:center;gap:10px;padding:12px 12px 13px;
+  border-bottom:.5px solid var(--rule-soft);}
+.me-av{width:34px;height:34px;border-radius:50%;background:var(--pc);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink);}
+.mestrip.away .me-av{opacity:.45;}
+.me-txt{flex:1;min-width:0;text-align:left;}
+.me-txt b{display:block;font-size:12px;font-weight:500;}
+.me-txt span{display:block;font-size:11px;color:var(--dim);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mestrip.away .me-txt span{color:#B4830B;font-style:italic;}
+.me-dice{width:30px;height:30px;border-radius:50%;border:.5px dashed #E8B21E;color:#B4830B;
+  font-size:15px;line-height:1;flex:none;transition:transform .35s ease,background .15s ease;}
+.me-dice:hover{background:#FFFBEF;}
+.me-dice:active{transform:rotate(180deg);}
+.me-back{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  border:.5px solid var(--rule);padding:5px 9px;border-radius:12px;flex:none;}
+.me-back:hover{border-color:var(--ink);color:var(--ink);}
+
 /* ---- away messages ---- */
 .awaybtn{border:.5px solid var(--rule);padding:4px 9px;letter-spacing:.1em;}
 .awaybtn.on{border-color:#E8B21E;color:#B4830B;}
@@ -716,6 +849,8 @@ main{-webkit-overflow-scrolling:touch;}
 .awpre{display:flex;flex-wrap:wrap;gap:5px;}
 .awpre button{border:.5px solid var(--rule);padding:4px 9px;font-size:10px;color:var(--dim);}
 .awpre button:hover{border-color:var(--ink);color:var(--ink);}
+.awpre .shuf{border-style:dashed;border-color:#E8B21E;color:#B4830B;}
+.awpre .shuf:hover{background:#FFFBEF;border-color:#B4830B;color:#B4830B;}
 .trow.isaway .av{opacity:.5;}
 
 /* ---- typing ---- */
@@ -738,18 +873,19 @@ main{-webkit-overflow-scrolling:touch;}
 .swipe{position:relative;overflow:hidden;}
 .swipe .trow{position:relative;background:var(--paper);z-index:1;
   transition:transform .18s cubic-bezier(.2,.8,.2,1);}
-.swipe.open .trow{transform:translateX(-88px);}
-.rowdel{position:absolute;right:0;top:0;bottom:0;width:88px;background:#000;color:#fff;
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;z-index:0;}
-.rowdel:hover{background:#FF10F0;}
+.swipe.open .trow{transform:translateX(-64px);}
+.rowdel{position:absolute;right:0;top:0;bottom:0;width:64px;background:none;color:var(--dimmer);
+  font-size:22px;line-height:1;z-index:0;display:flex;align-items:center;justify-content:center;}
+.rowdel:hover{color:#FF10F0;}
 .brow{position:relative;display:flex;align-items:center;
   transition:transform .18s cubic-bezier(.2,.8,.2,1);}
-.brow.open{transform:translateX(-76px);}
-.rowdel.msg{position:absolute;right:-76px;top:0;bottom:0;width:68px;border-radius:0;}
+.brow.open{transform:translateX(-58px);}
+/* the Delete only exists once the row is swiped open. Before that it must not be
+   drawn, must not be clickable, and must not widen the thread. */
+.rowdel.msg{position:absolute;right:-58px;top:0;bottom:0;width:52px;border-radius:0;
+  opacity:0;pointer-events:none;transition:opacity .14s ease;}
+.brow.open .rowdel.msg{opacity:1;pointer-events:auto;}
 .mwrap{overflow:visible;}
-.newrow{width:100%;text-align:left;padding:14px 12px;font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--dim);border-bottom:.5px solid var(--rule-soft);}
-.newrow:hover{color:var(--pink);}
 
 .tapbacks{position:absolute;top:-11px;display:flex;gap:2px;z-index:2;}
 .mwrap.me .tapbacks{left:-8px;} .mwrap.them .tapbacks{right:-8px;}
@@ -782,7 +918,10 @@ main{-webkit-overflow-scrolling:touch;}
 .mesw{display:inline-block;width:6px;height:6px;border-radius:50%;
   background:var(--pc,var(--rule));margin-right:5px;vertical-align:middle;flex:none;}
 .dock-foot{border-top-width:2px;border-top-style:solid;border-top-color:var(--mecol,var(--rule-soft));}
-.dock-hint{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);padding:0 12px 7px;}
+.dock-hint{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);
+  padding:0 12px;max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .2s ease,opacity .2s ease,padding .2s ease;}
+.dock-hint.on{max-height:22px;opacity:1;padding:0 12px 7px;}
 .im-empty{color:var(--dimmer);font-size:10px;text-align:center;padding:34px 16px;}
 .member-list{display:flex;flex-wrap:wrap;gap:6px;}
 .member-list button{border:.5px solid var(--rule);border-radius:12px;padding:5px 11px;font-size:10px;color:var(--dim);display:inline-flex;align-items:center;}
@@ -906,7 +1045,34 @@ main{-webkit-overflow-scrolling:touch;}
   .dock-grab i{width:34px;height:4px;border-radius:2px;background:var(--rule);display:block;}
   .dock-done{display:block;position:absolute;right:14px;top:6px;padding:6px 4px;
     font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
-  .im-head{padding:10px 14px;min-height:48px;}
+  .im-head{padding:6px 12px 12px;min-height:56px;gap:11px;}
+  /* the header is the first thing you see, so give it room and a real title */
+  .im-head .ttl.big{font-size:24px;letter-spacing:-.02em;font-weight:500;}
+  .hdid{gap:10px;}
+  .hdid .ttl{font-size:15px;line-height:1.15;font-weight:500;}
+  .hdid .sub{font-size:10px;display:block;margin-top:2px;letter-spacing:.06em;}
+  .im-back{font-size:30px;line-height:1;padding:0 6px 0 0;margin-top:-2px;}
+  .awaybtn{padding:6px 11px;font-size:10px;border-radius:13px;}
+  #im-close{padding:6px 12px;border-radius:13px;font-size:10px;}
+  #im-pdf,#im-info{font-size:11px;padding:6px 3px;}
+  .dock-grab{padding:12px 0 6px;}
+  .dock-grab i{width:40px;height:5px;}
+  .dock-done{font-size:11px;top:8px;right:16px;}
+  .mfilter{padding:10px 14px;gap:7px;}
+  .im-thread{padding:14px 14px 8px;}
+  .daydiv{margin:18px 0 12px;}
+  .pinbar{padding:11px 14px 12px;}
+  .awaybar{padding:12px 14px;}
+  .awayrow{font-size:12px;}
+  .bmedia{max-width:250px;max-height:320px;}
+  .trow{padding:15px 14px;gap:12px;}
+  .mestrip{padding:14px 14px 15px;gap:12px;}
+  .me-av{width:40px;height:40px;font-size:12px;}
+  .me-txt b{font-size:14px;}
+  .me-txt span{font-size:12.5px;}
+  .me-dice{width:36px;height:36px;font-size:18px;}
+  .me-back{font-size:10px;padding:7px 11px;}
+  .dock-foot textarea{max-height:150px;}
   .im-head button{font-size:11px;padding:6px 2px;}
   .im-head #im-close{display:none;}     /* Done and the drag bar replace it */
   .im-body{-webkit-overflow-scrolling:touch;}
@@ -933,8 +1099,14 @@ main{-webkit-overflow-scrolling:touch;}
   .mfc{font-size:9.5px;padding:5px 10px;}
   .pintxt{font-size:12.5px;}
   .pinbar-h{font-size:9.5px;}
-  .dock-hint{font-size:9px;}
-  .im-search input{font-size:16px;}
+  .dock-hint{font-size:9px;padding:0 14px;}
+  .dock-hint.on{max-height:26px;padding:0 14px 8px;}
+  .dock-foot textarea{max-height:150px;}
+  .list-foot{padding:10px 14px calc(10px + env(safe-area-inset-bottom));}
+  .lf-search{padding:9px 14px;}
+  .lf-search input{font-size:16px;}
+  .lf-new{width:42px;height:42px;}
+  .lf-new svg{width:25px;height:25px;}
   .tdy-t{font-size:14px;}
   .tdy-c{font-size:11.5px;}
   .tdy-day{font-size:16px;}
@@ -950,7 +1122,7 @@ html{background:#e9e9e9;}
 body{max-width:390px;margin:0 auto;background:#fff;min-height:100vh;
   box-shadow:0 0 0 1px rgba(0,0,0,.14), 0 18px 50px rgba(0,0,0,.16);}
 .tabs{left:50%;transform:translateX(-50%);width:390px;max-width:100vw;}
-.dock{left:50%;transform:translateX(-50%);width:370px;max-width:calc(100vw - 20px);right:auto;}
+.dock{left:50%;transform:translateX(-50%);width:390px;max-width:100vw;right:auto;}
 .preview-note{position:fixed;top:0;left:0;right:0;z-index:200;background:#000;color:#fff;
   font:9px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.12em;
   text-transform:uppercase;text-align:center;padding:5px 10px;}
@@ -1003,14 +1175,20 @@ header{top:24px;}
   <div class="dock-panel" id="dock-panel" hidden>
     <div class="dock-grab" id="dock-grab"><i></i><button class="dock-done" id="dock-done">Done</button></div>
     <div class="im-head" id="im-head"></div>
-    <div class="im-search" id="im-search"><input type="search" id="im-q" placeholder="Search"></div>
+
     <div class="im-body" id="im-body"></div>
+    <div class="list-foot" id="list-foot" hidden>
+      <span class="lf-search"><i class="lf-mag"></i><input type="search" id="im-q" placeholder="Search"></span>
+      <button class="lf-new" id="im-compose" title="New message" aria-label="New message">
+        <svg viewBox="0 0 22 22"><path d="M4 18h3.2l8.9-8.9-3.2-3.2L4 14.8V18z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M14.4 4.6l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.5" y="2.5" width="17" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      </button>
+    </div>
     <div class="dock-foot" id="dock-foot">
       <button class="dock-plus" id="dock-plus" title="Send a photo or video">+</button>
       <textarea id="dock-in" rows="1" placeholder="Message"></textarea>
       <button class="dock-send" id="dock-send">↑</button>
     </div>
-    <div class="dock-hint" id="dock-hint">Enter sends · task: remind: idea: · @name hands it over · Esc closes</div>
+    <div class="dock-hint" id="dock-hint">task:  remind:  idea:  ·  @name to hand it over</div>
   </div>
   <button class="dock-pill" id="dock-pill">Messages <span class="badge" id="dock-badge">0</span></button>
 </div>
@@ -1718,8 +1896,8 @@ function wedges(cx,cy,r,cols){
 const VIEWS=[['focus','Today'],['grid','Grid']];
 /* Calendar, Archive and Money are gone as screens. Meetings still attach to cards,
    the log still lives in Messages, payments still live on each person's page. */
-const SHEET=[['focus','Today'],['grid','Grid'],['people','People'],['board','All cards']];
-const TABS=[['home','Home'],['focus','Today'],['grid','Grid'],['messages','Messages'],['more','More']];
+const SHEET=[['focus','Today'],['live','Live'],['grid','Grid'],['people','People'],['board','All cards']];
+const TABS=[['home','Home'],['focus','Today'],['live','Live'],['grid','Grid'],['messages','Messages'],['more','More']];
 function goHome(){view='home';openCard=null;activePerson=null;activeObj=null;render();window.scrollTo(0,0);}
 function render(){
   const atHome = view==='home' && !openCard && !activePerson;
@@ -1740,8 +1918,10 @@ function render(){
   else if(view==='board') m.innerHTML=viewBoard();
   else if(view==='focus') m.innerHTML=viewFocus();
   else if(view==='grid') m.innerHTML=viewGrid();
+  else if(view==='live') m.innerHTML=viewLive();
   else if(view==='people') m.innerHTML=viewPeople();
   wire(); autosizeAll(); renderDock(); renderTabs();
+  if(view==='live'&&!openCard&&!activePerson) liveScroll();
 }
 /* ================= TAB BAR ================= */
 /* The app shell on narrow screens. Five destinations, thumb height, always there. */
@@ -1751,6 +1931,7 @@ function tabIcon(k){
     home:`<svg viewBox="0 0 20 20"><path ${s} d="M3 8.4 10 3l7 5.4V17H3z"/></svg>`,
     focus:`<svg viewBox="0 0 20 20"><circle ${s} cx="10" cy="10" r="7"/><path ${s} d="M10 5.6V10l3 2"/></svg>`,
     grid:`<svg viewBox="0 0 20 20"><path ${s} d="M3 3h5v5H3zM12 3h5v5h-5zM3 12h5v5H3zM12 12h5v5h-5z"/></svg>`,
+    live:`<svg viewBox="0 0 20 20"><circle ${s} cx="10" cy="10" r="2.4"/><path ${s} d="M5.4 5.4a6.5 6.5 0 0 0 0 9.2M14.6 5.4a6.5 6.5 0 0 1 0 9.2"/></svg>`,
     messages:`<svg viewBox="0 0 20 20"><path ${s} d="M3 4h14v10H8l-5 3z"/></svg>`,
     more:`<svg viewBox="0 0 20 20"><path ${s} d="M3 6h14M3 10h14M3 14h14"/></svg>`
   }[k]||'';
@@ -2877,7 +3058,7 @@ async function addMedia(files,mode,at){
 
   if(mode==='message'){
     const tid=S.dockThread||'t-main';
-    made.forEach(id=>postLog('',S.me,tid,id));
+    made.forEach(id=>broadcastMsg(postLog('',S.me,tid,id)));
     autoReply(tid);
     saveA(); save(); renderDock();
     flashMsg(made.length>1?`${made.length} sent`:'Sent',1400);
@@ -2908,8 +3089,9 @@ function msgMedia(id){
   if(!a) return `<div class="bmiss">that attachment is gone</div>`;
   if(a.missing) return `<div class="bmiss">video is on the other device</div>`;
   return a.type==='video'
-    ? `<video class="bmedia" src="${a.src}" controls playsinline preload="metadata"></video>`
-    : `<img class="bmedia" src="${a.src}" alt="">`;
+    ? `<video class="bmedia" data-open="${id}" src="${a.src}" playsinline preload="metadata" muted></video>
+       <button class="playbadge" data-open="${id}" aria-label="Play">\u25b6</button>`
+    : `<img class="bmedia" data-open="${id}" src="${a.src}" alt="">`;
 }
 function mediaBytes(){ return (A.assets||[]).reduce((n,a)=>n+(a.store==='file'?(a.src||'').length:0),0); }
 function mediaLine(){
@@ -3685,6 +3867,13 @@ function wire(){
   document.querySelectorAll('[data-delpay]').forEach(b=>b.onclick=()=>{if(!confirm('Delete this payment?'))return;
     snap('payment');S.payments=S.payments.filter(p=>p.id!==b.dataset.delpay);save();render();flashMsg('Deleted. Cmd Z to undo',2000);});
 
+  document.querySelectorAll('#main [data-open]').forEach(el=>el.onclick=e=>{
+    e.stopPropagation(); openLight(el.getAttribute('data-open'));});
+  document.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{
+    liveMedia=b.dataset.lv==='media'; liveStick=true; render();});
+  document.querySelectorAll('[data-fold]').forEach(b=>b.onclick=()=>{
+    liveFolder=b.dataset.fold; liveStick=true; render();});
+  const say=$('#lv-say'); if(say) say.onclick=()=>{S.dockOpen=true;save();renderDock();renderTabs();};
   document.querySelectorAll('#main [data-msgdone]').forEach(b=>b.onclick=e=>{e.stopPropagation();msgDone(b.dataset.msgdone);});
   document.querySelectorAll('[data-owner]').forEach(b=>b.onclick=()=>{
     const v=b.dataset.owner;
@@ -3882,8 +4071,8 @@ function renderDock(){
 }
 
 function renderThreadList(){
-  $('#dock-foot').hidden=true; $('#dock-hint').hidden=true; $('#im-search').hidden=false;
-  $('#im-head').innerHTML=`<span class="ttl">Messages</span>
+  $('#dock-foot').hidden=true; $('#dock-hint').hidden=true; $('#list-foot').hidden=false;
+  $('#im-head').innerHTML=`<span class="ttl big">Messages</span>
     <span class="sub">as</span><i class="mesw" style="--pc:${personColor(S.me)}"></i>
     <select class="who-sel" id="im-as">${names().map(n=>`<option ${S.me===n?'selected':''}>${esc(n)}</option>`).join('')}</select>
     <button id="im-away" class="awaybtn ${statusOf(S.me).away?'on':''}" title="Set an away message">${
@@ -3895,10 +4084,19 @@ function renderThreadList(){
       if(!(threadName(t).toLowerCase().includes(s)||ms.some(m=>m.text.toLowerCase().includes(s)))) return '';}
     return {t,last,un,sort:last?last.ts:0};
   }).filter(Boolean).sort((a,b)=>b.sort-a.sort);
-  $('#im-body').innerHTML=`<button class="newrow" id="im-newrow">+ New conversation</button>`+
-    `<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
+  const mine=statusOf(S.me);
+  const mestrip=`<div class="mestrip ${mine.away?'away':''}">
+    <span class="me-av" style="--pc:${personColor(S.me)}">${esc(initials(S.me))}</span>
+    <button class="me-txt" id="me-status">
+      <b>${esc(S.me)}</b>
+      <span>${mine.away?esc(mine.text):'Available'}</span>
+    </button>
+    <button class="me-dice" id="me-dice" title="Give me an away message">\u21bb</button>
+    ${mine.away?`<button class="me-back" id="me-back">I\u2019m back</button>`:''}
+  </div>`;
+  $('#im-body').innerHTML=mestrip+`<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
     <div class="swipe ${rowOpen===t.id?'open':''}" data-row="${t.id}">
-      <button class="rowdel" data-delthread="${t.id}">Delete</button>
+      <button class="rowdel" data-delthread="${t.id}" aria-label="Delete conversation">&times;</button>
       <button class="trow ${un?'unread':''} ${(t.members||[]).some(n=>n!==S.me&&statusOf(n).away)?'isaway':''}" data-thread="${t.id}">
         ${avatarHTML(t)}
         <span style="overflow:hidden">
@@ -3917,7 +4115,13 @@ function renderThreadList(){
   $('#im-away').onclick=awayModal;
   $('#im-close').onclick=closeDock;
   $('#im-new').onclick=newThreadModal;
-  $('#im-newrow').onclick=newThreadModal;
+  $('#im-compose').onclick=newThreadModal;
+  $('#me-status').onclick=awayModal;
+  $('#me-dice').onclick=()=>{
+    const cur=statusOf(S.me);
+    setStatus(S.me,true,quirk(cur.away?cur.text:''));
+    flashMsg('Away · '+statusOf(S.me).text,2600);};
+  const mb=$('#me-back'); if(mb) mb.onclick=()=>{setStatus(S.me,false,'');flashMsg('You are back',1600);};
   $('#im-body').querySelectorAll('[data-thread]').forEach(b=>b.onclick=()=>{
     if(rowOpen){ rowOpen=null; renderDock(); return; }
     openThread(b.dataset.thread);});
@@ -3932,12 +4136,13 @@ function renderThreadList(){
 }
 
 function renderThread(t){
-  $('#dock-foot').hidden=false; $('#dock-hint').hidden=false; $('#im-search').hidden=true;
+  $('#dock-foot').hidden=false; $('#dock-hint').hidden=false; $('#list-foot').hidden=true;
+  $('#dock-hint').classList.remove('on');
   const who=t.dm?threadName(t):t.members.join(', ');
   $('#im-head').innerHTML=`<button class="im-back" id="im-back">‹</button>
-    ${avatarHTML(t)}
-    <span class="ttl" style="line-height:1.2">${esc(threadName(t))}
-      <span class="sub" style="display:block">${esc(t.dm?'Direct':who)}</span></span>
+    <span class="hdid">${avatarHTML(t)}
+      <span class="ttl">${esc(threadName(t))}
+        <span class="sub">${esc(t.dm?'Direct':who)}</span></span></span>
     <button id="im-pdf" title="Save this thread today as PDF">PDF</button>
     <button id="im-info" title="Thread settings">···</button>
     <button id="im-close" title="Close">Done</button>`;
@@ -3974,7 +4179,7 @@ function renderThread(t){
         <div class="b ${m.assetId?'hasmedia':''} ${m.id===lastSentId?'justsent':''}"
              data-bub="${m.id}" title="${esc(m.author)} · ${fmtTime(m.ts)}">${
           m.assetId?msgMedia(m.assetId):''}${m.text?`<span class="btxt">${fmtMsg(m.text)}</span>`:''}</div>
-        <button class="rowdel msg" data-delbub="${m.id}">Delete</button>
+        <button class="rowdel msg" data-delbub="${m.id}" aria-label="Delete message">&times;</button>
       </div>
     </div>`;
     if(tail&&mine&&i===ms.length-1) html+=`<div class="receipt">Delivered</div>`;
@@ -4002,6 +4207,8 @@ function renderThread(t){
 
   body.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{mFilter=b.dataset.mf;renderDock();});
   body.querySelectorAll('[data-msgdone]').forEach(b=>b.onclick=e=>{e.stopPropagation();msgDone(b.dataset.msgdone);});
+  body.querySelectorAll('[data-open]').forEach(el=>el.onclick=e=>{
+    e.stopPropagation(); openLight(el.getAttribute('data-open'));});
   body.querySelectorAll('[data-delbub]').forEach(b=>b.onclick=e=>{e.stopPropagation();
     snap('message'); S.log=S.log.filter(l=>l.id!==b.dataset.delbub);
     rowOpen=null; save(); renderDock(); flashMsg('Deleted. Cmd Z undoes it',2400);});
@@ -4219,12 +4426,67 @@ function typingBubble(names){
   </div>`;
 }
 
+/* ================= AIM NOISES ================= */
+/* The door opening and closing. Synthesised, so there are no files to host and
+   nothing to load. Sound is off until you turn it on, and stays off if you never do. */
+let ac=null;
+function audio(){
+  try{ ac=ac||new (window.AudioContext||window.webkitAudioContext)(); 
+       if(ac.state==='suspended') ac.resume(); return ac; }catch(e){ return null; }
+}
+function tone(freqs,dur,vol){
+  if(S.sound===false) return;
+  const c=audio(); if(!c) return;
+  const t0=c.currentTime;
+  freqs.forEach((f,i)=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type='triangle'; o.frequency.setValueAtTime(f,t0+i*dur*0.5);
+    g.gain.setValueAtTime(0,t0+i*dur*0.5);
+    g.gain.linearRampToValueAtTime(vol||0.06,t0+i*dur*0.5+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+i*dur*0.5+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t0+i*dur*0.5); o.stop(t0+i*dur*0.5+dur+0.02);
+  });
+}
+const doorOpen  =()=>tone([523.25,784],0.16);        /* someone is back */
+const doorClose =()=>tone([784,392],0.18);           /* someone went away */
+const dingSend  =()=>tone([880],0.09,0.04);
+const dingRecv  =()=>tone([660,990],0.11,0.05);
+
 /* ================= AWAY MESSAGES ================= */
 /* Straight out of AIM. You set a message, your name goes yellow-dot, and the first
    person to write to you gets it back automatically. Status lives on the person
    record, so it saves with the file and travels with an Export. */
 const AWAY_PRESETS=['on a shoot','on a call','writing, back later','out for the day',
                     'brb','head down, ping if urgent'];
+/* the ones AIM was actually for */
+const AWAY_QUIRKS=[
+  'gone to the perfume mines',
+  'in a meeting about a meeting',
+  'raising money, back when rich',
+  'brb, becoming a different person',
+  'at the post office. pray for me',
+  'thinking about the fragrance waterfall',
+  'on set. do not perceive me',
+  'reading the group chat but not replying',
+  'touching grass, allegedly',
+  'in my villain era (spreadsheets)',
+  'somewhere between an idea and a deck',
+  'back in 5. this is a lie',
+  'writing an email that should be a text',
+  'negotiating with a vendor and losing',
+  'do not open the P&L. i am in there',
+  'became a fragrance. brb',
+  'on a call i could have skipped',
+  'at the studio pretending to know lighting',
+  'currently a problem for future me',
+  'reading a contract with my whole chest',
+  'out here manifesting a wire transfer',
+  'brb, having a thought about the brand',
+  'gone feral over a font',
+  'in the group chat, spiritually'
+];
+const quirk=(not)=>{ let x=not; while(x===not) x=AWAY_QUIRKS[Math.floor(Math.random()*AWAY_QUIRKS.length)]; return x; };
 const AUTO_AWAY_MIN=12;
 let lastPoke=Date.now(), autoWokeFrom=null;
 
@@ -4234,7 +4496,9 @@ function statusOf(name){
 }
 function setStatus(name,away,text){
   const p=S.people.find(x=>x.name===name); if(!p) return;
+  const was=(p.status&&p.status.away)||false;
   p.status={away:!!away,text:away?(text||'Away'):'',since:away?Date.now():0};
+  if(was!==!!away){ away?doorClose():doorOpen(); }
   if(!away) autoWokeFrom=null;
   save();
   try{ if(statusCh) statusCh.postMessage({name,status:p.status}); }catch(e){}
@@ -4245,7 +4509,10 @@ try{ statusCh=new BroadcastChannel('radish-status'); }catch(e){ statusCh=null; }
 if(statusCh) statusCh.onmessage=e=>{
   const d=e.data; if(!d||!d.name) return;
   const p=S.people.find(x=>x.name===d.name); if(!p) return;
-  p.status=d.status; if(S.dockOpen) renderDock();
+  const was=(p.status&&p.status.away)||false;
+  p.status=d.status;
+  if(was!==!!(d.status&&d.status.away)) (d.status&&d.status.away)?doorClose():doorOpen();
+  if(S.dockOpen) renderDock();
 };
 
 function awaySince(s){
@@ -4276,30 +4543,42 @@ function awayModal(){
     <div class="f"><label>Away message</label>
       <textarea id="aw-text" rows="2" placeholder="Back in an hour">${esc(s.text||'')}</textarea></div>
     <div class="f"><label>Or pick one</label>
-      <div class="awpre">${AWAY_PRESETS.map(x=>`<button data-pre="${esc(x)}">${esc(x)}</button>`).join('')}</div></div>
+      <div class="awpre">${AWAY_PRESETS.map(x=>`<button data-pre="${esc(x)}">${esc(x)}</button>`).join('')}
+        <button id="aw-shuffle" class="shuf">give me one \u21bb</button></div></div>
+    <div class="f"><label>Door sounds</label>
+      <div class="member-list">
+        <button id="aw-snd-on" class="${S.sound!==false?'on':''}">On</button>
+        <button id="aw-snd-off" class="${S.sound===false?'on':''}">Off</button></div>
+      <div class="tiny dim" style="margin-top:6px">The open and close, when someone comes back or steps away.</div></div>
     <div class="f"><label>Set me away on my own</label>
       <div class="member-list">
         <button id="aw-auto-on" class="${S.autoAway!==false?'on':''}">After ${AUTO_AWAY_MIN} min idle</button>
         <button id="aw-auto-off" class="${S.autoAway===false?'on':''}">Never</button></div></div>
     <div class="modal-acts"><button class="btn" id="aw-cancel">Cancel</button>
       <button class="btn p" id="aw-save">Save</button></div>`, sc=>{
-    let away=s.away, auto=S.autoAway!==false;
+    let away=s.away, auto=S.autoAway!==false, snd=S.sound!==false;
     const ta=sc.querySelector('#aw-text');
     const paint=()=>{
       sc.querySelector('#aw-here').classList.toggle('on',!away);
       sc.querySelector('#aw-away').classList.toggle('on',away);
       sc.querySelector('#aw-auto-on').classList.toggle('on',auto);
       sc.querySelector('#aw-auto-off').classList.toggle('on',!auto);
+      sc.querySelector('#aw-snd-on').classList.toggle('on',snd);
+      sc.querySelector('#aw-snd-off').classList.toggle('on',!snd);
     };
     sc.querySelector('#aw-here').onclick=()=>{away=false;paint();};
     sc.querySelector('#aw-away').onclick=()=>{away=true;paint();ta.focus();};
     sc.querySelector('#aw-auto-on').onclick=()=>{auto=true;paint();};
     sc.querySelector('#aw-auto-off').onclick=()=>{auto=false;paint();};
+    sc.querySelector('#aw-snd-on').onclick=()=>{snd=true;S.sound=true;paint();doorOpen();};
+    sc.querySelector('#aw-snd-off').onclick=()=>{snd=false;S.sound=false;paint();};
+    sc.querySelector('#aw-shuffle').onclick=()=>{
+      ta.value=quirk(ta.value); away=true; paint();};
     sc.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{
       ta.value=b.dataset.pre; away=true; paint();});
     sc.querySelector('#aw-cancel').onclick=closeModal;
     sc.querySelector('#aw-save').onclick=()=>{
-      S.autoAway=auto;
+      S.autoAway=auto; S.sound=snd;
       setStatus(S.me,away,ta.value.trim()||'Away');
       closeModal(); flashMsg(away?'You are away':'You are back',1800);};
   });
@@ -4314,11 +4593,187 @@ setInterval(()=>{
   if(statusOf(S.me).away) return;
   if(Date.now()-lastPoke > AUTO_AWAY_MIN*60000){
     autoWokeFrom=S.me;
-    setStatus(S.me,true,'Away from the desk');
+    setStatus(S.me,true,quirk(''));
   }
 },30000);
 ['click','keydown','touchstart'].forEach(ev=>
   document.addEventListener(ev,pokeIdle,{passive:true}));
+
+/* ================= THE VIEWER ================= */
+/* Tap any photo or clip anywhere and it opens full size, with somewhere to put it. */
+function folders(){ A.folders||=[]; return A.folders; }
+function folderName(id){ const f=folders().find(x=>x.id===id); return f?f.name:''; }
+function newFolder(name){
+  const n=String(name||'').trim(); if(!n) return null;
+  const ex=folders().find(f=>f.name.toLowerCase()===n.toLowerCase());
+  if(ex) return ex.id;
+  const f={id:uid(),name:n,made:Date.now()};
+  A.folders.push(f); saveA(); return f.id;
+}
+function fileAsset(assetId,folderId){
+  const a=asset(assetId); if(!a) return;
+  a.folder=folderId||''; saveA();
+  flashMsg(folderId?('Filed in '+folderName(folderId)):'Taken out of the folder',1800);
+}
+async function saveAsset(assetId){
+  const a=asset(assetId); if(!a) return;
+  try{
+    let href=a.src, revoke=false;
+    if(a.type==='video'&&a.store==='idb'){
+      const b=await mGet(assetId);
+      if(!b){ flashMsg('That video is on the other device',2400); return; }
+      href=URL.createObjectURL(b); revoke=true;
+    }
+    const ext=a.type==='video'?((a.name&&a.name.split('.').pop())||'mp4'):'jpg';
+    const el=document.createElement('a');
+    el.href=href;
+    el.download=((a.name&&a.name.replace(/\.[^.]+$/,''))||('radish-'+assetId))+'.'+ext;
+    document.body.appendChild(el); el.click(); el.remove();
+    if(revoke) setTimeout(()=>URL.revokeObjectURL(href),4000);
+    flashMsg('Saved',1600);
+  }catch(e){ flashMsg('That could not be saved',2200); }
+}
+function openLight(assetId){
+  const a=asset(assetId); if(!a) return;
+  closeLight();
+  const m=S.log.find(l=>l.assetId===assetId);
+  const box=document.createElement('div');
+  box.className='light'; box.id='light';
+  box.innerHTML=`
+    <div class="light-top">
+      <span class="light-who">${m?`<span class="lw-av" style="--pc:${personColor(m.author)}">${esc(initials(m.author))}</span>
+        <span class="lw-txt"><b>${esc(m.author)}</b><span>${fmtTime(m.ts)}${threadLabel(m)?' · '+esc(threadLabel(m)):''}</span></span>`:''}</span>
+      <button class="light-x" id="light-x" aria-label="Close">&times;</button>
+    </div>
+    <div class="light-stage" id="light-stage">${
+      a.missing?'<div class="bmiss">This video is on the other device</div>'
+      :a.type==='video'?`<video src="${a.src}" controls autoplay playsinline></video>`
+      :`<img src="${a.src}" alt="">`}</div>
+    <div class="light-bar">
+      <button id="light-save">Save to device</button>
+      <button id="light-file">${a.folder?('In '+esc(folderName(a.folder))):'Put in a folder'}</button>
+    </div>`;
+  document.body.appendChild(box);
+  box.querySelector('#light-x').onclick=closeLight;
+  box.onclick=e=>{ if(e.target===box||e.target.id==='light-stage') closeLight(); };
+  box.querySelector('#light-save').onclick=()=>saveAsset(assetId);
+  box.querySelector('#light-file').onclick=()=>folderPicker(assetId);
+  document.addEventListener('keydown',lightKey);
+}
+function lightKey(e){ if(e.key==='Escape'){ e.stopPropagation(); closeLight(); } }
+function closeLight(){
+  const b=document.getElementById('light'); if(b) b.remove();
+  document.removeEventListener('keydown',lightKey);
+}
+function folderPicker(assetId){
+  const a=asset(assetId)||{};
+  showModal(`<h3>Put it in a folder</h3>
+    <div class="f"><div class="folderpick" id="fp-list">
+      ${folders().map(f=>`<button data-f="${f.id}" class="${a.folder===f.id?'on':''}">${esc(f.name)}
+        <span>${(A.assets||[]).filter(x=>x.folder===f.id).length}</span></button>`).join('')
+        ||'<span class="tiny dim">No folders yet. Make the first one below.</span>'}
+      ${a.folder?'<button data-f="" class="clear">Take it out</button>':''}
+    </div></div>
+    <div class="f"><label>New folder</label>
+      <div class="newfold"><input id="fp-new" placeholder="Campaign, Behind the scenes, Press…">
+        <button class="btn" id="fp-add">Make it</button></div></div>
+    <div class="modal-acts"><button class="btn" id="fp-close">Done</button></div>`, s=>{
+    const after=()=>{ closeModal(); closeLight();
+      if(!openCard&&!activePerson&&view==='live') render(); };
+    s.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ fileAsset(assetId,b.dataset.f); after(); });
+    s.querySelector('#fp-add').onclick=()=>{
+      const id=newFolder(s.querySelector('#fp-new').value);
+      if(!id) return;
+      fileAsset(assetId,id); after();};
+    s.querySelector('#fp-close').onclick=closeModal;
+  });
+}
+
+/* ================= LIVE ================= */
+/* Every message and every photo from every thread, in one stream, oldest to newest.
+   It is not a copy: it reads the same log the messenger writes, so it is already
+   saved and already travels with the file. */
+let liveMedia=false;     /* photos and video only */
+let liveFolder='';       /* '', a folder id, or __none__ */
+let liveStick=true;      /* follow the bottom until the reader scrolls up */
+
+function liveItems(){
+  let out=S.log.filter(m=>m.kind!=='note');
+  if(liveMedia){
+    out=out.filter(m=>m.assetId);
+    if(liveFolder==='__none__') out=out.filter(m=>!(asset(m.assetId)||{}).folder);
+    else if(liveFolder) out=out.filter(m=>(asset(m.assetId)||{}).folder===liveFolder);
+  }
+  if(q){const s=q.toLowerCase();out=out.filter(m=>(m.text||'').toLowerCase().includes(s)||m.author.toLowerCase().includes(s));}
+  return out.sort((a,b)=>a.ts-b.ts);
+}
+function viewLive(){
+  const items=liveItems();
+  const shots=S.log.filter(m=>m.assetId).length;
+  const today=S.log.filter(m=>m.kind!=='note'&&dayKey(m)===todayISO()).length;
+
+  let lastDay=null, lastWho=null, body='';
+  items.forEach(m=>{
+    const d=dayKey(m);
+    if(d!==lastDay){
+      body+=`<div class="lv-day">${d===todayISO()?'Today':fmtDay(d)}</div>`;
+      lastDay=d; lastWho=null;
+    }
+    const fresh=lastWho!==m.author;
+    lastWho=m.author;
+    body+=`<div class="lv-item ${m.assetId?'media':''}" style="--pc:${personColor(m.author)}">
+      <div class="lv-side">${fresh?`<span class="lv-av">${esc(initials(m.author))}</span>`:''}</div>
+      <div class="lv-main">
+        ${fresh?`<div class="lv-meta"><b>${esc(m.author)}</b><span>${fmtTime(m.ts)}</span>
+          <span class="lv-where">${esc(threadLabel(m)||'')}</span></div>`:''}
+        ${m.assetId?`<div class="lv-shot">${msgMedia(m.assetId)}</div>`:''}
+        ${m.text?`<div class="lv-text">${fmtMsg(m.text)}</div>`:''}
+        ${(m.tag||m.pin)?`<div class="lv-tag" ${m.tag?`style="--tc:${tagColor(m.tag)}"`:''}>${
+          m.pin?'Pinned':''}${m.pin&&m.tag?' · ':''}${m.tag?esc(tagLabel(m.tag)):''}</div>`:''}
+      </div>
+    </div>`;
+  });
+
+  return `<div class="lv">
+    <div class="lv-head">
+      <div class="lv-title"><span class="lv-dot"></span>Live</div>
+      <div class="lv-stats">${today} today · ${shots} shot${shots===1?'':'s'}</div>
+    </div>
+    <div class="lv-bar">
+      <button class="lv-f ${!liveMedia?'on':''}" data-lv="all">Everything</button>
+      <button class="lv-f ${liveMedia?'on':''}" data-lv="media">Photos &amp; video</button>
+      <span style="flex:1"></span>
+      <button class="lv-f" id="lv-say">Say something</button>
+    </div>
+    ${liveMedia?`<div class="lv-folders">
+      <button class="lv-fold ${!liveFolder?'on':''}" data-fold="">All</button>
+      ${folders().map(f=>`<button class="lv-fold ${liveFolder===f.id?'on':''}" data-fold="${f.id}">${esc(f.name)}
+        <span>${(A.assets||[]).filter(x=>x.folder===f.id).length}</span></button>`).join('')}
+      <button class="lv-fold ${liveFolder==='__none__'?'on':''}" data-fold="__none__">Unfiled</button>
+    </div>`:''}
+    <div class="lv-feed" id="lv-feed">${body||`<div class="empty">${
+      liveMedia?'No photos yet. Send one from Messages.':'Nothing on the record yet.'}</div>`}</div>
+  </div>`;
+}
+function liveScroll(){
+  const f=document.getElementById('lv-feed'); if(!f) return;
+  if(liveStick) f.scrollTop=f.scrollHeight;
+  f.onscroll=()=>{ liveStick = f.scrollHeight-f.scrollTop-f.clientHeight < 60; };
+}
+
+/* new messages travel between open windows, so the stream is actually live */
+let msgCh=null;
+try{ msgCh=new BroadcastChannel('radish-msg'); }catch(e){ msgCh=null; }
+function broadcastMsg(m){ try{ if(msgCh&&m) msgCh.postMessage(m); }catch(e){} }
+if(msgCh) msgCh.onmessage=e=>{
+  const m=e.data; if(!m||!m.id) return;
+  if(S.log.some(l=>l.id===m.id)) return;
+  S.log.push(m); save();
+  dingRecv();
+  if(S.dockOpen) renderDock();
+  if(view==='live'&&!openCard&&!activePerson){ render(); }
+  renderTabs();
+};
 
 function wireDockGestures(){
   const panel=$('#dock-panel'), grab=$('#dock-grab'), body=$('#im-body');
@@ -4381,18 +4836,36 @@ function wireDockGestures(){
   }
 }
 
+let pressedInside=false;
+/* capture phase, before anything can re-render the node out from under us */
+['mousedown','touchstart'].forEach(ev=>document.addEventListener(ev,e=>{
+  pressedInside = !!(e.target.closest&&e.target.closest(
+    '#dock, #tabs, .scrim, .dock-pill, [data-go], #media-in, #file-in'));
+},true));
+
 function initDock(){
   const inp=$('#dock-in');
-  const grow=()=>{inp.style.height='auto';inp.style.height=Math.min(110,inp.scrollHeight)+'px';};
+  const grow=()=>{inp.style.height='auto';
+    inp.style.height=Math.min(isPhone()?150:110,inp.scrollHeight)+'px';};
   const send=()=>{
     const v=inp.value; if(!v.trim())return;
     const tid=S.dockThread||'t-main';
-    postLog(v,S.me,tid); autoReply(tid); save();
-    inp.value=''; grow(); stopTyping(); renderDock();
+    broadcastMsg(postLog(v,S.me,tid)); autoReply(tid); save();
+    inp.value=''; grow(); stopTyping(); renderDock(); dingSend();
     setTimeout(()=>{ lastSentId=null; },400);
     if((view==='focus'||view==='board')&&!openCard&&!activePerson) render();
   };
-  inp.oninput=()=>{grow(); if(inp.value.trim()) announceTyping(); else stopTyping();};
+  const hint=$('#dock-hint');
+  let hintTimer=null;
+  const showHint=()=>{ if(!hint) return;
+    if(inp.value.trim()){ hint.classList.remove('on'); return; }
+    hint.classList.add('on');
+    clearTimeout(hintTimer); hintTimer=setTimeout(()=>hint.classList.remove('on'),3800); };
+  const hideHint=()=>{ if(hint){ clearTimeout(hintTimer); hint.classList.remove('on'); } };
+  inp.onfocus=showHint;
+  inp.onblur=hideHint;
+  inp.oninput=()=>{grow(); hideHint();
+    if(inp.value.trim()) announceTyping(); else stopTyping();};
   inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}};
   $('#dock-send').onclick=send;
   $('#dock-plus').onclick=()=>{ mediaTarget='message'; $('#media-in').click(); };
@@ -4405,9 +4878,11 @@ function initDock(){
       rowOpen=null; renderDock();
     }
     /* On desktop the panel floats, so clicking off it should put it away.
-       On a phone it is the whole screen and there is nothing to click off onto. */
-    if(S.dockOpen&&!isPhone()&&!modal&&
-       !e.target.closest('#dock, #tabs, .scrim, .dock-pill, [data-go]')){
+       On a phone it is the whole screen and there is nothing to click off onto.
+       This has to read where the press STARTED, recorded on mousedown below: by the
+       time a click bubbles up here the handler may already have re-rendered the list,
+       leaving e.target detached from the document and matching nothing. */
+    if(S.dockOpen&&!isPhone()&&!modal&&e.isTrusted&&!pressedInside){
       closeDock();
     }
   });
