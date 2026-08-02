@@ -125,6 +125,18 @@ tr:hover td{background:#fafafa;}
 .tag.m{border-color:var(--pink);color:var(--pink);}
 .overdue{color:var(--pink);}
 .empty{color:var(--dimmer);font-size:10px;padding:22px 0;}
+.lockscreen{position:fixed;inset:0;background:#fff;z-index:400;display:flex;align-items:center;justify-content:center;}
+.lockscreen[hidden]{display:none;}
+.lockbox{width:100%;max-width:260px;text-align:center;}
+.lockmark{font-size:19px;margin-bottom:6px;}
+.lockmsg{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);margin-bottom:26px;}
+.lockbox input{width:100%;border:none;border-bottom:.5px solid var(--ink);background:none;padding:8px 0;
+  text-align:center;font-size:15px;letter-spacing:.3em;margin-bottom:18px;}
+.lockbox .btn{width:100%;padding:10px;}
+.lockbio{display:block;width:100%;margin-top:14px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:underline;text-underline-offset:3px;}
+.lockbio[hidden]{display:none;}
+.lockerr{color:#000;margin-top:14px;min-height:14px;}
 .warnbar{position:sticky;top:0;z-index:95;background:#000;color:#fff;display:flex;gap:16px;
   align-items:center;justify-content:space-between;padding:9px 22px;font-size:10.5px;line-height:1.4;}
 .warnbar[hidden]{display:none;}
@@ -541,6 +553,39 @@ tr:hover td{background:#fafafa;}
   .cal-day{grid-template-columns:1fr;gap:5px;}
   .msg{grid-template-columns:60px 1fr;} .msg-acts{opacity:1;grid-column:2;}
 }
+.mfbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.mfsec{margin-bottom:26px;}
+.mfhead{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);padding-bottom:7px;border-bottom:.5px solid var(--ink);margin-bottom:4px;}
+.mfrow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:.5px solid var(--rule-soft);}
+.mfrow.sub{padding-left:22px;}
+.mfrow.done .mftxt{color:#5a5a5a;text-decoration:line-through;}
+.mftick{flex:none;padding:2px;}
+.mfdot{width:20px;height:20px;border-radius:50%;display:block;border:1px solid var(--ink);}
+.mfdot.small{width:11px;height:11px;background:#000;}
+.mfrow.done .mfdot{background:#000!important;box-shadow:none!important;}
+.mftxt{flex:1;font-size:13px;line-height:1.4;}
+.mfrow.sub .mftxt{font-size:12px;color:#3a3a3a;}
+.mfchip{flex:none;font-size:9px;letter-spacing:.08em;text-transform:uppercase;border:.5px solid var(--rule);
+  border-radius:11px;padding:3px 9px;color:var(--dim);}
+.mfchip.dark{background:#000;color:#fff;border-color:#000;}
+.mfmore{flex:none;font-size:15px;color:var(--dim);padding:2px 6px;letter-spacing:.06em;}
+.mfadd{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:12px 0 2px;
+  text-decoration:underline;text-underline-offset:3px;}
+.mgbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.mgwrap{border:.5px solid var(--rule);padding:10px;}
+.mghead{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);padding-bottom:8px;margin-bottom:8px;border-bottom:.5px solid var(--rule-soft);}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.mgt{position:relative;aspect-ratio:4/5;background:#f7f7f7;overflow:hidden;border:.5px solid var(--rule-soft);}
+.mgt.empty{background:none;border:.5px dashed var(--rule);display:flex;align-items:center;justify-content:center;}
+.mgt.empty span{font-size:10px;color:var(--dimmer);}
+.mgt.on{outline:2px solid var(--ink);outline-offset:-2px;}
+.mgt img,.mgt video{width:100%;height:100%;object-fit:cover;display:block;}
+.mgx{position:absolute;top:2px;right:3px;width:20px;height:20px;font-size:14px;line-height:1;color:#fff;
+  text-shadow:0 0 4px rgba(0,0,0,.85);}
+.mghint{margin-top:12px;line-height:1.5;}
+
 @media (max-width:700px){
   main{padding:14px 14px 70px;}
   .obj-head .big{font-size:17px;line-height:1.3;}
@@ -597,6 +642,7 @@ tr:hover td{background:#fafafa;}
       <button id="btn-export">Export</button>
       <button id="btn-import">Import</button>
       <button id="btn-restore">Restore</button>
+      <button id="btn-lock">Lock</button>
       <button id="btn-file">Save to a file</button>
       <button id="btn-openfile">Open a file</button>
       <button id="btn-print">Print</button>
@@ -608,6 +654,17 @@ tr:hover td{background:#fafafa;}
 <div class="bar" id="bar"></div>
 <main id="main"></main>
 <div id="printroot"></div>
+
+<div class="lockscreen" id="lockscreen" hidden>
+  <div class="lockbox">
+    <div class="lockmark">radish</div>
+    <div class="lockmsg" id="lockmsg">Locked</div>
+    <input type="password" id="lockcode" inputmode="numeric" autocomplete="current-password" placeholder="Passcode">
+    <button class="btn p" id="lockgo">Open</button>
+    <button class="lockbio" id="lockbio" hidden>Use Face ID</button>
+    <div class="lockerr tiny" id="lockerr"></div>
+  </div>
+</div>
 
 <div class="warnbar" id="warnbar" hidden>
   <span><b>This window cannot save.</b> Your browser is blocking storage for this file, so nothing here will survive a reload. Press Export to keep a copy, Import to bring one back.</span>
@@ -716,6 +773,91 @@ const Store={
     try{ localStorage.setItem(k,s); return true;}catch(e){ return false; }
   }
 };
+
+/* ================= LOCK ================= */
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
+const unb64=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+async function bioAvailable(){
+  try{
+    if(!window.PublicKeyCredential||!window.isSecureContext) return false;
+    return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+  }catch(e){ return false; }
+}
+async function bioEnroll(){
+  const cred=await navigator.credentials.create({publicKey:{
+    challenge:crypto.getRandomValues(new Uint8Array(32)),
+    rp:{name:'radish'},
+    user:{id:crypto.getRandomValues(new Uint8Array(16)),name:'radish',displayName:'radish'},
+    pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'preferred'},
+    timeout:60000, attestation:'none'}});
+  return b64(cred.rawId);
+}
+async function bioVerify(idB64){
+  await navigator.credentials.get({publicKey:{
+    challenge:crypto.getRandomValues(new Uint8Array(32)),
+    allowCredentials: idB64?[{type:'public-key',id:unb64(idB64)}]:[],
+    userVerification:'required', timeout:60000}});
+  return true;
+}
+function lockOpen(){ const l=document.getElementById('lockscreen'); if(l) l.hidden=true; }
+async function showLock(){
+  const l=document.getElementById('lockscreen'), err=document.getElementById('lockerr'),
+        inp=document.getElementById('lockcode'), bio=document.getElementById('lockbio');
+  l.hidden=false;
+  const tryCode=()=>{
+    if(inp.value && inp.value===(S.lock&&S.lock.code)){ lockOpen(); }
+    else { err.textContent='That is not it.'; inp.value=''; inp.focus(); }
+  };
+  document.getElementById('lockgo').onclick=tryCode;
+  inp.onkeydown=e=>{ if(e.key==='Enter') tryCode(); };
+  if(S.lock&&S.lock.credId&&await bioAvailable()){
+    bio.hidden=false;
+    const go=async()=>{ err.textContent='';
+      try{ await bioVerify(S.lock.credId); lockOpen(); }
+      catch(e){ err.textContent='Face ID did not match. Use the passcode.'; } };
+    bio.onclick=go; setTimeout(go,350);
+  }
+  setTimeout(()=>inp.focus(),80);
+}
+function lockModal(){
+  const on=!!(S.lock&&S.lock.on);
+  showModal(`<h3>Lock</h3>
+    <div class="f" style="font-size:11px;line-height:1.5;color:var(--dim)">
+      A passcode keeps this closed to anyone who opens the file casually. It is not real security, since the file
+      itself can be read in a text editor. Put it on a real web address and Face ID becomes available.</div>
+    <div class="f"><label>Passcode</label><input id="lk-code" value="${esc((S.lock&&S.lock.code)||'')}" placeholder="Leave empty for none"></div>
+    <div class="f"><label>Ask for it when opening</label><div class="member-list">
+      <button id="lk-on" class="${on?'on':''}">On</button><button id="lk-off" class="${on?'':'on'}">Off</button></div></div>
+    <div class="f"><label>Face ID or Touch ID</label>
+      <div class="member-list"><button id="lk-bio">${(S.lock&&S.lock.credId)?'Set up · replace':'Set up on this device'}</button>
+      ${(S.lock&&S.lock.credId)?'<button id="lk-biooff">Remove</button>':''}</div>
+      <div class="tiny dim" id="lk-bionote" style="margin-top:8px"></div></div>
+    <div class="modal-acts"><button class="btn" id="lk-cancel">Close</button><button class="btn p" id="lk-save">Save</button></div>`,
+  async sc=>{
+    let want=on;
+    sc.querySelector('#lk-on').onclick=()=>{want=true;sc.querySelector('#lk-on').classList.add('on');sc.querySelector('#lk-off').classList.remove('on');};
+    sc.querySelector('#lk-off').onclick=()=>{want=false;sc.querySelector('#lk-off').classList.add('on');sc.querySelector('#lk-on').classList.remove('on');};
+    const note=sc.querySelector('#lk-bionote');
+    note.textContent = await bioAvailable()
+      ? 'This device can do it.'
+      : (window.isSecureContext ? 'This device has no face or fingerprint reader set up.'
+                                : 'Not available on a file opened from your computer. Host the page and it turns on.');
+    sc.querySelector('#lk-bio').onclick=async()=>{
+      if(!await bioAvailable()){ alert('Face ID needs the page to be on a web address, with the device unlocked by face or fingerprint.'); return; }
+      try{ const id=await bioEnroll(); S.lock=Object.assign({},S.lock,{credId:id}); save(); note.textContent='Set up on this device.'; }
+      catch(e){ note.textContent='That did not complete.'; }
+    };
+    const off=sc.querySelector('#lk-biooff');
+    if(off) off.onclick=()=>{ S.lock=Object.assign({},S.lock,{credId:null}); save(); closeModal(); flashMsg('Face ID removed',1600); };
+    sc.querySelector('#lk-cancel').onclick=closeModal;
+    sc.querySelector('#lk-save').onclick=()=>{
+      const code=sc.querySelector('#lk-code').value.trim();
+      S.lock=Object.assign({},S.lock,{code,on:want&&!!(code||(S.lock&&S.lock.credId))});
+      save(); closeModal();
+      flashMsg(S.lock.on?'Locked when you open it':'Lock off',1800);};
+  });
+}
 
 /* ================= HELPERS ================= */
 const $=s=>document.querySelector(s);
@@ -1174,6 +1316,7 @@ async function boot(){
     }
   }catch(e){}
   paintFileBadge();
+  if(S.lock&&S.lock.on&&(S.lock.code||S.lock.credId)) showLock();
   if(!STORAGE_OK && !FH){
     const wb=$('#warnbar'); wb.hidden=false;
     $('#wb-exp').onclick=()=>$('#btn-export').click();
@@ -1472,7 +1615,39 @@ function undoLast(){
 }
 function flashMsg(t,ms){const f=$('#flash');f.textContent=t;f.classList.add('on');
   setTimeout(()=>{f.classList.remove('on');setTimeout(()=>f.textContent='Saved',300);},ms||2000);}
+function flowMobile(o){
+  const card=objCards(o).find(c=>c.group==='Flow');
+  if(!card) return '';
+  ensureSides(card);
+  const rails=card.rails;
+  const doneN=card.items.filter(i=>i.status==='done').length;
+  const body=rails.map(r=>{
+    const list=card.items.filter(i=>i.side===r.key);
+    const d=list.filter(i=>i.status==='done').length;
+    return `<div class="mfsec">
+      <div class="mfhead"><span>${esc(r.name)}</span><span class="mono">${d}/${list.length}</span></div>
+      ${list.map((it,idx)=>{
+        const cols=ownersOf(it.owner).map(personColor);
+        const nlinks=(it.files||[]).length+((it.link&&it.link.trim())?1:0);
+        const dot = it.dot
+          ? `<span class="mfdot small" style="background:${cols[0]||'#000'}"></span>`
+          : `<span class="mfdot" style="background:${cols[0]||'#e2e2e2'};${cols[1]?'box-shadow:inset -7px 0 0 '+cols[1]+';':''}"></span>`;
+        return `<div class="mfrow ${it.status==='done'?'done':''} ${it.dot?'sub':''}" data-mfrow="${it.id}">
+          <button class="mftick" data-mftick="${it.id}">${dot}</button>
+          <span class="mftxt">${esc(it.text)}</span>
+          ${nlinks?`<button class="mfchip" data-mflink="${it.id}">${nlinks} link${nlinks>1?'s':''}</button>`:''}
+          ${(it.comments&&it.comments.length)?`<button class="mfchip dark" data-mfcom="${it.id}">${it.comments.length}</button>`:''}
+          <button class="mfmore" data-mfmore="${it.id}">···</button>
+        </div>`;}).join('')||'<div class="empty" style="padding:10px 0">Nothing on this line.</div>'}
+      <button class="mfadd" data-mfadd="${card.id}:${r.key}">+ Step on ${esc(r.name)}</button>
+    </div>`;
+  }).join('');
+  return `<div class="mfbar"><span class="tiny dim">${doneN} of ${card.items.length} done</span>
+      <span class="tiny dim">Tap the dot to cross off, ··· for everything else</span></div>
+    ${body}`;
+}
 function flowHTML(o){
+  if(isMobile()) return flowMobile(o);
   const card=objCards(o).find(c=>c.group==='Flow');
   if(!card) return '';
   ensureSides(card);
@@ -2016,7 +2191,39 @@ function normBoard(){
   if(typeof S.board.gx!=='number'){S.board.gx=0;S.board.gy=0;}
   if(typeof S.board.gs!=='number') S.board.gs=0.58;
 }
+function isMobile(){ try{ return window.matchMedia('(max-width:700px)').matches; }catch(e){ return false; } }
+function viewGridMobile(){
+  normGrid();
+  const tiles=S.grid.tiles;
+  const filled=tiles.filter(p=>p&&p.assetId).length;
+  const sel=S.grid.swap;
+  const tileHTML=tiles.map((p,n)=>{
+    const a=p&&p.assetId?asset(p.assetId):null;
+    const on=sel===n;
+    if(!a) return `<div class="mgt empty ${on?'on':''}" data-mt="${n}"><span>${n+1}</span></div>`;
+    const media=a.type==='video'
+      ? `<video src="${a.src}" muted playsinline preload="metadata" style="object-position:${a.pos||'50% 50%'}"></video>`
+      : `<img src="${a.src}" alt="" style="object-position:${a.pos||'50% 50%'}">`;
+    return `<div class="mgt ${on?'on':''}" data-mt="${n}">${media}
+      <button class="mgx" data-mx="${n}">&times;</button></div>`;
+  }).join('');
+  return `<div class="detail-top"><div class="detail-title">Grid</div></div>
+  <div class="mgbar">
+    <button class="btn p" id="mg-add">+ Photos</button>
+    <button class="btn" id="mg-shift">Shift down</button>
+    <button class="btn" id="mg-more">+ 3</button>
+    <span class="tiny dim mono">${filled}/${tiles.length}</span>
+  </div>
+  <div class="mgwrap">
+    <div class="mghead"><span>${esc(S.grid.handle)}</span><span>${filled} posts</span></div>
+    <div class="mgrid">${tileHTML}</div>
+  </div>
+  <div class="tiny dim mghint">${sel!=null
+    ? 'Now tap where it should go. Tap it again to leave it where it is.'
+    : 'Tap a square, then tap another to swap them. The × takes one out.'}</div>`;
+}
 function viewGrid(){
+  if(isMobile()) return viewGridMobile();
   normGrid(); normBoard();
   const tiles=S.grid.tiles;
   const posts=tiles.filter(Boolean);
@@ -2096,7 +2303,31 @@ function boardAdd(assetId,x,y,w,h,kind){
   if(kind==='note') it.text='';
   S.board.items.push(it); return it;
 }
+function wireGridMobile(){
+  const add=$('#mg-add'); if(!add) return;
+  add.onclick=()=>{ S.grid.fillMode=true; $('#media-in').click(); };
+  $('#mg-shift').onclick=()=>{
+    const t=S.grid.tiles, last=t[t.length-1];
+    for(let i=t.length-1;i>0;i--) t[i]=t[i-1];
+    t[0]=null; S.grid.swap=null; save(); render();};
+  $('#mg-more').onclick=()=>{S.grid.tiles.push(null,null,null);save();render();};
+  document.querySelectorAll('[data-mt]').forEach(el=>{
+    el.onclick=e=>{
+      if(e.target.closest('.mgx')) return;
+      const n=+el.dataset.mt;
+      if(S.grid.swap==null){ S.grid.swap=n; }
+      else if(S.grid.swap===n){ S.grid.swap=null; }
+      else { const t=S.grid.tiles, a=S.grid.swap;
+        const tmp=t[n]; t[n]=t[a]; t[a]=tmp; S.grid.swap=null; }
+      save(); render();};
+  });
+  document.querySelectorAll('[data-mx]').forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); snap('post');
+    const n=+b.dataset.mx; S.grid.tiles[n]=null; S.grid.swap=null;
+    save(); render(); flashMsg('Taken out. Cmd Z to undo',1800);});
+}
 function wireGrid(){
+  if(isMobile()){ wireGridMobile(); return; }
   const wrap=$('#bwrap'), stage=$('#bstage');
   if(!wrap||!stage) return;
   normGrid(); normBoard();
@@ -2558,6 +2789,27 @@ function wire(){
       applyChip(g.getAttribute('data-drop'), n==='clear'?'':n);});
     g.addEventListener('click',e=>{ if(chipDrag!==null){e.stopPropagation();applyChip(g.getAttribute('data-drop'),chipDrag);chipDrag=null;} },true);
   });
+  if(isMobile()){
+    const findIt=id=>{ for(const c of S.cards){ const it=(c.items||[]).find(x=>x.id===id); if(it) return {c,it}; } return {}; };
+    document.querySelectorAll('[data-mftick]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const {c,it}=findIt(b.getAttribute('data-mftick')); if(!it)return;
+      it.status=it.status==='done'?'todo':'done'; save(); render();});
+    document.querySelectorAll('[data-mfmore]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const {c,it}=findIt(b.getAttribute('data-mfmore')); if(it) stepSheet(c,it);});
+    document.querySelectorAll('[data-mfrow]').forEach(el=>el.onclick=e=>{
+      if(e.target.closest('button'))return;
+      const {c,it}=findIt(el.getAttribute('data-mfrow')); if(it) stepSheet(c,it);});
+    document.querySelectorAll('[data-mflink]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const {c,it}=findIt(b.getAttribute('data-mflink')); if(it) filesModal(c,it);});
+    document.querySelectorAll('[data-mfcom]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const {c,it}=findIt(b.getAttribute('data-mfcom')); if(it) commentModal(c,it);});
+    document.querySelectorAll('[data-mfadd]').forEach(b=>b.onclick=()=>{
+      const [cid,key]=b.getAttribute('data-mfadd').split(':');
+      const c=S.cards.find(x=>x.id===cid); if(!c)return;
+      const t=prompt('What is the step?'); if(!t)return;
+      c.items.push(P(t.trim(),'',{side:key})); save(); render();});
+    return;
+  }
   wireFlowDrag();
   (function(){
     const svg=document.querySelector('.flowwrap svg'); if(!svg) return;
@@ -3413,6 +3665,64 @@ function filesModal(card,it){
   };
   draw();
 }
+function stepSheet(card,it){
+  const rails=card.rails||[];
+  const list=card.items.filter(x=>x.side===it.side);
+  const idx=list.findIndex(x=>x.id===it.id);
+  showModal(`<h3>Step</h3>
+    <div class="f"><input id="ss-t" value="${esc(it.text)}"></div>
+    <div class="f"><label>Who</label><div class="member-list" id="ss-own">
+      ${[...S.people.map(p=>({name:p.name,color:p.color||DEFCOL})),{name:THIRD,color:THIRDCOL}].map(p=>
+        `<button data-n="${esc(p.name)}" class="${ownersOf(it.owner).some(x=>x.toLowerCase()===p.name.toLowerCase())?'on':''}">
+          <i class="sw" style="background:${p.color};margin-right:6px"></i>${esc(p.name)}</button>`).join('')}
+    </div></div>
+    <div class="f"><label>Line</label><div class="member-list" id="ss-rail">
+      ${rails.map(r=>`<button data-r="${r.key}" class="${it.side===r.key?'on':''}">${esc(r.name)}</button>`).join('')}
+    </div></div>
+    <div class="f"><label>Order</label><div class="member-list">
+      <button id="ss-up" ${idx<=0?'disabled':''}>Move up</button>
+      <button id="ss-down" ${idx>=list.length-1?'disabled':''}>Move down</button>
+    </div></div>
+    <div class="f"><label>More</label><div class="member-list">
+      <button id="ss-links">Links (${(it.files||[]).length+((it.link&&it.link.trim())?1:0)})</button>
+      <button id="ss-com">Comments (${(it.comments||[]).length})</button>
+      <button id="ss-sub">${it.dot?'Make it a full step':'Make it a note'}</button>
+      <button id="ss-hide">Tuck away</button>
+      <button id="ss-del">Delete</button>
+    </div></div>
+    <div class="modal-acts"><button class="btn" id="ss-cancel">Close</button><button class="btn p" id="ss-save">Save</button></div>`,
+  sc=>{
+    let picked=new Set(ownersOf(it.owner)), rail=it.side;
+    sc.querySelectorAll('#ss-own button').forEach(b=>b.onclick=()=>{
+      const n=b.dataset.n, hit=[...picked].find(x=>x.toLowerCase()===n.toLowerCase());
+      if(hit)picked.delete(hit); else picked.add(n); b.classList.toggle('on');});
+    sc.querySelectorAll('#ss-rail button').forEach(b=>b.onclick=()=>{
+      rail=b.dataset.r; sc.querySelectorAll('#ss-rail button').forEach(x=>x.classList.toggle('on',x.dataset.r===rail));});
+    const move=dir=>{
+      const all=card.items, here=all.findIndex(x=>x.id===it.id);
+      const sameRail=[]; all.forEach((x,i)=>{ if(x.side===it.side) sameRail.push(i); });
+      const at=sameRail.indexOf(here), to=sameRail[at+dir];
+      if(to===undefined) return;
+      const tmp=all[here]; all[here]=all[to]; all[to]=tmp;
+      delete all[here].y; delete all[to].y;
+      save(); closeModal(); render();};
+    sc.querySelector('#ss-up').onclick=()=>move(-1);
+    sc.querySelector('#ss-down').onclick=()=>move(1);
+    sc.querySelector('#ss-links').onclick=()=>{closeModal();filesModal(card,it);};
+    sc.querySelector('#ss-com').onclick=()=>{closeModal();commentModal(card,it);};
+    sc.querySelector('#ss-sub').onclick=()=>{it.dot=!it.dot;save();closeModal();render();};
+    sc.querySelector('#ss-hide').onclick=()=>{HIDDEN.add(it.id);save();closeModal();render();};
+    sc.querySelector('#ss-del').onclick=()=>{ if(!confirm('Delete this step?'))return;
+      snap('step'); card.items=card.items.filter(x=>x.id!==it.id); save(); closeModal(); render();
+      flashMsg('Deleted. Cmd Z to undo',2000);};
+    sc.querySelector('#ss-cancel').onclick=closeModal;
+    sc.querySelector('#ss-save').onclick=()=>{
+      it.text=sc.querySelector('#ss-t').value.trim()||it.text;
+      it.owner=[...picked].join(', ');
+      if(rail!==it.side){ it.side=rail; delete it.y; }
+      save(); closeModal(); render();};
+  });
+}
 function commentModal(card,it){
   const draw=()=>{
     const list=(it.comments||[]).map(c=>`<div class="cmt">
@@ -3515,6 +3825,7 @@ $('#btn-export').onclick=()=>{
   a.download='radish-ops-'+todayISO()+'.json';a.click();URL.revokeObjectURL(a.href);};
 $('#btn-import').onclick=()=>$('#file-in').click();
 $('#btn-restore').onclick=()=>restoreModal(false);
+$('#btn-lock').onclick=lockModal;
 $('#btn-file').onclick=connectFile;
 $('#btn-openfile').onclick=openFile;
 $('#file-in').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
@@ -3669,7 +3980,8 @@ $('#file-in').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new Fi
 $('#btn-print').onclick=()=>{if(view==='log'&&!openCard&&!activePerson)printDay(todayISO());else window.print();};
 $('#media-in').onchange=e=>{
   if(e.target.files.length){
-    if(view==='grid'){ normBoard(); const B=S.board;
+    if(view==='grid'&&S.grid&&S.grid.fillMode){ S.grid.fillMode=false; addMedia(e.target.files,'fill'); }
+    else if(view==='grid'){ normBoard(); const B=S.board;
       const w=document.querySelector('#bwrap');
       const r=w?w.getBoundingClientRect():{width:900,height:600};
       addMedia(e.target.files,null,{x:(r.width/2-B.pan.x)/B.zoom,y:(r.height/2-B.pan.y)/B.zoom});
@@ -3706,6 +4018,11 @@ document.addEventListener('keydown',e=>{
 document.addEventListener('dragover',e=>{if(view!=='grid')e.preventDefault();});
 document.addEventListener('drop',e=>{if(view!=='grid')e.preventDefault();});
 
+let __wasMobile=isMobile();
+window.addEventListener('resize',()=>{
+  const now=isMobile();
+  if(now!==__wasMobile){ __wasMobile=now; if(view==='grid') render(); }
+});
 boot();
 </script>
 </body>
