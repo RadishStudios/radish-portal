@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>radish</title>
+
+
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="favicon.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="radish">
 <style>
 :root{
   --ink:#000; --pink:#000; --paper:#fff;
@@ -34,11 +43,18 @@ nav button{font-size:10px;padding-bottom:8px;border-bottom:2px solid transparent
 nav button.on{color:var(--ink);border-bottom-color:var(--pink);}
 nav button:hover{color:var(--ink);}
 
-.bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:9px 22px;border-bottom:.5px solid var(--rule-soft);font-size:10px;}
-.bar input[type=search],.bar input[type=text],.bar select{border:none;border-bottom:.5px solid var(--rule);background:none;padding:3px 0;min-width:150px;}
+.bar{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding:11px 22px;border-bottom:.5px solid var(--rule-soft);font-size:10px;}
+.bar input[type=search],.bar input[type=text]{border:none;border-bottom:.5px solid var(--rule-soft);background:none;padding:4px 0;min-width:180px;flex:1;max-width:320px;}
 .bar input::placeholder{color:var(--dimmer);}
-.chip{font-size:9px;border:.5px solid var(--rule);padding:3px 8px;color:var(--dim);}
-.chip.on{border-color:var(--pink);color:var(--pink);}
+/* filters read as words, not as boxes */
+.bar select.plain{border:none;background:none;padding:4px 0;min-width:0;color:var(--dim);
+  font-size:10px;-webkit-appearance:none;appearance:none;padding-right:12px;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-size:4px 4px,4px 4px;background-position:right 4px center,right 0 center;background-repeat:no-repeat;}
+.bar select.plain:hover{color:var(--ink);}
+.addcard{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--ink);padding-bottom:2px;}
+.addcard:hover{color:var(--pink);border-color:var(--pink);}
 main{padding:26px 22px 60px;}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:1px;background:var(--rule-soft);border:.5px solid var(--rule-soft);}
@@ -61,6 +77,51 @@ main{padding:26px 22px 60px;}
 .detail-title{font-size:15px;font-weight:400;}
 .back{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
 .back:hover{color:var(--pink);}
+/* ================= TODAY ================= */
+/* Built to the rule of the Messages list: one line that matters, one line that
+   doesn't, and air. Colour identifies a person, it does not decorate a section. */
+.tdy{max-width:720px;}
+.tdy-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;padding-bottom:4px;}
+.tdy-day{font-size:15px;letter-spacing:.01em;}
+.tdy-sum{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+.tdy-sum b{color:#FF10F0;font-weight:400;}
+
+.tdy-people{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0 4px;}
+.tdy-who{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--dim);
+  padding:6px 0;border-bottom:1.5px solid transparent;}
+.tdy-who .sw{width:7px;height:7px;border-radius:50%;background:var(--pc);flex:none;}
+.tdy-who b{font-weight:400;font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.tdy-who.on{color:var(--ink);border-bottom-color:var(--pc,var(--ink));}
+.tdy-who.on b{color:var(--ink);}
+
+.tdy-sec{margin-top:34px;}
+.tdy-lab{display:flex;align-items:baseline;gap:8px;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:2px;}
+.tdy-lab b{font-weight:400;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.tdy-lab.hot{color:#FF10F0;}
+
+.tdy-rows{border-top:.5px solid var(--rule-soft);}
+.tdy-row{display:flex;align-items:center;gap:14px;padding:15px 2px;
+  border-bottom:.5px solid var(--rule-soft);}
+.tdy-row .check{margin-top:0;width:13px;height:13px;}
+.tdy-main{flex:1;min-width:0;}
+.tdy-t{font-size:12.5px;line-height:1.35;}
+.tdy-c{font-size:10px;color:var(--dimmer);margin-top:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tdy-row.late .tdy-c{color:#FF10F0;}
+.tdy-av{width:26px;height:26px;border-radius:50%;background:var(--pc,#ececec);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:8.5px;
+  letter-spacing:.03em;color:var(--ink);}
+.tdy-open{margin:14px 0 -8px;}
+.tdy-open button{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+.tdy-open button:hover{color:var(--ink);}
+
+  .tdy-day{font-size:13px;}
+  .tdy-people{gap:13px;}
+  .tdy-row{padding:14px 2px;gap:12px;}
+
+
 .rows{border-top:.5px solid var(--rule-soft);max-width:1000px;}
 .row{display:grid;grid-template-columns:16px 1fr 92px 78px 70px 20px;gap:10px;align-items:start;padding:7px 2px;border-bottom:.5px solid var(--rule-soft);}
 .row:hover{background:#fafafa;}
@@ -117,10 +178,6 @@ tr:hover td{background:#fafafa;}
 .f textarea{resize:vertical;min-height:52px;border:.5px solid var(--rule);padding:7px;}
 .modal-acts{display:flex;gap:9px;justify-content:flex-end;margin-top:20px;}
 
-.cal-day{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:11px 0;border-bottom:.5px solid var(--rule-soft);max-width:1000px;}
-.cal-date{font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);padding-top:1px;}
-.cal-date.today{color:var(--pink);}
-.cal-item{display:flex;gap:9px;align-items:baseline;margin-bottom:3px;}
 .tag{font-size:8px;letter-spacing:.11em;text-transform:uppercase;border:.5px solid var(--rule);padding:1px 5px;color:var(--dim);flex:none;}
 .tag.m{border-color:var(--pink);color:var(--pink);}
 .overdue{color:var(--pink);}
@@ -146,20 +203,7 @@ tr:hover td{background:#fafafa;}
 .saveflash{position:fixed;bottom:18px;right:20px;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--pink);opacity:0;transition:opacity .25s;z-index:120;}
 .saveflash.on{opacity:1;}
 
-.log-wrap{max-width:840px;}
-.compose{position:sticky;top:98px;background:var(--paper);z-index:40;border:.5px solid var(--ink);padding:10px 12px;margin-bottom:22px;}
-.compose-top{display:flex;gap:10px;align-items:center;margin-bottom:7px;}
-.compose-top select{border:none;border-bottom:.5px solid var(--rule);background:none;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);padding:2px 0;}
-.compose textarea{width:100%;border:none;background:none;resize:none;min-height:34px;line-height:1.5;padding:0;overflow:hidden;}
-.compose textarea::placeholder{color:var(--dimmer);}
-.compose-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px;padding-top:7px;border-top:.5px solid var(--rule-soft);}
 .day{margin-bottom:26px;}
-.day-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;border-bottom:.5px solid var(--ink);padding-bottom:6px;margin-bottom:10px;}
-.day-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;}
-.day-title.today{color:var(--pink);}
-.day-acts{display:flex;gap:12px;}
-.day-acts button{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);}
-.day-acts button:hover{color:var(--pink);}
 .msg{display:grid;grid-template-columns:74px 1fr auto;gap:12px;padding:5px 0;align-items:baseline;}
 .msg:hover{background:#fafafa;}
 .msg:hover .msg-acts{opacity:1;}
@@ -167,11 +211,10 @@ tr:hover td{background:#fafafa;}
 .msg-body{white-space:pre-wrap;word-break:break-word;}
 .msg-body .mention{color:var(--pink);}
 .msg-body .hash{border-bottom:.5px solid var(--rule);}
-.msg-acts{opacity:0;display:flex;gap:9px;align-items:baseline;}
-.msg-acts button{font-size:9px;color:var(--dimmer);letter-spacing:.1em;text-transform:uppercase;}
-.msg-acts button:hover{color:var(--pink);}
-.msg-time{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
 .msg.note .msg-body{border-left:2px solid var(--pink);padding-left:9px;}
+.msg-who .wsw{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--pc,var(--rule));margin-right:6px;vertical-align:middle;}
+.msg.isflag .msg-who{text-decoration:underline;text-underline-offset:3px;}
 
 .bwrap{position:relative;height:calc(100vh - 230px);min-height:560px;overflow:hidden;
   border:.5px solid var(--rule-soft);background:#fff;cursor:default;}
@@ -214,7 +257,7 @@ tr:hover td{background:#fafafa;}
 .btools button{font-size:12px;line-height:1;padding:2px 5px;}
 .btools button:hover{background:#000;color:#fff;}
 .scrollnote{display:none;}
-@media(max-width:700px){.scrollnote{display:block;}}
+.scrollnote{display:block;}
 .bhint{position:absolute;left:14px;bottom:12px;z-index:5;color:var(--dimmer);background:#fff;padding:2px 0;
   max-width:66%;line-height:1.45;}
 .insp{position:absolute;right:0;top:0;bottom:0;width:330px;background:#fff;border-left:.5px solid var(--ink);
@@ -266,7 +309,7 @@ tr:hover td{background:#fafafa;}
   text-decoration:underline;text-underline-offset:2px;}
 .home-sub button:hover{color:var(--dim);}
 .home-sub .badge2{font-size:9px;vertical-align:super;margin-left:3px;}
-@media(max-width:640px){.home{padding:32px 4px 28px;} .home-foot{margin-top:44px;}}
+.home{padding:32px 4px 28px;} .home-foot{margin-top:44px;}
 
 /* ---------- OBJECTIVE PAGE ---------- */
 .week-head{display:flex;justify-content:space-between;align-items:baseline;max-width:1000px;
@@ -286,7 +329,7 @@ tr:hover td{background:#fafafa;}
 .outcomes{max-width:660px;margin-bottom:4px;}
 .outc{font-size:13.5px;font-weight:400;padding:8px 0 8px 16px;position:relative;}
 .outc:before{content:'';position:absolute;left:2px;top:1.05em;width:4px;height:4px;background:var(--ink);}
-@media(max-width:640px){.outc{font-size:14px;}}
+.outc{font-size:14px;}
 .funnel{list-style:none;margin:0 0 4px;padding:0;max-width:1000px;}
 .funnel li{position:relative;padding:1px 0 1px 18px;font-size:12.5px;line-height:1.5;}
 .funnel li:before{content:"";position:absolute;left:4px;top:.7em;width:5px;height:5px;
@@ -341,8 +384,8 @@ tr:hover td{background:#fafafa;}
 
 /* ---------- PERSON COLUMNS ---------- */
 .pcols{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 34px;max-width:1000px;}
-@media(max-width:820px){.pcols{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:560px){.pcols{grid-template-columns:1fr;}}
+.pcols{grid-template-columns:repeat(2,1fr);}
+.pcols{grid-template-columns:1fr;}
 .pcol h4{font-size:9px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;
   margin:0 0 9px;padding-bottom:6px;border-bottom:.5px solid var(--ink);display:flex;align-items:center;gap:7px;}
 .sw{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none;opacity:.6;}
@@ -388,8 +431,8 @@ tr:hover td{background:#fafafa;}
 
 /* ---------- THREE COLUMN WORK ---------- */
 .cols{column-count:3;column-gap:38px;column-rule:.5px solid var(--rule-soft);max-width:1100px;margin-top:2px;}
-@media(max-width:1000px){.cols{column-count:2;}}
-@media(max-width:640px){.cols{column-count:1;column-rule:none;}}
+.cols{column-count:2;}
+.cols{column-count:1;column-rule:none;}
 .colsec{break-inside:avoid;page-break-inside:avoid;margin:0 0 22px;}
 .colsec h4{font-size:10px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;
   margin:0 0 8px;padding-bottom:5px;border-bottom:.5px solid var(--ink);}
@@ -438,6 +481,68 @@ tr:hover td{background:#fafafa;}
 .fitem .nolink{color:var(--dimmer);}
 
 /* ---------- FLOATING MESSENGER ---------- */
+/* ================= APP SHELL ================= */
+/* Bottom tab bar. Appears on narrow screens; desktop keeps the header nav. */
+.tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:100;
+  background:var(--paper);border-top:1px solid var(--ink);
+  padding-bottom:env(safe-area-inset-bottom);}
+.tb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:9px 0 7px;color:var(--dimmer);min-height:50px;}
+.tb-i{position:relative;display:block;width:20px;height:20px;}
+.tb-i svg{width:20px;height:20px;display:block;}
+.tb-l{font-size:8px;letter-spacing:.1em;text-transform:uppercase;}
+.tb.on{color:var(--ink);}
+.tb.on .tb-l{color:var(--ink);}
+.tb-badge{position:absolute;top:-4px;right:-7px;background:var(--pink);color:#fff;
+  border-radius:9px;padding:0 4px;font-size:8px;line-height:13px;min-width:13px;text-align:center;}
+.nav-quiet{opacity:.55;}
+
+/* More sheet */
+.sheet-h{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  padding-bottom:6px;border-bottom:.5px solid var(--ink);margin:2px 0 2px;}
+.sheet-rows{display:flex;flex-direction:column;margin-bottom:20px;}
+.sheet-rows button{text-align:left;padding:11px 2px;font-size:11px;
+  border-bottom:.5px solid var(--rule-soft);}
+.sheet-rows button:hover{color:var(--pink);}
+.sheet-rows.quiet button{font-size:10px;color:var(--dim);}
+.sheet-rows.quiet button:hover{color:var(--ink);}
+
+/* Quiet figures on the home screen */
+.home-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:30px;padding-top:12px;
+  border-top:.5px solid var(--rule-soft);font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--dim);}
+.home-stats b{font-weight:400;font-size:12px;letter-spacing:-.01em;color:var(--ink);
+  font-variant-numeric:tabular-nums;margin-right:4px;}
+.home-sub button.quiet{color:var(--dimmer);}
+
+
+  .tabs{display:flex;}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom));}
+  .dock-pill{display:none!important;}  /* Messages is a tab down there now */
+  .mast-right{display:none;}           /* lives in More now */
+  header nav{display:flex;}
+  .home{padding-bottom:20px;}
+
+@media print{ .tabs{display:none!important;} }
+
+/* Touch feel */
+html{-webkit-text-size-adjust:100%;}
+body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:contain;}
+main{-webkit-overflow-scrolling:touch;}
+
+  nav button{padding:10px 0 9px;font-size:11px;}
+  .home-sub button{padding:7px 0;font-size:10.5px;}
+
+
+/* installed to a home screen: clear the notch and the home indicator */
+@media (display-mode:standalone){
+  header{padding-top:calc(14px + env(safe-area-inset-top));}
+  main,.bar,header{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right));}
+}
+@media (display-mode:standalone) and (min-width:821px){
+  body{padding-bottom:calc(80px + env(safe-area-inset-bottom));}
+  .dock{bottom:calc(20px + env(safe-area-inset-bottom));}
+}
 .dock{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
 .dock-pill{border:.5px solid var(--ink);background:var(--paper);padding:8px 14px;font-size:9px;letter-spacing:.14em;
   text-transform:uppercase;display:flex;gap:9px;align-items:center;box-shadow:0 1px 0 rgba(0,0,0,.06);}
@@ -453,6 +558,8 @@ tr:hover td{background:#fafafa;}
 .im-head .sub{font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer);}
 .im-head button{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);flex:none;}
 .im-head button:hover{color:var(--pink);}
+#im-close{border:.5px solid var(--rule);padding:4px 9px;letter-spacing:.12em;}
+#im-close:hover{border-color:var(--pink);}
 .im-back{font-size:14px!important;line-height:1;color:var(--pink)!important;}
 .im-head .who-sel{border:none;background:none;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);padding:0;max-width:74px;}
 
@@ -465,12 +572,18 @@ tr:hover td{background:#fafafa;}
 .trow{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:9px 11px;
   border-bottom:.5px solid var(--rule-soft);cursor:pointer;text-align:left;width:100%;}
 .trow:hover{background:#fafafa;}
-.av{width:32px;height:32px;border-radius:50%;background:#ececec;display:flex;align-items:center;justify-content:center;
-  font-size:9px;letter-spacing:.04em;color:var(--dim);flex:none;position:relative;}
+.av{width:32px;height:32px;border-radius:50%;background:var(--pc,#ececec);display:flex;align-items:center;justify-content:center;
+  font-size:9px;letter-spacing:.04em;color:var(--ink);flex:none;position:relative;}
 .av.grp{background:none;}
-.av.grp i{position:absolute;width:21px;height:21px;border-radius:50%;background:#ececec;border:1.5px solid var(--paper);
-  display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--dim);font-style:normal;}
-.av.grp i:nth-child(1){left:0;top:0;} .av.grp i:nth-child(2){right:0;bottom:0;}
+.av.grp i{position:absolute;width:21px;height:21px;border-radius:50%;background:var(--pc,#ececec);border:1.5px solid var(--paper);
+  display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--ink);font-style:normal;}
+.av.grp.n2 i:nth-child(1){left:0;top:0;} .av.grp.n2 i:nth-child(2){right:0;bottom:0;}
+/* three people, three colours, all visible */
+.av.grp.n3 i{width:18px;height:18px;font-size:7px;}
+.av.grp.n3 i:nth-child(1){left:0;top:-1px;}
+.av.grp.n3 i:nth-child(2){right:0;top:2px;}
+.av.grp.n3 i:nth-child(3){left:7px;bottom:-1px;}
+.av.grp.n1 i:nth-child(1){left:5px;top:5px;}
 .trow .tname{font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .trow .tprev{font-size:10px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:1px;}
 .trow.unread .tname{font-weight:600;} .trow.unread .tprev{color:var(--ink);}
@@ -480,34 +593,177 @@ tr:hover td{background:#fafafa;}
 
 .im-thread{padding:12px 11px 6px;display:flex;flex-direction:column;}
 .daydiv{text-align:center;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);margin:12px 0 9px;}
-.bwrap{display:flex;flex-direction:column;max-width:78%;margin-bottom:2px;position:relative;}
-.bwrap.gapafter{margin-bottom:8px;}
-.bwrap.me{align-self:flex-end;align-items:flex-end;}
-.bwrap.them{align-self:flex-start;align-items:flex-start;}
+.mwrap{display:flex;flex-direction:column;max-width:78%;margin-bottom:2px;position:relative;
+  height:auto;min-height:0;overflow:visible;border:none;background:none;}
+.mwrap.gapafter{margin-bottom:8px;}
+.mwrap.me{align-self:flex-end;align-items:flex-end;}
+.mwrap.them{align-self:flex-start;align-items:flex-start;}
 .bname{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);margin:6px 10px 2px;}
 .b{padding:7px 12px;border-radius:17px;line-height:1.38;white-space:pre-wrap;word-break:break-word;font-size:11.5px;
   position:relative;cursor:default;}
-.bwrap.me .b{background:var(--pink);color:#fff;}
-.bwrap.them .b{background:#eceded;color:var(--ink);}
-.bwrap.me.tail .b{border-bottom-right-radius:5px;}
-.bwrap.them.tail .b{border-bottom-left-radius:5px;}
+/* Who said it is the bubble colour. What it is, is the label above it. */
+.mwrap .b{background:color-mix(in srgb, var(--pc) 16%, #fff);color:var(--ink);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--pc) 55%, #fff);}
+.mwrap.me .b{background:color-mix(in srgb, var(--pc) 26%, #fff);
+  box-shadow:inset 0 0 0 1px var(--pc);}
+@supports not (color: color-mix(in srgb, red 50%, blue)){
+  .mwrap .b{background:#f4f4f4;box-shadow:inset 0 0 0 1px var(--pc);}
+  .mwrap.me .b{background:#ececec;}
+}
+.mwrap .bname{color:var(--pc);}
+.mwrap.me.tail .b{border-bottom-right-radius:5px;}
+.mwrap.them.tail .b{border-bottom-left-radius:5px;}
 .b .mention{font-weight:600;text-decoration:underline;}
 .b .hash{border-bottom:1px solid currentColor;opacity:.75;}
-.bwrap.sys{align-self:center;max-width:92%;margin:5px 0 9px;}
-.bwrap.sys .b{background:none;border:.5px solid var(--rule);color:var(--dim);border-radius:0;font-size:9px;
+.mwrap.sys{align-self:center;max-width:92%;margin:5px 0 9px;}
+.mwrap.sys .b{background:none;box-shadow:none;border:.5px solid var(--rule);color:var(--dim);border-radius:0;font-size:9px;
   letter-spacing:.06em;padding:4px 9px;}
 
+/* ---- pinned ---- */
+.pinbar{border-bottom:.5px solid var(--rule-soft);padding:8px 11px 9px;background:#fcfcfc;}
+.pinbar-h{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;}
+.pinrow{display:flex;align-items:flex-start;gap:8px;padding:4px 0;
+  border-left:3px solid var(--pc);padding-left:8px;margin-bottom:3px;}
+.pintxt{flex:1;font-size:10.5px;line-height:1.35;}
+.pinx{font-size:12px;color:var(--dimmer);line-height:1;padding:0 2px;}
+.pinx:hover{color:var(--ink);}
+.tdy-row.chat{border-left:3px solid var(--pc);padding-left:8px;}
+.tdy-row.chat .tdy-t{font-size:11px;}
+.msg.done .msg-body{text-decoration:line-through;color:var(--dimmer);}
+
+/* ---- message tags ---- */
+.mfilter{position:sticky;top:0;z-index:3;display:flex;gap:5px;flex-wrap:wrap;
+  background:var(--paper);padding:8px 11px;border-bottom:.5px solid var(--rule-soft);}
+.mfc{font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);
+  border:.5px solid var(--rule-soft);padding:3px 7px;}
+.mfc.on{color:var(--ink);border-color:var(--ink);}
+.mfc.on[style*="--tc"]{border-color:var(--tc);box-shadow:inset 0 -2px 0 var(--tc);}
+.mtag{font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:var(--tc,var(--dim));
+  margin:0 10px 2px;display:flex;align-items:center;gap:4px;}
+.mtag .fl{font-style:normal;color:var(--ink);}
+.mwrap.tagged .b{border-bottom:3px solid var(--tc);}
+.mwrap.flagged .b{border-top:3px solid var(--ink);}
+.mtag{color:var(--ink);}
+.mtag:before{content:'';width:7px;height:7px;background:var(--tc,var(--ink));flex:none;}
+.tagrow{display:flex;gap:3px;padding:5px 4px 1px;border-top:.5px solid var(--rule-soft);margin-top:4px;}
+.tagrow.who{align-items:center;gap:5px;}
+.whol{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);margin-right:2px;}
+.wav{width:22px;height:22px;border-radius:50%;background:var(--pc,#ececec);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--ink);opacity:.42;}
+.wav.on{opacity:1;box-shadow:0 0 0 1.5px var(--ink);}
+.wav.none{background:none;border:.5px solid var(--rule);color:var(--dimmer);}
+.forwho{font-weight:400;color:var(--pc);margin-left:6px;}
+.forwho:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;
+  background:var(--pc);margin-right:4px;vertical-align:middle;}
+.tgb{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  border:.5px solid var(--rule-soft);padding:3px 6px;white-space:nowrap;}
+.tgb:hover{color:var(--ink);}
+.tgb.on{color:var(--ink);border-color:var(--tc,var(--ink));box-shadow:inset 0 -2px 0 var(--tc,var(--ink));}
+.tb-r1{display:flex;align-items:center;gap:2px;}
+
+/* ---- new message: To line ---- */
+.tofield{display:flex;flex-wrap:wrap;gap:5px;align-items:center;
+  border-bottom:.5px solid var(--rule);padding:4px 0 6px;}
+.topills{display:flex;flex-wrap:wrap;gap:5px;}
+.topill{display:flex;align-items:center;gap:5px;border:.5px solid var(--pc);
+  border-radius:12px;padding:3px 8px;font-size:10px;background:none;}
+.topill i{font-style:normal;color:var(--dimmer);}
+.topill:hover i{color:var(--ink);}
+.tofield input{flex:1;min-width:110px;border:none;background:none;padding:3px 0;font-size:11px;}
+.tosug{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;}
+.tosug button{display:flex;align-items:center;gap:6px;border:.5px solid var(--rule-soft);
+  padding:5px 9px;font-size:10px;color:var(--dim);}
+.tosug button:hover{border-color:var(--ink);color:var(--ink);}
+.tosug .sw{width:7px;height:7px;border-radius:50%;flex:none;}
+
+/* ---- send feel ---- */
+/* The bubble arrives with a little push, the way iMessage does it. */
+@keyframes bubblein{
+  0%{transform:translateY(9px) scale(.82);opacity:0;}
+  55%{transform:translateY(0) scale(1.03);opacity:1;}
+  100%{transform:translateY(0) scale(1);}
+}
+.b.justsent{animation:bubblein .28s cubic-bezier(.2,1.25,.4,1) both;transform-origin:100% 100%;}
+.mwrap.them .b.justsent{transform-origin:0 100%;}
+.dock-send{transition:transform .12s ease, background .15s ease;}
+.dock-send:active{transform:scale(.86);}
+.dock-plus{width:27px;height:27px;border-radius:50%;border:.5px solid var(--rule);
+  font-size:16px;line-height:1;color:var(--dim);display:flex;align-items:center;
+  justify-content:center;flex:none;margin-bottom:2px;transition:transform .12s ease;}
+.dock-plus:hover{border-color:var(--ink);color:var(--ink);}
+.dock-plus:active{transform:scale(.86);}
+
+/* ---- attachments ---- */
+.b.hasmedia{padding:4px;overflow:hidden;}
+.bmedia{display:block;width:100%;max-width:220px;max-height:280px;object-fit:cover;
+  border-radius:14px;}
+.b.hasmedia .btxt{display:block;padding:6px 9px 4px;}
+.bmiss{padding:16px 12px;font-size:9px;letter-spacing:.06em;color:var(--dimmer);
+  background:#f6f6f6;border-radius:14px;text-align:center;}
+.daydiv b{font-weight:500;color:var(--dim);}
+
+/* ---- away messages ---- */
+.awaybtn{border:.5px solid var(--rule);padding:4px 9px;letter-spacing:.1em;}
+.awaybtn.on{border-color:#E8B21E;color:#B4830B;}
+.awaydot{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#E8B21E;margin-right:5px;vertical-align:middle;}
+.awaylbl{font-style:italic;color:var(--dim);margin-right:6px;}
+.awaybar{border-bottom:.5px solid var(--rule-soft);background:#FFFDF5;padding:9px 12px;}
+.awayrow{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:10.5px;line-height:1.4;}
+.awayrow i{width:7px;height:7px;border-radius:50%;background:#E8B21E;flex:none;
+  align-self:center;}
+.awayrow b{font-weight:400;}
+.awpre{display:flex;flex-wrap:wrap;gap:5px;}
+.awpre button{border:.5px solid var(--rule);padding:4px 9px;font-size:10px;color:var(--dim);}
+.awpre button:hover{border-color:var(--ink);color:var(--ink);}
+.trow.isaway .av{opacity:.5;}
+
+/* ---- typing ---- */
+.mwrap.typing{opacity:.95;}
+.b.dots{display:flex;align-items:center;gap:4px;padding:11px 14px;min-height:0;}
+.b.dots i{width:6px;height:6px;border-radius:50%;background:var(--pc);display:block;
+  animation:dotpulse 1.25s ease-in-out infinite;}
+.b.dots i:nth-child(2){animation-delay:.16s;}
+.b.dots i:nth-child(3){animation-delay:.32s;}
+@keyframes dotpulse{
+  0%,60%,100%{transform:translateY(0);opacity:.35;}
+  30%{transform:translateY(-3px);opacity:1;}
+}
+.typinglbl{font-style:normal;color:var(--ink);}
+@media (prefers-reduced-motion:reduce){
+  .b.dots i{animation:none;opacity:.6;}
+}
+
+/* ---- swipe to delete ---- */
+.swipe{position:relative;overflow:hidden;}
+.swipe .trow{position:relative;background:var(--paper);z-index:1;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1);}
+.swipe.open .trow{transform:translateX(-88px);}
+.rowdel{position:absolute;right:0;top:0;bottom:0;width:88px;background:#000;color:#fff;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;z-index:0;}
+.rowdel:hover{background:#FF10F0;}
+.brow{position:relative;display:flex;align-items:center;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1);}
+.brow.open{transform:translateX(-76px);}
+.rowdel.msg{position:absolute;right:-76px;top:0;bottom:0;width:68px;border-radius:0;}
+.mwrap{overflow:visible;}
+.newrow{width:100%;text-align:left;padding:14px 12px;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);border-bottom:.5px solid var(--rule-soft);}
+.newrow:hover{color:var(--pink);}
+
 .tapbacks{position:absolute;top:-11px;display:flex;gap:2px;z-index:2;}
-.bwrap.me .tapbacks{left:-8px;} .bwrap.them .tapbacks{right:-8px;}
+.mwrap.me .tapbacks{left:-8px;} .mwrap.them .tapbacks{right:-8px;}
 .tapback{background:var(--paper);border:.5px solid var(--rule-soft);border-radius:11px;padding:1px 5px;font-size:9px;
   display:flex;gap:2px;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.08);}
 .tapback b{font-weight:400;font-size:7px;color:var(--dim);}
 .tapback.mine{border-color:var(--pink);}
 
-.tb-pop{position:absolute;top:-38px;background:var(--paper);border:.5px solid var(--rule);border-radius:18px;
-  padding:4px 7px;display:flex;gap:3px;box-shadow:0 2px 10px rgba(0,0,0,.14);z-index:5;}
-.bwrap.me .tb-pop{right:0;} .bwrap.them .tb-pop{left:0;}
+.tb-pop{position:absolute;bottom:calc(100% + 6px);top:auto;flex-direction:column;align-items:stretch;background:var(--paper);border:.5px solid var(--rule);border-radius:14px;
+  padding:5px 8px;display:flex;gap:3px;box-shadow:0 2px 10px rgba(0,0,0,.14);z-index:5;}
+.mwrap.me .tb-pop{right:0;} .mwrap.them .tb-pop{left:0;}
 .tb-pop button{font-size:14px;line-height:1;padding:2px 3px;border-radius:50%;}
+.tb-pop .tagrow button{font-size:8px;border-radius:0;padding:3px 6px;}
+.tb-pop .tagrow.who button{border-radius:50%;padding:0;font-size:8px;}
 .tb-pop button:hover{background:#f0f0f0;}
 .tb-pop .sep{width:.5px;background:var(--rule-soft);margin:2px 3px;}
 .tb-pop .txtbtn{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:0 4px;}
@@ -523,16 +779,17 @@ tr:hover td{background:#fafafa;}
 .dock-send{width:27px;height:27px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;line-height:1;
   display:flex;align-items:center;justify-content:center;flex:none;margin-bottom:2px;}
 .dock-send:hover{background:var(--ink);}
+.mesw{display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--pc,var(--rule));margin-right:5px;vertical-align:middle;flex:none;}
+.dock-foot{border-top-width:2px;border-top-style:solid;border-top-color:var(--mecol,var(--rule-soft));}
 .dock-hint{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);padding:0 12px 7px;}
 .im-empty{color:var(--dimmer);font-size:10px;text-align:center;padding:34px 16px;}
 .member-list{display:flex;flex-wrap:wrap;gap:6px;}
 .member-list button{border:.5px solid var(--rule);border-radius:12px;padding:5px 11px;font-size:10px;color:var(--dim);display:inline-flex;align-items:center;}
 .member-list button.on{border-color:var(--pink);color:var(--pink);}
-@media(max-width:640px){
-  .dock{right:10px;left:10px;bottom:10px;align-items:stretch;}
-  .dock-panel{width:auto;height:76vh;}
+
   .dock-pill{justify-content:center;}
-}
+
 
 #printroot{display:none;}
 @media print{
@@ -546,13 +803,12 @@ tr:hover td{background:#fafafa;}
   .p-body{white-space:pre-wrap;}
   @page{margin:.55in;}
 }
-@media (max-width:640px){
+
   main{padding:16px;} header{padding:12px 16px 0;} .bar{padding:9px 16px;}
   .row,.row-head{grid-template-columns:16px 1fr 20px;}
   .row select,.row input[type=date],.row-head span.hide,.row [data-flag]{display:none;}
-  .cal-day{grid-template-columns:1fr;gap:5px;}
   .msg{grid-template-columns:60px 1fr;} .msg-acts{opacity:1;grid-column:2;}
-}
+
 .mfbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
 .mfsec{margin-bottom:26px;}
 .mfhead{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;text-transform:uppercase;
@@ -581,12 +837,17 @@ tr:hover td{background:#fafafa;}
 .mgt.empty{background:none;border:.5px dashed var(--rule);display:flex;align-items:center;justify-content:center;}
 .mgt.empty span{font-size:10px;color:var(--dimmer);}
 .mgt.on{outline:2px solid var(--ink);outline-offset:-2px;}
+.mgv{position:absolute;left:5px;bottom:5px;font-size:7px;letter-spacing:.14em;
+  background:rgba(0,0,0,.72);color:#fff;padding:2px 4px;pointer-events:none;}
+.mgmiss{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  text-align:center;font-size:8px;letter-spacing:.08em;color:var(--dimmer);
+  background:#f6f6f6;padding:6px;}
 .mgt img,.mgt video{width:100%;height:100%;object-fit:cover;display:block;}
 .mgx{position:absolute;top:2px;right:3px;width:20px;height:20px;font-size:14px;line-height:1;color:#fff;
   text-shadow:0 0 4px rgba(0,0,0,.85);}
 .mghint{margin-top:12px;line-height:1.5;}
 
-@media (max-width:700px){
+
   main{padding:14px 14px 70px;}
   .obj-head .big{font-size:17px;line-height:1.3;}
   .backhome{margin-bottom:18px;}
@@ -628,11 +889,78 @@ tr:hover td{background:#fafafa;}
   .insp{position:static;width:auto;border-left:none;border-top:.5px solid var(--ink);
     box-shadow:none;padding:14px 0 4px;}
   .stat{min-width:46%;}
-}
+
+/* ================= MESSAGES, FULL SCREEN ================= */
+/* On a phone the messenger stops being a floating card and becomes the screen.
+   Drag the bar down to put it away, swipe right inside a thread to go back. */
+.dock-grab{display:none;}
+.dock-done{display:none;}
+
+  .dock{left:0;right:0;top:0;bottom:0;z-index:120;padding:0;gap:0;align-items:stretch;}
+  .dock-panel{width:100%;height:100%;max-height:none;border:none;border-radius:0;
+    box-shadow:none;padding-top:env(safe-area-inset-top);
+    transition:transform .22s cubic-bezier(.2,.8,.2,1);}
+  .dock-panel.dragging{transition:none;}
+  .dock-grab{display:flex;align-items:center;justify-content:center;position:relative;
+    padding:10px 0 8px;flex:none;touch-action:none;cursor:grab;}
+  .dock-grab i{width:34px;height:4px;border-radius:2px;background:var(--rule);display:block;}
+  .dock-done{display:block;position:absolute;right:14px;top:6px;padding:6px 4px;
+    font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+  .im-head{padding:10px 14px;min-height:48px;}
+  .im-head button{font-size:11px;padding:6px 2px;}
+  .im-head #im-close{display:none;}     /* Done and the drag bar replace it */
+  .im-body{-webkit-overflow-scrolling:touch;}
+  .dock-foot{padding:10px 12px calc(10px + env(safe-area-inset-bottom));}
+  .dock-foot textarea{font-size:16px;padding:9px 14px;}   /* 16px stops iOS zooming in */
+  .dock-send{width:34px;height:34px;font-size:15px;}
+  .dock-hint{padding:0 14px calc(8px + env(safe-area-inset-bottom));}
+  .trow{padding:14px 12px;}
+  /* the type was sized for a 352px panel in the corner of a monitor.
+     On a full phone screen it needs to be read at arm's length. */
+  .trow .tname{font-size:14px;}
+  .trow .tprev{font-size:12.5px;margin-top:3px;}
+  .trow .ttime{font-size:9.5px;}
+  .av{width:38px;height:38px;font-size:11px;}
+  .av.grp i{width:25px;height:25px;font-size:9px;}
+  .av.grp.n3 i{width:22px;height:22px;font-size:8px;}
+  .b{font-size:15px;padding:9px 14px;border-radius:19px;}
+  .bname{font-size:9.5px;}
+  .mtag{font-size:9.5px;}
+  .daydiv{font-size:9.5px;}
+  .im-head .ttl{font-size:13px;}
+  .im-head .sub{font-size:9px;}
+  .im-empty{font-size:12.5px;}
+  .mfc{font-size:9.5px;padding:5px 10px;}
+  .pintxt{font-size:12.5px;}
+  .pinbar-h{font-size:9.5px;}
+  .dock-hint{font-size:9px;}
+  .im-search input{font-size:16px;}
+  .tdy-t{font-size:14px;}
+  .tdy-c{font-size:11.5px;}
+  .tdy-day{font-size:16px;}
+  .tdy-who{font-size:12px;}
+  .tdy-lab{font-size:10px;}
+  .tdy-av{width:30px;height:30px;font-size:9.5px;}
+
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+/* ===== PREVIEW ONLY — phone frame, not part of the deployed app ===== */
+html{background:#e9e9e9;}
+body{max-width:390px;margin:0 auto;background:#fff;min-height:100vh;
+  box-shadow:0 0 0 1px rgba(0,0,0,.14), 0 18px 50px rgba(0,0,0,.16);}
+.tabs{left:50%;transform:translateX(-50%);width:390px;max-width:100vw;}
+.dock{left:50%;transform:translateX(-50%);width:370px;max-width:calc(100vw - 20px);right:auto;}
+.preview-note{position:fixed;top:0;left:0;right:0;z-index:200;background:#000;color:#fff;
+  font:9px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.12em;
+  text-transform:uppercase;text-align:center;padding:5px 10px;}
+.preview-note b{color:#FF10F0;font-weight:400;}
+body{padding-top:24px;}
+header{top:24px;}
 </style>
 </head>
 <body>
+<div class="preview-note">Preview &middot; phone width <b>390px</b> &middot; deploy file is unchanged</div>
 
 <header>
   <div class="mast">
@@ -673,17 +1001,21 @@ tr:hover td{background:#fafafa;}
 
 <div class="dock" id="dock">
   <div class="dock-panel" id="dock-panel" hidden>
+    <div class="dock-grab" id="dock-grab"><i></i><button class="dock-done" id="dock-done">Done</button></div>
     <div class="im-head" id="im-head"></div>
     <div class="im-search" id="im-search"><input type="search" id="im-q" placeholder="Search"></div>
     <div class="im-body" id="im-body"></div>
     <div class="dock-foot" id="dock-foot">
+      <button class="dock-plus" id="dock-plus" title="Send a photo or video">+</button>
       <textarea id="dock-in" rows="1" placeholder="Message"></textarea>
       <button class="dock-send" id="dock-send">↑</button>
     </div>
-    <div class="dock-hint" id="dock-hint">Enter sends · todo: makes a task · @name</div>
+    <div class="dock-hint" id="dock-hint">Enter sends · task: remind: idea: · @name hands it over · Esc closes</div>
   </div>
   <button class="dock-pill" id="dock-pill">Messages <span class="badge" id="dock-badge">0</span></button>
 </div>
+
+<nav class="tabs" id="tabs"></nav>
 
 <div class="saveflash" id="flash">Saved</div>
 <input type="file" id="file-in" accept="application/json" hidden>
@@ -1296,6 +1628,8 @@ async function boot(){
   }
 
   A=await Store.get(AKEY)||{assets:[],order:[]};
+  A.assets||=[]; A.order||=[];
+  hydrateMedia();
   if(!hadSaved && bakList().length){ setTimeout(()=>restoreModal(true),400); }
   save();
   try{
@@ -1381,15 +1715,19 @@ function wedges(cx,cy,r,cols){
 }
 
 /* ================= SHELL ================= */
-const VIEWS=[['board','Everything'],['grid','Grid']];
-const MORE=[['focus','Today'],['calendar','Calendar'],['people','People'],['money','Money'],['log','Archive']];
+const VIEWS=[['focus','Today'],['grid','Grid']];
+/* Calendar, Archive and Money are gone as screens. Meetings still attach to cards,
+   the log still lives in Messages, payments still live on each person's page. */
+const SHEET=[['focus','Today'],['grid','Grid'],['people','People'],['board','All cards']];
+const TABS=[['home','Home'],['focus','Today'],['grid','Grid'],['messages','Messages'],['more','More']];
 function goHome(){view='home';openCard=null;activePerson=null;activeObj=null;render();window.scrollTo(0,0);}
 function render(){
   const atHome = view==='home' && !openCard && !activePerson;
   document.querySelector('header').style.display = atHome ? 'none' : '';
   if(!atHome){
     $('#nav').innerHTML=`<button id="nav-home">← radish</button>`+
-      VIEWS.map(([k,l])=>`<button data-v="${k}" class="${view===k&&!openCard&&!activePerson?'on':''}">${l}</button>`).join('');
+      VIEWS.map(([k,l])=>`<button data-v="${k}" class="${view===k&&!openCard&&!activePerson?'on':''}">${l}</button>`).join('')+
+      `<button data-v="board" class="nav-quiet ${view==='board'&&!openCard&&!activePerson?'on':''}">All cards</button>`;
     $('#nav').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{view=b.dataset.v;openCard=null;activePerson=null;activeObj=null;render();});
     $('#nav-home').onclick=goHome;
   }
@@ -1401,31 +1739,81 @@ function render(){
   else if(view==='objective') m.innerHTML=viewObjective(activeObj);
   else if(view==='board') m.innerHTML=viewBoard();
   else if(view==='focus') m.innerHTML=viewFocus();
-  else if(view==='log') m.innerHTML=viewLog();
   else if(view==='grid') m.innerHTML=viewGrid();
   else if(view==='people') m.innerHTML=viewPeople();
-  else if(view==='money') m.innerHTML=viewMoney();
-  else if(view==='calendar') m.innerHTML=viewCalendar();
-  wire(); autosizeAll(); renderDock();
+  wire(); autosizeAll(); renderDock(); renderTabs();
+}
+/* ================= TAB BAR ================= */
+/* The app shell on narrow screens. Five destinations, thumb height, always there. */
+function tabIcon(k){
+  const s='stroke="currentColor" fill="none" stroke-width="1.2" stroke-linecap="square"';
+  return {
+    home:`<svg viewBox="0 0 20 20"><path ${s} d="M3 8.4 10 3l7 5.4V17H3z"/></svg>`,
+    focus:`<svg viewBox="0 0 20 20"><circle ${s} cx="10" cy="10" r="7"/><path ${s} d="M10 5.6V10l3 2"/></svg>`,
+    grid:`<svg viewBox="0 0 20 20"><path ${s} d="M3 3h5v5H3zM12 3h5v5h-5zM3 12h5v5H3zM12 12h5v5h-5z"/></svg>`,
+    messages:`<svg viewBox="0 0 20 20"><path ${s} d="M3 4h14v10H8l-5 3z"/></svg>`,
+    more:`<svg viewBox="0 0 20 20"><path ${s} d="M3 6h14M3 10h14M3 14h14"/></svg>`
+  }[k]||'';
+}
+function renderTabs(){
+  const el=$('#tabs'); if(!el) return;
+  const un=totalUnread();
+  const atHome = view==='home' && !openCard && !activePerson;
+  el.innerHTML=TABS.map(([k,l])=>{
+    const on = k==='home' ? atHome
+             : k==='messages' ? !!S.dockOpen
+             : (view===k && !openCard && !activePerson);
+    const badge = (k==='messages'&&un) ? `<span class="tb-badge">${un}</span>` : '';
+    return `<button class="tb ${on?'on':''}" data-tab="${k}" aria-label="${l}">
+      <span class="tb-i">${tabIcon(k)}${badge}</span><span class="tb-l">${l}</span></button>`;
+  }).join('');
+  el.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.tab;
+    if(k==='home'){ goHome(); return; }
+    if(k==='messages'){ S.dockOpen=!S.dockOpen; save(); renderDock(); renderTabs(); return; }
+    if(k==='more'){ moreSheet(); return; }
+    view=k; openCard=null; activePerson=null; activeObj=null; render(); window.scrollTo(0,0);
+  });
+}
+function moreSheet(){
+  const util=[['export','Export'],['import','Import'],['restore','Restore'],['lock','Lock'],
+              ['file','Save to a file'],['openfile','Open a file'],['print','Print']];
+  showModal(`<div class="sheet">
+    <div class="sheet-h">Go to</div>
+    <div class="sheet-rows">${SHEET.map(([k,l])=>`<button data-sgo="${k}">${l}</button>`).join('')}</div>
+    <div class="sheet-h">This file</div>
+    <div class="sheet-rows quiet">${util.map(([k,l])=>`<button data-sdo="${k}">${l}</button>`).join('')}</div>
+    <div class="modal-acts"><button class="btn" id="sheet-x">Close</button></div>
+  </div>`, sc=>{
+    sc.querySelector('#sheet-x').onclick=closeModal;
+    sc.querySelectorAll('[data-sgo]').forEach(b=>b.onclick=()=>{
+      closeModal(); view=b.dataset.sgo; openCard=null; activePerson=null; activeObj=null;
+      render(); window.scrollTo(0,0);});
+    sc.querySelectorAll('[data-sdo]').forEach(b=>b.onclick=()=>{
+      const id={export:'btn-export',import:'btn-import',restore:'btn-restore',lock:'btn-lock',
+                file:'btn-file',openfile:'btn-openfile',print:'btn-print'}[b.dataset.sdo];
+      closeModal(); const t=document.getElementById(id); if(t) t.click();});
+  });
 }
 function renderBar(){
   const bar=$('#bar');
   if(view==='home'&&!openCard&&!activePerson){bar.style.display='none';return;}
   bar.style.display='';
-  const simple = openCard||activePerson||['money','people','calendar','log','grid','objective'].includes(view);
-  if(simple){ $('#bar').innerHTML=`<input type="search" id="q" placeholder="Search everything" value="${esc(q)}">`; }
+  /* Today carries its own row of names, so the bar there is just search. */
+  const simple = openCard||activePerson||['money','people','calendar','log','grid','objective','focus'].includes(view);
+  if(simple){ $('#bar').innerHTML=`<input type="search" id="q" placeholder="Search" value="${esc(q)}">`; }
   else{
-    $('#bar').innerHTML=`<input type="search" id="q" placeholder="Search everything" value="${esc(q)}">`+
-      `<button class="chip ${!filterGroup?'on':''}" data-g="">All</button>`+
-      groups().map(g=>`<button class="chip ${filterGroup===g?'on':''}" data-g="${esc(g)}">${esc(g)}</button>`).join('')+
-      `<span style="flex:1"></span>`+
-      `<select id="fo" class="chip" style="border:.5px solid var(--rule);padding:3px 6px"><option value="">Everyone</option>
+    $('#bar').innerHTML=`<input type="search" id="q" placeholder="Search" value="${esc(q)}">`+
+      `<select id="fg" class="plain"><option value="">All groups</option>
+        ${groups().map(g=>`<option ${filterGroup===g?'selected':''}>${esc(g)}</option>`).join('')}</select>`+
+      `<select id="fo" class="plain"><option value="">Everyone</option>
         ${names().map(n=>`<option ${filterOwner===n?'selected':''}>${esc(n)}</option>`).join('')}</select>`+
-      `<button class="btn p" id="new-card">+ Card</button>`;
+      `<span style="flex:1"></span>`+
+      `<button class="addcard" id="new-card">+ Card</button>`;
   }
   const qi=$('#q');
   if(qi) qi.oninput=e=>{q=e.target.value;const p=e.target.selectionStart;render();const n=$('#q');if(n){n.focus();n.setSelectionRange(p,p);}};
-  $('#bar').querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{filterGroup=b.dataset.g;render();});
+  const fg=$('#fg'); if(fg) fg.onchange=e=>{filterGroup=e.target.value;render();};
   const fo=$('#fo'); if(fo) fo.onchange=e=>{filterOwner=e.target.value;render();};
   const nc=$('#new-card'); if(nc) nc.onclick=newCard;
 }
@@ -1462,12 +1850,19 @@ function viewHome(){
         <span class="t">${esc(o.title)}</span><span class="m">${esc(objMetric(o))}</span></button>`).join('')}
       <button class="obj dim" id="obj-new"><span class="t">+ Add an objective</span></button>
     </div>
+    <div class="home-stats">
+      <span><b class="pink">${money(pipeTotals().landed)}</b> landed</span>
+      <span><b>${openI().length}</b> open</span>
+      <span><b>${openI().filter(i=>i.flag).length}</b> flagged</span>
+      <span><b>${openI().filter(i=>i.due&&i.due<todayISO()).length}</b> overdue</span>
+    </div>
     <div class="home-foot">
       <div class="who">radish world llc<br><span>new york</span></div>
       <div class="home-sub">
         <button data-go="messages">Messages${un?`<span class="badge2">${un}</span>`:''}</button>
+        <button data-go="focus">Today</button>
         <button data-go="grid">Grid</button>
-        <button data-go="board">Everything</button>
+        <button data-go="board" class="quiet">All cards</button>
       </div>
     </div>
   </div>`;
@@ -2049,7 +2444,6 @@ function matches(c){
 }
 function viewBoard(){
   const cards=S.cards.filter(matches), t=pipeTotals();
-  const more=`<div class="morerow">${MORE.map(([k,l])=>`<button data-go="${k}">${l}</button>`).join('')}</div>`;
   const stats=`<div class="stats">
     <div class="stat hot"><b>${money(t.landed)}</b><span>Landed</span></div>
     <div class="stat"><b>${money(t.low)}–${money(t.high)}</b><span>Pipeline open</span></div>
@@ -2057,8 +2451,8 @@ function viewBoard(){
     <div class="stat"><b>${openI().filter(i=>i.flag).length}</b><span>Flagged</span></div>
     <div class="stat"><b>${money(spendIn(monthOf(todayISO())))}</b><span>Spent this month</span></div>
     <div class="stat"><b>${S.log.filter(l=>dayKey(l)===todayISO()).length}</b><span>Log entries today</span></div></div>`;
-  if(!cards.length) return more+stats+`<div class="empty">Nothing matches.</div>`;
-  return more+stats+`<div class="grid">`+cards.map(c=>{
+  if(!cards.length) return stats+`<div class="empty">Nothing matches.</div>`;
+  return stats+`<div class="grid">`+cards.map(c=>{
     const prog=cardProgress(c), openN=c.items.filter(i=>i.status!=='done').length;
     let prev;
     if(c.type==='pipeline'){
@@ -2084,19 +2478,81 @@ function viewBoard(){
 /* ================= FOCUS ================= */
 function viewFocus(){
   const today=todayISO();
-  let items=openI().filter(i=>i.ptype!=='pipeline');
-  if(filterOwner) items=items.filter(i=>i.owner===filterOwner);
+  const all=openI().filter(i=>i.ptype!=='pipeline');
+  let items=all;
+  if(filterOwner==='__none__') items=items.filter(i=>!i.owner);
+  else if(filterOwner) items=items.filter(i=>i.owner===filterOwner);
   if(q){const s=q.toLowerCase();items=items.filter(i=>i.text.toLowerCase().includes(s));}
+
+  /* who has what — the row of names you tap to narrow the day */
+  const chatAll=openFromChat();
+  const countFor=n=>n==='__none__'
+    ? all.filter(i=>!i.owner).length + chatAll.filter(m=>!msgOwner(m)).length
+    : all.filter(i=>i.owner===n).length + chatAll.filter(m=>msgOwner(m)===n).length;
+  const chip=(k,label,col,n)=>`<button class="tdy-who ${filterOwner===k?'on':''}" data-owner="${esc(k)}"
+      ${col?`style="--pc:${col}"`:''}>${col?'<i class="sw"></i>':''}${esc(label)} <b>${n}</b></button>`;
+  const people=`<div class="tdy-people">
+    ${chip('','Everyone','',all.length+chatAll.length)}
+    ${S.people.map(p=>chip(p.name,p.name,p.color||DEFCOL,countFor(p.name))).join('')}
+    ${countFor('__none__')?chip('__none__','Unassigned','#dcdcdc',countFor('__none__')):''}
+  </div>`;
+
   const od=items.filter(i=>i.due&&i.due<today).sort((a,b)=>a.due.localeCompare(b.due));
-  const up=items.filter(i=>i.due&&i.due>=today).sort((a,b)=>a.due.localeCompare(b.due));
+  const dt=items.filter(i=>i.due===today);
+  const up=items.filter(i=>i.due&&i.due>today).sort((a,b)=>a.due.localeCompare(b.due));
   const fl=items.filter(i=>i.flag&&!i.due), rest=items.filter(i=>!i.flag&&!i.due);
-  const block=(label,arr)=>!arr.length?'':`<div class="sec-label">${label} · ${arr.length}</div><div class="rows">`+
-    arr.map(i=>`<div class="row">
+
+  const row=i=>{
+    const oc=i.owner?personColor(i.owner):'';
+    const late=i.due&&i.due<today;
+    const meta=[i.card, i.due?fmtDate(i.due):''].filter(Boolean).join(' \u00b7 ');
+    return `<div class="tdy-row ${late?'late':''}" ${oc?`style="--pc:${oc}"`:''}>
       <button class="check ${i.flag?'flag':''}" data-tog="${i.cardId}:${i.id}"></button>
-      <div><div>${esc(i.text)}</div><div class="tiny dim">${esc(i.card)}</div></div>
-      <div class="tiny ${i.owner?'pink':'dim'}" style="letter-spacing:.08em;text-transform:uppercase">${esc(i.owner||'')}</div>
-      <div class="tiny mono ${i.due&&i.due<todayISO()?'overdue':'dim'}">${fmtDate(i.due)}</div><div></div><div></div></div>`).join('')+`</div>`;
-  return block('Overdue',od)+block('Upcoming',up)+block('Flagged',fl)+block('Everything else open',rest)||`<div class="empty">Nothing open.</div>`;
+      <div class="tdy-main">
+        <div class="tdy-t">${esc(i.text)}</div>
+        <div class="tdy-c">${esc(meta)}</div>
+      </div>
+      ${i.owner?`<button class="tdy-av" data-owner="${esc(i.owner)}" title="${esc(i.owner)}">${esc(initials(i.owner))}</button>`:''}
+    </div>`;
+  };
+  const block=(label,arr,accent)=>!arr.length?'':
+    `<div class="tdy-sec">
+       <div class="tdy-lab ${accent?'hot':''}">${label}<b>${arr.length}</b></div>
+       <div class="tdy-rows">${arr.map(row).join('')}</div>
+     </div>`;
+
+  /* what the chat is still holding onto */
+  let chat=chatAll;
+  if(filterOwner==='__none__') chat=chat.filter(m=>!msgOwner(m));
+  else if(filterOwner) chat=chat.filter(m=>msgOwner(m)===filterOwner);
+  if(q){const s=q.toLowerCase();chat=chat.filter(m=>m.text.toLowerCase().includes(s));}
+  const chatBlock=!chat.length?'':`<div class="tdy-sec">
+    <div class="tdy-lab">From the chat<b>${chat.length}</b></div>
+    <div class="tdy-rows">${chat.map(m=>`
+      <div class="tdy-row" style="--pc:${personColor(msgOwner(m))}${m.tag?`;--tc:${tagColor(m.tag)}`:''}">
+        <button class="check" data-msgdone="${m.id}" title="Cross it off"></button>
+        <div class="tdy-main">
+          <div class="tdy-t">${fmtMsg(m.text)}</div>
+          <div class="tdy-c">${[m.pin?'Pinned':'',m.tag?tagLabel(m.tag):'',
+            m.owner&&m.owner!==m.author?('from '+m.author):'',threadLabel(m)||'Messages'].filter(Boolean).join(' \u00b7 ')}</div>
+        </div>
+        ${msgOwner(m)?`<button class="tdy-av" data-owner="${esc(msgOwner(m))}" title="${esc(msgOwner(m))}">${esc(initials(msgOwner(m)))}</button>`:''}
+      </div>`).join('')}</div>
+  </div>`;
+
+  const body=chatBlock+block('Overdue',od,true)+block('Due today',dt)+
+             block('Coming up',up)+block('Flagged',fl)+block('Open, no date',rest);
+
+  const pid=(S.people.find(p=>p.name===filterOwner)||{}).id;
+  return `<div class="tdy">
+    <div class="tdy-head">
+      <div class="tdy-day">${fmtDay(today)}</div>
+      <div class="tdy-sum">${items.length} open${od.length?` · <b>${od.length} overdue</b>`:''}</div>
+    </div>
+    ${people}
+    ${pid?`<div class="tdy-open"><button data-open-person="${pid}">Open ${esc(filterOwner)}'s page →</button></div>`:''}
+    ${body||`<div class="empty">${filterOwner?'Nothing open for them.':'Nothing open.'}</div>`}
+  </div>`;
 }
 
 /* ================= LOG ================= */
@@ -2105,80 +2561,112 @@ function fmtMsg(t){
     .replace(/(^|\s)@([A-Za-z][\w'-]*)/g,'$1<span class="mention">@$2</span>')
     .replace(/(^|\s)#([\w-]+)/g,'$1<span class="hash">#$2</span>');
 }
-function viewLog(){
-  let entries=[...S.log];
-  if(q){const s=q.toLowerCase();entries=entries.filter(e=>e.text.toLowerCase().includes(s)||e.author.toLowerCase().includes(s));}
-  const days={};
-  entries.forEach(e=>{(days[dayKey(e)]||=[]).push(e);});
-  const keys=Object.keys(days).sort().reverse();
-  const compose=`<div class="compose">
-    <div class="compose-top">
-      <span class="tiny dim up">As</span>
-      <select id="log-as">${names().map(n=>`<option ${S.me===n?'selected':''}>${esc(n)}</option>`).join('')}</select>
-      <span class="tiny dim">${fmtDate(todayISO())}</span>
-    </div>
-    <textarea id="log-in" rows="1" placeholder="Write. Enter posts it, Shift+Enter is a new line. Start with 'todo:' to make it a task."></textarea>
-    <div class="compose-foot">
-      <span class="tiny dim">@name mentions · #tags · todo: makes a task</span>
-      <button class="btn p sm" id="log-send">Enter</button>
-    </div></div>`;
-  const body=keys.length?keys.map(d=>{
-    const msgs=days[d].sort((a,b)=>a.ts-b.ts);
-    return `<div class="day">
-      <div class="day-head">
-        <span class="day-title ${d===todayISO()?'today':''}">${fmtDay(d)}${d===todayISO()?' · TODAY':''}</span>
-        <span class="day-acts">
-          <button data-pdf="${d}">Save PDF</button>
-          <button data-copy="${d}">Copy for Claude</button>
-        </span></div>
-      ${msgs.map(m=>`<div class="msg ${m.kind==='note'?'note':''}">
-        <span class="msg-who">${esc(m.author)}</span>
-        <span class="msg-body">${fmtMsg(m.text)}<span class="tiny dim" style="margin-left:8px">${esc(threadLabel(m))}</span></span>
-        <span class="msg-acts">
-          <span class="msg-time">${fmtTime(m.ts)}</span>
-          <button data-mktask="${m.id}">Task</button>
-          <button data-delmsg="${m.id}">×</button>
-        </span></div>`).join('')}</div>`;
-  }).join(''):`<div class="empty">Nothing logged yet.</div>`;
-  return `<div class="log-wrap">${compose}${body}</div>`;
+/* ================= MESSAGE TAGS ================= */
+/* A message can carry one tag, a flag, a pin and an owner. All editable after the fact.
+   "to do" and "task" are the same thing, so they share one tag. */
+const MTAGS=[['task','Task','#CBFA28'],['reminder','Reminder','#2AC8FC'],['idea','Idea','#A062F7']];
+const tagOf=k=>MTAGS.find(t=>t[0]===k);
+const tagColor=k=>{const t=tagOf(k);return t?t[2]:'';};
+const tagLabel=k=>{const t=tagOf(k);return t?t[1]:'';};
+const PREFIX=[[/^(?:task|todo|to-do)\s*:\s*/i,'task'],
+              [/^(?:remind(?:er)?)\s*:\s*/i,'reminder'],
+              [/^idea\s*:\s*/i,'idea']];
+function readTag(t){
+  for(const [re,k] of PREFIX){ if(re.test(t)) return {tag:k,body:t.replace(re,'')}; }
+  return {tag:'',body:t};
 }
-function postLog(text,author,threadId){
-  const t=text.trim(); if(!t) return;
+/* @anna hands the thing to Anna. The name has to be someone on the team,
+   so a stray @ in a sentence does not quietly assign work to nobody. */
+function readOwner(t){
+  const m=String(t).match(/@([A-Za-z][\w'-]*)/);
+  if(!m) return '';
+  return names().find(n=>n.toLowerCase()===m[1].toLowerCase())||'';
+}
+const msgOwner=m=>m.owner||m.author;
+let mFilter='';   /* '', a tag key, or 'flag' */
+let rowOpen=null; /* id of the row currently swiped open */
+function tagRow(id,cur,flagged,pinned,owner){
+  return `<div class="tagrow">
+    ${MTAGS.map(([k,l,c])=>`<button data-settag="${id}:${k}" class="tgb ${cur===k?'on':''}"
+      style="--tc:${c}">${l}</button>`).join('')}
+    <button data-settag="${id}:" class="tgb clr ${!cur?'on':''}">None</button>
+    <button data-flag="${id}" class="tgb fl ${flagged?'on':''}">${flagged?'Flagged':'Flag'}</button>
+    <button data-pin="${id}" class="tgb fl ${pinned?'on':''}">${pinned?'Unpin':'Pin'}</button>
+  </div>
+  <div class="tagrow who">
+    <span class="whol">For</span>
+    ${S.people.map(pp=>`<button data-setowner="${id}:${esc(pp.name)}" title="${esc(pp.name)}"
+      class="wav ${owner===pp.name?'on':''}" style="--pc:${pp.color||DEFCOL}">${esc(initials(pp.name))}</button>`).join('')}
+    <button data-setowner="${id}:" class="wav none ${!owner?'on':''}" title="Nobody">\u2014</button>
+  </div>`;
+}
+function filterChips(){
+  const c=(k,l)=>`<button class="mfc ${mFilter===k?'on':''}" data-mf="${k}"
+    ${k&&k!=='flag'?`style="--tc:${tagColor(k)}"`:''}>${l}</button>`;
+  return `<div class="mfilter">${c('','All')}${MTAGS.map(([k,l])=>c(k,l)).join('')}${c('flag','Flagged')}</div>`;
+}
+function passFilter(m){
+  if(!mFilter) return true;
+  if(mFilter==='flag') return !!m.flag;
+  return m.tag===mFilter;
+}
+function togglePin(id){
+  const m=S.log.find(l=>l.id===id); if(!m) return;
+  m.pin=!m.pin; tbOpen=null; save(); renderDock();
+  flashMsg(m.pin?'Pinned to Today':'Unpinned',1600);
+  if(!openCard&&!activePerson&&['focus','board'].includes(view)) render();
+}
+function msgDone(id){
+  const m=S.log.find(l=>l.id===id); if(!m) return;
+  m.done=!m.done; save(); renderDock();
+  if(!openCard&&!activePerson&&view==='focus') render();
+}
+/* What the day still owes you from the chat: anything pinned, plus anything
+   someone tagged a task or a reminder and nobody has ticked off. */
+function openFromChat(){
+  return S.log.filter(m=>m.kind!=='note'&&!m.done&&
+    (m.pin||m.tag==='task'||m.tag==='reminder'))
+    .sort((a,b)=>b.ts-a.ts);
+}
+function pinnedIn(tid){
+  return S.log.filter(m=>m.kind!=='note'&&m.pin&&!m.done&&(m.threadId||'t-main')===tid).sort((a,b)=>a.ts-b.ts);
+}
+
+function setTag(id,k){
+  const m=S.log.find(l=>l.id===id); if(!m) return;
+  m.tag=k||''; tbOpen=null; save(); renderDock();
+  if((view==='focus'||view==='board')&&!openCard&&!activePerson) render();
+}
+function setOwner(id,name){
+  const m=S.log.find(l=>l.id===id); if(!m) return;
+  m.owner=name||''; tbOpen=null; save(); renderDock();
+  flashMsg(name?('Now '+name+"'s"):'Unassigned',1600);
+  if(!openCard&&!activePerson&&['focus','board'].includes(view)) render();
+}
+function toggleFlag(id){
+  const m=S.log.find(l=>l.id===id); if(!m) return;
+  m.flag=!m.flag; tbOpen=null; save(); renderDock();
+  if((view==='focus'||view==='board')&&!openCard&&!activePerson) render();
+}
+
+function postLog(text,author,threadId,assetId){
+  const t=String(text||'').trim(); if(!t&&!assetId) return;
   const tid=threadId||'t-main';
-  if(/^todo:/i.test(t)){
-    const body=t.replace(/^todo:\s*/i,'');
-    const card=S.cards.find(c=>c.title==='Priorities')||S.cards[0];
-    const m=body.match(/@([A-Za-z][\w'-]*)/);
-    const owner=m?(names().find(n=>n.toLowerCase()===m[1].toLowerCase())||''):'';
-    card.items.push(P(body.replace(/@[A-Za-z][\w'-]*/,'').trim(),owner,{flag:true}));
-    S.log.push({id:uid(),ts:Date.now(),date:todayISO(),author,kind:'note',threadId:tid,
-      text:'Task added to '+card.title+': '+body});
-  } else {
-    S.log.push({id:uid(),ts:Date.now(),date:todayISO(),author,text:t,kind:'msg',threadId:tid,reactions:{}});
-  }
+  const {tag,body}=readTag(t);
+  const owner=readOwner(body||t);
+  const m={id:uid(),ts:Date.now(),date:todayISO(),author,text:body||t,kind:'msg',
+    threadId:tid,reactions:{},tag,flag:false,owner};
+  if(assetId) m.assetId=assetId;
+  S.log.push(m);
+  lastSentId=m.id;
   save();
+  return m;
 }
+let lastSentId=null;   /* the one bubble that gets the send animation */
 function threadLabel(m){
   const t=(S.threads||[]).find(x=>x.id===(m.threadId||'t-main'));
   return t?threadName(t):'';
 }
-function dayText(d){
-  const msgs=S.log.filter(l=>dayKey(l)===d).sort((a,b)=>a.ts-b.ts);
-  return `radish log\n${fmtDay(d)}\n\n`+msgs.map(m=>`[${fmtTime(m.ts)}] (${threadLabel(m)}) ${m.author}: ${m.text}`).join('\n')+'\n';
-}
-function printDay(d){
-  const msgs=S.log.filter(l=>dayKey(l)===d).sort((a,b)=>a.ts-b.ts);
-  $('#printroot').innerHTML=`<div class="p-head"><div class="p-title">radish Ops · Daily Log</div>
-    <div style="font-size:9px;letter-spacing:.12em;margin-top:4px">${fmtDay(d)}</div></div>`+
-    (msgs.map(m=>`<div class="p-msg"><div class="p-who">${esc(m.author)} · ${fmtTime(m.ts)}<br><span style="opacity:.55">${esc(threadLabel(m))}</span></div><div class="p-body">${esc(m.text)}</div></div>`).join('')
-      ||'<div class="p-body">No entries.</div>');
-  window.print();
-  setTimeout(()=>{$('#printroot').innerHTML='';},800);
-}
-
-/* ================= GRID PLANNER ================= */
-const POST_KINDS=[['photo','Photo'],['reel','Reel'],['carousel','Carousel'],['story','Story']];
-const POST_STATUS=[['idea','Idea'],['shot','Shot'],['edited','Edited'],['approved','Approved'],['posted','Posted']];
 function tilePost(t){ return (t&&typeof t==='object')?t:(t?{id:uid(),assetId:t,kind:'photo',status:'idea'}:null); }
 function normGrid(){
   S.grid||={tiles:new Array(9).fill(null)};
@@ -2201,15 +2689,18 @@ function viewGridMobile(){
     const a=p&&p.assetId?asset(p.assetId):null;
     const on=sel===n;
     if(!a) return `<div class="mgt empty ${on?'on':''}" data-mt="${n}"><span>${n+1}</span></div>`;
-    const media=a.type==='video'
+    const media=a.missing
+      ? `<div class="mgmiss">Video is on the other device</div>`
+      : a.type==='video'
       ? `<video src="${a.src}" muted playsinline preload="metadata" style="object-position:${a.pos||'50% 50%'}"></video>`
       : `<img src="${a.src}" alt="" style="object-position:${a.pos||'50% 50%'}">`;
     return `<div class="mgt ${on?'on':''}" data-mt="${n}">${media}
+      ${a.type==='video'?'<span class="mgv">REEL</span>':''}
       <button class="mgx" data-mx="${n}">&times;</button></div>`;
   }).join('');
   return `<div class="detail-top"><div class="detail-title">Grid</div></div>
   <div class="mgbar">
-    <button class="btn p" id="mg-add">+ Photos</button>
+    <button class="btn p" id="mg-add">+ Photos or video</button>
     <button class="btn" id="mg-shift">Shift down</button>
     <button class="btn" id="mg-more">+ 3</button>
     <span class="tiny dim mono">${filled}/${tiles.length}</span>
@@ -2220,7 +2711,8 @@ function viewGridMobile(){
   </div>
   <div class="tiny dim mghint">${sel!=null
     ? 'Now tap where it should go. Tap it again to leave it where it is.'
-    : 'Tap a square, then tap another to swap them. The × takes one out.'}</div>`;
+    : 'Tap a square, then tap another to swap them. The × takes one out.'}</div>
+  <div class="tiny dim mghint">Photos come along in Export and Save to a file. Video stays on this device. ${mediaLine()}</div>`;
 }
 function viewGrid(){
   if(isMobile()) return viewGridMobile();
@@ -2245,6 +2737,7 @@ function viewGrid(){
     const isSel=B.sel===it.id;
     let inner='';
     if(it.kind==='note') inner=`<div class="bnote">${esc(it.text||'')}</div>`;
+    else if(a&&a.missing) inner=`<div class="bnote dim">video is on the other device</div>`;
     else if(a&&a.type==='video') inner=`<video src="${a.src}" muted loop playsinline preload="metadata"></video>`;
     else if(a) inner=`<img src="${a.src}" alt="">`;
     else inner=`<div class="bnote dim">missing</div>`;
@@ -2295,6 +2788,138 @@ function viewGrid(){
     <div class="bhint tiny">Drop images or video anywhere on the right. Drag to move, corner to scale, top handle to turn. Drag one onto a slot to make it that post.</div>
   </div>`;
 }
+/* ================= MEDIA ================= */
+/* Photos are downscaled and kept inside the file itself, so they survive Export,
+   Import and Save to a file. Video is far too big for that, so the video itself
+   lives in this browser's own storage and only a reference travels with the file. */
+const MEDIA_DB='radish-media', MEDIA_ST='m', MAX_EDGE=1200, JPEG_Q=0.78;
+let mediaTarget=null;   /* where the next pick should land: 'message' or the grid */
+function mdb(){ return new Promise((res,rej)=>{ try{
+  const r=indexedDB.open(MEDIA_DB,1);
+  r.onupgradeneeded=()=>{ if(!r.result.objectStoreNames.contains(MEDIA_ST)) r.result.createObjectStore(MEDIA_ST); };
+  r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);
+}catch(e){ rej(e); } }); }
+async function mPut(k,blob){ try{const db=await mdb();return new Promise(res=>{
+  const t=db.transaction(MEDIA_ST,'readwrite');t.objectStore(MEDIA_ST).put(blob,k);
+  t.oncomplete=()=>res(true);t.onerror=()=>res(false);});}catch(e){return false;} }
+async function mGet(k){ try{const db=await mdb();return new Promise(res=>{
+  const t=db.transaction(MEDIA_ST,'readonly');const q=t.objectStore(MEDIA_ST).get(k);
+  q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null);});}catch(e){return null;} }
+async function mDel(k){ try{const db=await mdb();return new Promise(res=>{
+  const t=db.transaction(MEDIA_ST,'readwrite');t.objectStore(MEDIA_ST).delete(k);
+  t.oncomplete=()=>res(true);t.onerror=()=>res(false);});}catch(e){return false;} }
+
+/* Phone photos are 4000px and 5MB. Shrink before storing or the file stops saving. */
+function shrinkImage(file){
+  return new Promise(res=>{
+    const url=URL.createObjectURL(file);
+    const img=new Image();
+    img.onload=()=>{
+      let {naturalWidth:w,naturalHeight:h}=img;
+      const s=Math.min(1,MAX_EDGE/Math.max(w,h));
+      w=Math.round(w*s); h=Math.round(h*s);
+      const c=document.createElement('canvas'); c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      URL.revokeObjectURL(url);
+      let out;
+      try{ out=c.toDataURL('image/jpeg',JPEG_Q); }catch(e){ out=''; }
+      res({src:out,w,h});
+    };
+    img.onerror=()=>{ URL.revokeObjectURL(url); res({src:'',w:0,h:0}); };
+    img.src=url;
+  });
+}
+function videoSize(file){
+  return new Promise(res=>{
+    const url=URL.createObjectURL(file);
+    const v=document.createElement('video');
+    v.preload='metadata'; v.muted=true; v.playsInline=true;
+    v.onloadedmetadata=()=>res({w:v.videoWidth||1080,h:v.videoHeight||1350,url});
+    v.onerror=()=>res({w:1080,h:1350,url});
+    v.src=url;
+  });
+}
+/* Rebuild the playable links for videos held in this browser. */
+async function hydrateMedia(){
+  if(!A||!A.assets) return;
+  let any=false;
+  for(const a of A.assets){
+    if(a.type==='video'&&a.store==='idb'&&!(a.src||'').startsWith('blob:')){
+      const b=await mGet(a.id);
+      if(b){ a.src=URL.createObjectURL(b); any=true; }
+      else a.missing=true;
+    }
+  }
+  if(any&&view==='grid') render();
+}
+
+async function addMedia(files,mode,at){
+  const list=[...files]; if(!list.length) return;
+  flashMsg(list.length>1?`Adding ${list.length}…`:'Adding…',20000);
+  const made=[];
+  for(const f of list){
+    const isVid=/^video\//.test(f.type)||/\.(mov|mp4|m4v|webm)$/i.test(f.name||'');
+    const id=uid();
+    if(isVid){
+      const {w,h,url}=await videoSize(f);
+      const ok=await mPut(id,f);
+      A.assets.push({id,type:'video',src:url,w,h,name:f.name||'',
+        store:ok?'idb':'mem',size:f.size||0,added:Date.now()});
+      if(!ok) flashMsg('That video is stored only until you reload.',3000);
+    }else{
+      const {src,w,h}=await shrinkImage(f);
+      if(!src){ continue; }
+      A.assets.push({id,type:'image',src,w,h,name:f.name||'',store:'file',added:Date.now()});
+    }
+    A.order.push(id); made.push(id);
+  }
+  if(!made.length){ flashMsg('Nothing could be read from those files.',2600); return; }
+
+  if(mode==='message'){
+    const tid=S.dockThread||'t-main';
+    made.forEach(id=>postLog('',S.me,tid,id));
+    autoReply(tid);
+    saveA(); save(); renderDock();
+    flashMsg(made.length>1?`${made.length} sent`:'Sent',1400);
+    return;
+  }
+  if(mode==='fill'){
+    normGrid();
+    made.forEach(id=>{
+      let n=S.grid.tiles.findIndex(t=>!t);
+      if(n<0){ S.grid.tiles.push(null); n=S.grid.tiles.length-1; }
+      const a=asset(id);
+      S.grid.tiles[n]={id:uid(),assetId:id,kind:a&&a.type==='video'?'reel':'photo',status:'idea'};
+    });
+  }else{
+    const p=at||{x:60,y:60};
+    made.forEach((id,i)=>{
+      const a=asset(id)||{};
+      const ratio=(a.w&&a.h)?a.h/a.w:1.25;
+      const w=220;
+      boardAdd(id,p.x+i*26,p.y+i*26,w,Math.round(w*ratio),a.type==='video'?'video':'image');
+    });
+  }
+  saveA(); save(); render();
+  flashMsg(made.length>1?`${made.length} added`:'Added',1800);
+}
+function msgMedia(id){
+  const a=asset(id);
+  if(!a) return `<div class="bmiss">that attachment is gone</div>`;
+  if(a.missing) return `<div class="bmiss">video is on the other device</div>`;
+  return a.type==='video'
+    ? `<video class="bmedia" src="${a.src}" controls playsinline preload="metadata"></video>`
+    : `<img class="bmedia" src="${a.src}" alt="">`;
+}
+function mediaBytes(){ return (A.assets||[]).reduce((n,a)=>n+(a.store==='file'?(a.src||'').length:0),0); }
+function mediaLine(){
+  const mb=mediaBytes()/1048576;
+  const vids=(A.assets||[]).filter(a=>a.type==='video').length;
+  if(!mediaBytes()&&!vids) return '';
+  return `<br>${mb.toFixed(1)} MB of photos in the file${vids?` \u00b7 ${vids} video${vids>1?'s':''} on this device`:''}` +
+    (mb>3.2&&!FH_NAME ? ' \u00b7 <b>getting full, press Save to a file</b>' : '');
+}
+
 function boardAdd(assetId,x,y,w,h,kind){
   normBoard();
   const z=(S.board.items.reduce((m,i)=>Math.max(m,i.z||1),0))+1;
@@ -2570,49 +3195,6 @@ function viewPerson(id){
 }
 
 /* ================= MONEY / CALENDAR ================= */
-function viewMoney(){
-  const month=monthOf(todayISO()), spent=spendIn(month), b=+S.budget.monthly||0, left=b-spent, t=pipeTotals();
-  const pays=[...S.payments].sort((a,c)=>(c.date||'').localeCompare(a.date||''));
-  const byP=S.people.map(p=>({name:p.name,m:spendBy(p.name,month),a:spendBy(p.name,'')})).filter(x=>x.a>0).sort((a,c)=>c.a-a.a);
-  return `<div class="detail-top"><div class="detail-title">Money</div>
-    <div style="display:flex;gap:12px;align-items:baseline"><span class="tiny dim up">Monthly budget</span>
-    <input id="budget-in" class="mono" value="${b}" style="border:none;border-bottom:.5px solid var(--rule);background:none;width:80px;text-align:right">
-    <button class="btn p" id="log-pay">+ Payment</button></div></div>
-  <div class="stats">
-    <div class="stat"><b>${money(b)}</b><span>Budget / month</span></div>
-    <div class="stat hot"><b>${money(spent)}</b><span>Spent · ${month}</span></div>
-    <div class="stat"><b style="${left<0?'color:var(--pink)':''}">${money(left)}</b><span>${left<0?'Over':'Left'}</span></div>
-    <div class="stat"><b>${money(t.landed)}</b><span>Cash landed</span></div>
-    <div class="stat"><b>${money(t.low)}–${money(t.high)}</b><span>Still in play</span></div></div>
-  <div class="sec-label">Spend by person</div>
-  ${byP.length?`<table><thead><tr><th>Person</th><th class="num">This month</th><th class="num">All time</th><th style="width:44%"></th></tr></thead><tbody>
-  ${byP.map(x=>`<tr><td>${esc(x.name)}</td><td class="num mono">${money(x.m)}</td><td class="num mono">${money(x.a)}</td>
-  <td><div class="bar-mini" style="margin:6px 0"><i style="width:${b?Math.min(100,Math.round(x.m/b*100)):0}%"></i></div></td></tr>`).join('')}
-  </tbody></table>`:'<div class="empty">No payments logged yet.</div>'}
-  <div class="sec-label">Ledger</div>
-  ${pays.length?`<table><thead><tr><th style="width:88px">Date</th><th>Person</th><th>For</th><th>Method</th><th class="num">Amount</th><th style="width:20px"></th></tr></thead><tbody>
-  ${pays.map(p=>`<tr><td class="tiny mono dim">${fmtDate(p.date)}</td><td>${esc(p.person)}</td>
-  <td>${esc(p.memo||'')}${p.project?`<div class="tiny dim">${esc(p.project)}</div>`:''}</td>
-  <td class="tiny dim up">${esc(p.method||'')}</td><td class="num mono">${money(p.amount)}</td>
-  <td><button class="kill" data-delpay="${p.id}">×</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">Empty ledger.</div>'}`;
-}
-function viewCalendar(){
-  const map={};
-  allItems().filter(i=>i.due&&i.status!=='done').forEach(i=>(map[i.due]||=[]).push({type:'task',text:i.text,sub:i.card,who:i.owner}));
-  S.meetings.forEach(m=>{if(m.date)(map[m.date]||=[]).push({type:'meeting',text:m.title,sub:m.notes||'',who:m.who});});
-
-  const days=Object.keys(map).sort(), today=todayISO();
-  return `<div class="detail-top"><div class="detail-title">Calendar</div>
-    <button class="btn p" id="add-mtg-global">+ Meeting</button></div>`+
-    (days.length?days.map(d=>`<div class="cal-day">
-      <div class="cal-date ${d===today?'today':''} ${d<today?'overdue':''}">${fmtDate(d)}${d===today?' · TODAY':''}</div>
-      <div>${map[d].map(x=>`<div class="cal-item"><span class="tag ${x.type==='meeting'?'m':''}">${x.type==='meeting'?'Mtg':(x.type==='post'?'Post':'Due')}</span>
-        <span style="flex:1">${esc(x.text)}${x.sub?`<span class="tiny dim"> · ${esc(x.sub)}</span>`:''}</span>
-        ${x.who?`<span class="tiny pink up">${esc(x.who)}</span>`:''}</div>`).join('')}</div></div>`).join('')
-    :'<div class="empty">Nothing scheduled.</div>');
-}
-
-/* ================= CARD DETAIL ================= */
 function viewDetail(id){
   const c=S.cards.find(x=>x.id===id); if(!c){openCard=null;return viewBoard();}
   const owners=['',...names()];
@@ -3073,7 +3655,6 @@ function wire(){
     c.links=c.links.filter(l=>l.id!==b.dataset.dellink);save();render();});
 
   const am=$('#add-mtg'); if(am) am.onclick=()=>meetingModal(openCard);
-  const amg=$('#add-mtg-global'); if(amg) amg.onclick=()=>meetingModal(null);
   document.querySelectorAll('[data-delmtg]').forEach(b=>b.onclick=()=>{snap('meeting');S.meetings=S.meetings.filter(m=>m.id!==b.dataset.delmtg);save();render();flashMsg('Deleted. Cmd Z to undo',2000);});
 
   const ap=$('#add-person'); if(ap) ap.onclick=()=>personModal(null);
@@ -3101,28 +3682,23 @@ function wire(){
     ad.onclick=add; nd.onkeydown=e=>{if(e.key==='Enter')add();};}
 
   const bi=$('#budget-in'); if(bi) bi.onchange=()=>{S.budget.monthly=parseFloat(bi.value.replace(/[^0-9.]/g,''))||0;save();render();};
-  const lp=$('#log-pay'); if(lp) lp.onclick=()=>payModal(null,null);
   document.querySelectorAll('[data-delpay]').forEach(b=>b.onclick=()=>{if(!confirm('Delete this payment?'))return;
     snap('payment');S.payments=S.payments.filter(p=>p.id!==b.dataset.delpay);save();render();flashMsg('Deleted. Cmd Z to undo',2000);});
 
-  const li=$('#log-in'), ls=$('#log-send'), la=$('#log-as');
-  if(li){
-    const send=()=>{const author=(la&&la.value)||S.me;S.me=author;postLog(li.value,author,'t-main');li.value='';render();
-      const n=$('#log-in');if(n)n.focus();};
-    li.oninput=()=>autosize(li);
-    li.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}};
-    if(ls) ls.onclick=send;
-    if(la) la.onchange=()=>{S.me=la.value;save();};
-    li.focus();
-  }
-  document.querySelectorAll('[data-pdf]').forEach(b=>b.onclick=()=>printDay(b.dataset.pdf));
-  document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{
-    const txt=dayText(b.dataset.copy);
-    try{await navigator.clipboard.writeText(txt);const o=b.textContent;b.textContent='Copied';setTimeout(()=>b.textContent=o,1400);}
-    catch(_){showModal(`<h3>Copy for Claude</h3><div class="f"><textarea style="min-height:300px">${esc(txt)}</textarea></div>
-      <div class="modal-acts"><button class="btn" id="cc-close">Close</button></div>`,s=>{s.querySelector('#cc-close').onclick=closeModal;});}
-  });
+  document.querySelectorAll('#main [data-msgdone]').forEach(b=>b.onclick=e=>{e.stopPropagation();msgDone(b.dataset.msgdone);});
+  document.querySelectorAll('[data-owner]').forEach(b=>b.onclick=()=>{
+    const v=b.dataset.owner;
+    filterOwner = (filterOwner===v) ? '' : v;   /* tap the same name to go back to everyone */
+    render(); window.scrollTo(0,0);});
   document.querySelectorAll('[data-delmsg]').forEach(b=>b.onclick=()=>{snap('message');S.log=S.log.filter(l=>l.id!==b.dataset.delmsg);save();render();});
+  document.querySelectorAll('[data-cycletag]').forEach(b=>b.onclick=()=>{
+    const m=S.log.find(l=>l.id===b.dataset.cycletag); if(!m) return;
+    const order=['', ...MTAGS.map(t=>t[0])];
+    m.tag=order[(order.indexOf(m.tag||'')+1)%order.length];
+    save();render();});
+  document.querySelectorAll('[data-flagmsg]').forEach(b=>b.onclick=()=>{
+    const m=S.log.find(l=>l.id===b.dataset.flagmsg); if(!m) return;
+    m.flag=!m.flag; save(); render();});
   document.querySelectorAll('[data-mktask]').forEach(b=>b.onclick=()=>{
     const m=S.log.find(l=>l.id===b.dataset.mktask); if(!m) return;
     const titles=S.cards.map(c=>`<option value="${c.id}">${esc(c.title)}</option>`).join('');
@@ -3278,9 +3854,11 @@ function threadUnread(t){
 }
 function totalUnread(){ return S.threads.reduce((a,t)=>a+threadUnread(t),0); }
 function avatarHTML(t){
-  if(t.dm) return `<span class="av">${initials(threadName(t))}</span>`;
-  const others=t.members.filter(n=>n!==S.me).slice(0,2);
-  return `<span class="av grp">${others.map(n=>`<i>${initials(n)}</i>`).join('')}</span>`;
+  if(t.dm){ const n=threadName(t);
+    return `<span class="av" style="--pc:${personColor(n)}">${initials(n)}</span>`; }
+  const all=(t.members||[]).slice(0,3);
+  return `<span class="av grp n${all.length}">${all.map(n=>
+    `<i style="--pc:${personColor(n)}" title="${esc(n)}">${initials(n)}</i>`).join('')}</span>`;
 }
 function relTime(ts){
   const d=new Date(ts), t=todayISO(), k=new Date(ts).toISOString().slice(0,10);
@@ -3292,6 +3870,7 @@ function relTime(ts){
 
 function renderDock(){
   const panel=$('#dock-panel');
+  panel.style.setProperty('--mecol', personColor(S.me));
   const un=totalUnread(), badge=$('#dock-badge');
   badge.textContent=un; badge.hidden=!un;
   panel.hidden=!S.dockOpen;
@@ -3305,28 +3884,51 @@ function renderDock(){
 function renderThreadList(){
   $('#dock-foot').hidden=true; $('#dock-hint').hidden=true; $('#im-search').hidden=false;
   $('#im-head').innerHTML=`<span class="ttl">Messages</span>
-    <span class="sub">as</span><select class="who-sel" id="im-as">${names().map(n=>`<option ${S.me===n?'selected':''}>${esc(n)}</option>`).join('')}</select>
-    <button id="im-new" title="New message">✎</button><button id="im-close">×</button>`;
+    <span class="sub">as</span><i class="mesw" style="--pc:${personColor(S.me)}"></i>
+    <select class="who-sel" id="im-as">${names().map(n=>`<option ${S.me===n?'selected':''}>${esc(n)}</option>`).join('')}</select>
+    <button id="im-away" class="awaybtn ${statusOf(S.me).away?'on':''}" title="Set an away message">${
+      statusOf(S.me).away?'Away':'Available'}</button>
+    <button id="im-new" title="New message">✎</button><button id="im-close" title="Close">Done</button>`;
   const rows=[...S.threads].map(t=>{
     const ms=threadMsgs(t.id), last=ms[ms.length-1], un=threadUnread(t);
     if(imQ){const s=imQ.toLowerCase();
       if(!(threadName(t).toLowerCase().includes(s)||ms.some(m=>m.text.toLowerCase().includes(s)))) return '';}
     return {t,last,un,sort:last?last.ts:0};
   }).filter(Boolean).sort((a,b)=>b.sort-a.sort);
-  $('#im-body').innerHTML=`<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
-    <button class="trow ${un?'unread':''}" data-thread="${t.id}">
-      ${avatarHTML(t)}
-      <span style="overflow:hidden">
-        <span class="tname">${esc(threadName(t))}</span>
-        <span class="tprev">${last?esc((last.author===S.me?'You: ':(t.dm?'':last.author+': '))+last.text).slice(0,60):'No messages yet'}</span>
-      </span>
-      <span class="tright">${last?`<span class="ttime">${relTime(last.ts)}</span>`:''}${un?'<span class="tdot"></span>':''}</span>
-    </button>`).join(''):`<div class="im-empty">No conversations match.</div>`)+`</div>`;
+  $('#im-body').innerHTML=`<button class="newrow" id="im-newrow">+ New conversation</button>`+
+    `<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
+    <div class="swipe ${rowOpen===t.id?'open':''}" data-row="${t.id}">
+      <button class="rowdel" data-delthread="${t.id}">Delete</button>
+      <button class="trow ${un?'unread':''} ${(t.members||[]).some(n=>n!==S.me&&statusOf(n).away)?'isaway':''}" data-thread="${t.id}">
+        ${avatarHTML(t)}
+        <span style="overflow:hidden">
+          <span class="tname">${esc(threadName(t))}</span>
+          <span class="tprev">${(()=>{const o=t.dm?t.members.find(n=>n!==S.me):null;
+              const st=o?statusOf(o):null;
+              return (st&&st.away)?`<i class="awaydot"></i><em class="awaylbl">${esc(st.text)}</em>`:'';})()}${typingIn(t.id).length
+            ? `<i class="mesw" style="--pc:${personColor(typingIn(t.id)[0])}"></i><em class="typinglbl">${esc(typingIn(t.id).join(' and '))} typing\u2026</em>`
+            : (last?`<i class="mesw" style="--pc:${personColor(last.author)}"></i>`+esc((last.author===S.me?'You: ':(t.dm?'':last.author+': '))+last.text).slice(0,60):'No messages yet')}</span>
+        </span>
+        <span class="tright">${last?`<span class="ttime">${relTime(last.ts)}</span>`:''}${un?'<span class="tdot"></span>':''}</span>
+      </button>
+    </div>`).join(''):`<div class="im-empty">No conversations match.</div>`)+`</div>`;
 
   $('#im-as').onchange=e=>{S.me=e.target.value;save();renderDock();};
+  $('#im-away').onclick=awayModal;
   $('#im-close').onclick=closeDock;
   $('#im-new').onclick=newThreadModal;
-  $('#im-body').querySelectorAll('[data-thread]').forEach(b=>b.onclick=()=>openThread(b.dataset.thread));
+  $('#im-newrow').onclick=newThreadModal;
+  $('#im-body').querySelectorAll('[data-thread]').forEach(b=>b.onclick=()=>{
+    if(rowOpen){ rowOpen=null; renderDock(); return; }
+    openThread(b.dataset.thread);});
+  $('#im-body').querySelectorAll('[data-delthread]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    const t=thread(b.dataset.delthread); if(!t) return;
+    if(!confirm(`Delete "${threadName(t)}" and its messages?`)) return;
+    snap('conversation');
+    S.threads=S.threads.filter(x=>x.id!==t.id);
+    S.log=S.log.filter(l=>(l.threadId||'t-main')!==t.id);
+    rowOpen=null; if(S.dockThread===t.id) S.dockThread=null;
+    save(); renderDock(); flashMsg('Deleted. Cmd Z undoes it',2400);});
 }
 
 function renderThread(t){
@@ -3338,14 +3940,22 @@ function renderThread(t){
       <span class="sub" style="display:block">${esc(t.dm?'Direct':who)}</span></span>
     <button id="im-pdf" title="Save this thread today as PDF">PDF</button>
     <button id="im-info" title="Thread settings">···</button>
-    <button id="im-close">×</button>`;
+    <button id="im-close" title="Close">Done</button>`;
 
-  const ms=threadMsgs(t.id).slice(-200);
+  const ms=threadMsgs(t.id).slice(-200).filter(m=>m.kind==='note'?!mFilter:passFilter(m));
   let lastDay=null, html='';
+  const GAP=20*60000;   /* 20 minutes of quiet earns a new time stamp */
+  let lastStamp=0;
   ms.forEach((m,i)=>{
     const d=dayKey(m);
-    if(d!==lastDay){html+=`<div class="daydiv">${d===todayISO()?'Today':fmtDay(d)}</div>`;lastDay=d;}
-    if(m.kind==='note'){html+=`<div class="bwrap sys" data-msg="${m.id}"><div class="b">${fmtMsg(m.text)}</div></div>`;return;}
+    if(d!==lastDay){
+      html+=`<div class="daydiv"><b>${d===todayISO()?'Today':fmtDay(d)}</b> ${fmtTime(m.ts)}</div>`;
+      lastDay=d; lastStamp=m.ts;
+    } else if(m.ts-lastStamp>GAP){
+      html+=`<div class="daydiv">${fmtTime(m.ts)}</div>`;
+      lastStamp=m.ts;
+    }
+    if(m.kind==='note'){html+=`<div class="mwrap sys" data-msg="${m.id}"><div class="b">${fmtMsg(m.text)}</div></div>`;return;}
     const mine=m.author===S.me;
     const next=ms[i+1];
     const tail=!next||next.author!==m.author||next.kind==='note'||dayKey(next)!==d;
@@ -3353,15 +3963,49 @@ function renderThread(t){
     const showName=!mine&&!t.dm&&(!prev||prev.author!==m.author||prev.kind==='note'||dayKey(prev)!==d);
     const r=m.reactions||{};
     const tb=Object.keys(r).filter(k=>r[k]&&r[k].length);
-    html+=`<div class="bwrap ${mine?'me':'them'} ${tail?'tail gapafter':''}" data-msg="${m.id}">
+    const tc=tagColor(m.tag);
+    const pc=personColor(m.author);
+    html+=`<div class="mwrap ${mine?'me':'them'} ${tail?'tail gapafter':''} ${m.tag?'tagged':''} ${m.flag?'flagged':''}"
+      data-msg="${m.id}" style="--pc:${pc}${tc?`;--tc:${tc}`:''}">
       ${showName?`<div class="bname">${esc(m.author)}</div>`:''}
+      ${(m.tag||m.flag||m.owner)?`<div class="mtag">${m.flag?'<i class="fl">▪</i>':''}${m.tag?esc(tagLabel(m.tag)):(m.flag?'Flagged':'')}${m.owner?`<b class="forwho" style="--pc:${personColor(m.owner)}">for ${esc(m.owner)}</b>`:''}</div>`:''}
       ${tb.length?`<span class="tapbacks">${tb.map(k=>`<span class="tapback ${r[k].includes(S.me)?'mine':''}">${k}${r[k].length>1?`<b>${r[k].length}</b>`:''}</span>`).join('')}</span>`:''}
-      <div class="b" data-bub="${m.id}" title="${esc(m.author)} · ${fmtTime(m.ts)}">${fmtMsg(m.text)}</div>
+      <div class="brow ${rowOpen===m.id?'open':''}">
+        <div class="b ${m.assetId?'hasmedia':''} ${m.id===lastSentId?'justsent':''}"
+             data-bub="${m.id}" title="${esc(m.author)} · ${fmtTime(m.ts)}">${
+          m.assetId?msgMedia(m.assetId):''}${m.text?`<span class="btxt">${fmtMsg(m.text)}</span>`:''}</div>
+        <button class="rowdel msg" data-delbub="${m.id}">Delete</button>
+      </div>
     </div>`;
     if(tail&&mine&&i===ms.length-1) html+=`<div class="receipt">Delivered</div>`;
+    lastStamp=Math.max(lastStamp,m.ts);
   });
-  $('#im-body').innerHTML=`<div class="im-thread">${html||'<div class="im-empty">Start the conversation.</div>'}</div>`;
-  const body=$('#im-body'); body.scrollTop=body.scrollHeight;
+  const otherAway=(t.members||[]).filter(n=>n!==S.me&&statusOf(n).away);
+  const awaybar=otherAway.length?`<div class="awaybar">${otherAway.map(n=>{
+    const st=statusOf(n);
+    return `<div class="awayrow" style="--pc:${personColor(n)}"><i></i>
+      <b>${esc(n)} is away</b> ${esc(st.text)}
+      <span class="dim">${awaySince(st)?'· '+awaySince(st):''}</span></div>`;}).join('')}</div>`:'';
+  const pins=pinnedIn(t.id);
+  const pinbar=pins.length?`<div class="pinbar">
+    <div class="pinbar-h">Pinned · ${pins.length}</div>
+    ${pins.map(m=>`<div class="pinrow" style="--pc:${personColor(m.author)}">
+      <button class="check" data-msgdone="${m.id}" title="Cross it off"></button>
+      <span class="pintxt">${esc(m.text).slice(0,90)}</span>
+      <button class="pinx" data-pin="${m.id}" title="Unpin">×</button>
+    </div>`).join('')}
+  </div>`:'';
+  const typers=typingIn(t.id);
+  const threadHTML = html||`<div class="im-empty">${mFilter?'Nothing tagged that way yet.':'Start the conversation.'}</div>`;
+  $('#im-body').innerHTML=filterChips()+awaybar+pinbar+`<div class="im-thread">${threadHTML}${typingBubble(typers)}</div>`;
+  const body=$('#im-body'); if(!mFilter) body.scrollTop=body.scrollHeight;
+
+  body.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{mFilter=b.dataset.mf;renderDock();});
+  body.querySelectorAll('[data-msgdone]').forEach(b=>b.onclick=e=>{e.stopPropagation();msgDone(b.dataset.msgdone);});
+  body.querySelectorAll('[data-delbub]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+    snap('message'); S.log=S.log.filter(l=>l.id!==b.dataset.delbub);
+    rowOpen=null; save(); renderDock(); flashMsg('Deleted. Cmd Z undoes it',2400);});
+  body.querySelectorAll('.pinx[data-pin]').forEach(b=>b.onclick=e=>{e.stopPropagation();togglePin(b.dataset.pin);});
 
   (S.lastRead||={})[t.id]=Date.now(); save();
 
@@ -3375,17 +4019,27 @@ function renderThread(t){
     el.onclick=e=>{e.stopPropagation();openTapbacks(el.dataset.bub);};
   });
   if(tbOpen){
-    const wrap=body.querySelector(`.bwrap[data-msg="${tbOpen}"]`);
+    const wrap=body.querySelector(`.mwrap[data-msg="${tbOpen}"]`);
     if(wrap){
       const pop=document.createElement('div');pop.className='tb-pop';
-      pop.innerHTML=TAPBACKS.map(k=>`<button data-tb="${k}">${k}</button>`).join('')+
-        `<span class="sep"></span><button class="txtbtn" data-tbtask="1">Task</button><button class="txtbtn" data-tbdel="1">Del</button>`;
+      const msg=S.log.find(l=>l.id===tbOpen)||{};
+      pop.innerHTML=`<div class="tb-r1">${TAPBACKS.map(k=>`<button data-tb="${k}">${k}</button>`).join('')}`+
+        `<span class="sep"></span><button class="txtbtn" data-tbtask="1">→ Card</button>`+
+        `<button class="txtbtn" data-tbdel="1">Del</button></div>`+
+        tagRow(tbOpen,msg.tag||'',!!msg.flag,!!msg.pin,msg.owner||'');
       wrap.appendChild(pop);
       pop.querySelectorAll('[data-tb]').forEach(b=>b.onclick=e=>{e.stopPropagation();react(tbOpen,b.dataset.tb);});
+      pop.querySelectorAll('[data-settag]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+        const [id,k]=b.dataset.settag.split(':');setTag(id,k);});
+      pop.querySelector('[data-flag]').onclick=e=>{e.stopPropagation();toggleFlag(tbOpen);};
+      pop.querySelector('[data-pin]').onclick=e=>{e.stopPropagation();togglePin(tbOpen);};
+      pop.querySelectorAll('[data-setowner]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+        const i=b.dataset.setowner.indexOf(':');
+        setOwner(b.dataset.setowner.slice(0,i), b.dataset.setowner.slice(i+1));});
       pop.querySelector('[data-tbtask]').onclick=e=>{e.stopPropagation();const id=tbOpen;tbOpen=null;taskFromMsg(id);};
       pop.querySelector('[data-tbdel]').onclick=e=>{e.stopPropagation();
         S.log=S.log.filter(l=>l.id!==tbOpen);tbOpen=null;save();renderDock();
-        if(view==='log'&&!openCard&&!activePerson)render();};
+        if(view==='focus'&&!openCard&&!activePerson)render();};
     }
   }
 }
@@ -3416,17 +4070,42 @@ function taskFromMsg(id){
   });
 }
 function openThread(id){S.dockThread=id;tbOpen=null;save();renderDock();setTimeout(()=>$('#dock-in').focus(),30);}
-function closeDock(){S.dockOpen=false;tbOpen=null;save();renderDock();}
+function closeDock(){S.dockOpen=false;tbOpen=null;save();renderDock();renderTabs();}
 
 function newThreadModal(){
   showModal(`<h3>New message</h3>
-    <div class="f"><label>To</label><div class="member-list" id="nt-members">
-      ${names().filter(n=>n!==S.me).map(n=>`<button data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div></div>
+    <div class="f"><label>To</label>
+      <div class="tofield" id="nt-to"><span class="topills" id="nt-pills"></span><input id="nt-q" placeholder="Type a name"></div>
+      <div class="tosug" id="nt-sug"></div></div>
     <div class="f"><label>Group name (optional)</label><input id="nt-name" placeholder="Leave blank for a direct message"></div>
     <div class="modal-acts"><button class="btn" id="nt-cancel">Cancel</button><button class="btn p" id="nt-save">Start</button></div>`,s=>{
     const picked=new Set();
-    s.querySelectorAll('#nt-members button').forEach(b=>b.onclick=()=>{
-      const n=b.dataset.n; picked.has(n)?picked.delete(n):picked.add(n); b.classList.toggle('on');});
+    const q=s.querySelector('#nt-q'), pills=s.querySelector('#nt-pills'), sug=s.querySelector('#nt-sug');
+    const paint=()=>{
+      pills.innerHTML=[...picked].map(n=>
+        `<button class="topill" data-drop="${esc(n)}" style="--pc:${personColor(n)}">${esc(n)} <i>&times;</i></button>`).join('');
+      pills.querySelectorAll('[data-drop]').forEach(b=>b.onclick=()=>{picked.delete(b.dataset.drop);paint();});
+      const term=q.value.trim().toLowerCase();
+      const left=names().filter(n=>n!==S.me&&!picked.has(n)&&(!term||n.toLowerCase().includes(term)));
+      sug.innerHTML=left.map(n=>
+        `<button data-add="${esc(n)}"><i class="sw" style="background:${personColor(n)}"></i>${esc(n)}</button>`).join('')
+        ||`<span class="tiny dim">No one else matches.</span>`;
+      sug.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{
+        picked.add(b.dataset.add); q.value=''; paint(); q.focus();});
+    };
+    q.oninput=paint;
+    q.onkeydown=e=>{
+      if(e.key==='Enter'){
+        e.preventDefault();
+        const term=q.value.trim().toLowerCase();
+        const hit=names().find(n=>n!==S.me&&!picked.has(n)&&n.toLowerCase().startsWith(term));
+        if(term&&hit){picked.add(hit);q.value='';paint();}
+      }
+      if(e.key==='Backspace'&&!q.value&&picked.size){
+        picked.delete([...picked].pop()); paint();
+      }
+    };
+    paint(); setTimeout(()=>q.focus(),40);
     s.querySelector('#nt-cancel').onclick=closeModal;
     s.querySelector('#nt-save').onclick=()=>{
       const mem=[...picked]; if(!mem.length){alert('Pick at least one person.');return;}
@@ -3487,23 +4166,252 @@ function printThreadDay(id,d){
   setTimeout(()=>{$('#printroot').innerHTML='';},800);
 }
 
+/* ---- gestures ---- */
+/* Drag the grab bar down to put the messenger away. Swipe right anywhere in a
+   thread to go back to the list. Neither interferes with scrolling: the dismiss
+   only starts on the bar, and the back swipe needs to be clearly sideways. */
+function isPhone(){ try{ return window.matchMedia('(max-width:820px)').matches; }catch(e){ return false; } }
+/* ================= TYPING ================= */
+/* Who is mid-message right now. Nothing is stored: it expires on its own.
+   Today this travels between open tabs and windows on this machine. When the
+   sync layer lands, it publishes to the same place and this code does not change. */
+const TYPING={};          /* name -> {threadId, at} */
+const TYPE_TTL=4200;      /* dots vanish if nothing arrives for this long */
+let typeCh=null, lastSent=0, typeTimer=null;
+try{ typeCh=new BroadcastChannel('radish-typing'); }catch(e){ typeCh=null; }
+
+function announceTyping(){
+  const now=Date.now();
+  if(now-lastSent<1400) return;      /* one ping every 1.4s, not one per keystroke */
+  lastSent=now;
+  const msg={name:S.me,threadId:S.dockThread||'t-main',at:now};
+  try{ if(typeCh) typeCh.postMessage(msg); }catch(e){}
+}
+function stopTyping(){
+  lastSent=0;
+  try{ if(typeCh) typeCh.postMessage({name:S.me,threadId:S.dockThread||'t-main',at:0}); }catch(e){}
+}
+function typingIn(tid){
+  const now=Date.now();
+  return Object.keys(TYPING).filter(n=>n!==S.me&&TYPING[n]&&
+    TYPING[n].threadId===tid && now-TYPING[n].at<TYPE_TTL);
+}
+function anyoneTyping(){
+  const now=Date.now();
+  return Object.keys(TYPING).some(n=>n!==S.me&&TYPING[n]&&now-TYPING[n].at<TYPE_TTL);
+}
+function receiveTyping(d){
+  if(!d||!d.name) return;
+  if(d.at) TYPING[d.name]={threadId:d.threadId,at:d.at};
+  else delete TYPING[d.name];
+  if(S.dockOpen) renderDock();
+  clearTimeout(typeTimer);
+  if(anyoneTyping()) typeTimer=setTimeout(()=>{ if(S.dockOpen) renderDock(); },TYPE_TTL+120);
+}
+if(typeCh) typeCh.onmessage=e=>receiveTyping(e.data);
+
+function typingBubble(names){
+  if(!names.length) return '';
+  const who=names.length===1?names[0]:names.slice(0,2).join(' and ');
+  return `<div class="mwrap them typing" style="--pc:${personColor(names[0])}">
+    <div class="bname">${esc(who)}</div>
+    <div class="brow"><div class="b dots"><i></i><i></i><i></i></div></div>
+  </div>`;
+}
+
+/* ================= AWAY MESSAGES ================= */
+/* Straight out of AIM. You set a message, your name goes yellow-dot, and the first
+   person to write to you gets it back automatically. Status lives on the person
+   record, so it saves with the file and travels with an Export. */
+const AWAY_PRESETS=['on a shoot','on a call','writing, back later','out for the day',
+                    'brb','head down, ping if urgent'];
+const AUTO_AWAY_MIN=12;
+let lastPoke=Date.now(), autoWokeFrom=null;
+
+function statusOf(name){
+  const p=S.people.find(x=>x.name===name);
+  return (p&&p.status)||{away:false,text:'',since:0};
+}
+function setStatus(name,away,text){
+  const p=S.people.find(x=>x.name===name); if(!p) return;
+  p.status={away:!!away,text:away?(text||'Away'):'',since:away?Date.now():0};
+  if(!away) autoWokeFrom=null;
+  save();
+  try{ if(statusCh) statusCh.postMessage({name,status:p.status}); }catch(e){}
+  if(S.dockOpen) renderDock();
+}
+let statusCh=null;
+try{ statusCh=new BroadcastChannel('radish-status'); }catch(e){ statusCh=null; }
+if(statusCh) statusCh.onmessage=e=>{
+  const d=e.data; if(!d||!d.name) return;
+  const p=S.people.find(x=>x.name===d.name); if(!p) return;
+  p.status=d.status; if(S.dockOpen) renderDock();
+};
+
+function awaySince(s){
+  if(!s||!s.since) return '';
+  const mins=Math.round((Date.now()-s.since)/60000);
+  if(mins<1) return 'just now';
+  if(mins<60) return mins+' min';
+  const hrs=Math.round(mins/60);
+  return hrs+(hrs>1?' hours':' hour');
+}
+/* AIM answered for you. So does this, once per conversation per away session. */
+function autoReply(tid){
+  const t=thread(tid); if(!t||!t.dm) return;
+  const other=t.members.find(n=>n!==S.me); if(!other) return;
+  const s=statusOf(other); if(!s.away) return;
+  const already=S.log.some(l=>l.kind==='note'&&l.autoFor===other&&
+    (l.threadId||'t-main')===tid&&l.awaySince===s.since);
+  if(already) return;
+  S.log.push({id:uid(),ts:Date.now()+1,date:todayISO(),author:other,kind:'note',
+    threadId:tid,text:other+' is away · '+s.text,autoFor:other,awaySince:s.since});
+}
+function awayModal(){
+  const me=S.me, s=statusOf(me);
+  showModal(`<h3>Your status</h3>
+    <div class="f"><div class="member-list">
+      <button id="aw-here" class="${s.away?'':'on'}">Available</button>
+      <button id="aw-away" class="${s.away?'on':''}">Away</button></div></div>
+    <div class="f"><label>Away message</label>
+      <textarea id="aw-text" rows="2" placeholder="Back in an hour">${esc(s.text||'')}</textarea></div>
+    <div class="f"><label>Or pick one</label>
+      <div class="awpre">${AWAY_PRESETS.map(x=>`<button data-pre="${esc(x)}">${esc(x)}</button>`).join('')}</div></div>
+    <div class="f"><label>Set me away on my own</label>
+      <div class="member-list">
+        <button id="aw-auto-on" class="${S.autoAway!==false?'on':''}">After ${AUTO_AWAY_MIN} min idle</button>
+        <button id="aw-auto-off" class="${S.autoAway===false?'on':''}">Never</button></div></div>
+    <div class="modal-acts"><button class="btn" id="aw-cancel">Cancel</button>
+      <button class="btn p" id="aw-save">Save</button></div>`, sc=>{
+    let away=s.away, auto=S.autoAway!==false;
+    const ta=sc.querySelector('#aw-text');
+    const paint=()=>{
+      sc.querySelector('#aw-here').classList.toggle('on',!away);
+      sc.querySelector('#aw-away').classList.toggle('on',away);
+      sc.querySelector('#aw-auto-on').classList.toggle('on',auto);
+      sc.querySelector('#aw-auto-off').classList.toggle('on',!auto);
+    };
+    sc.querySelector('#aw-here').onclick=()=>{away=false;paint();};
+    sc.querySelector('#aw-away').onclick=()=>{away=true;paint();ta.focus();};
+    sc.querySelector('#aw-auto-on').onclick=()=>{auto=true;paint();};
+    sc.querySelector('#aw-auto-off').onclick=()=>{auto=false;paint();};
+    sc.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{
+      ta.value=b.dataset.pre; away=true; paint();});
+    sc.querySelector('#aw-cancel').onclick=closeModal;
+    sc.querySelector('#aw-save').onclick=()=>{
+      S.autoAway=auto;
+      setStatus(S.me,away,ta.value.trim()||'Away');
+      closeModal(); flashMsg(away?'You are away':'You are back',1800);};
+  });
+}
+/* idle watch */
+function pokeIdle(){
+  lastPoke=Date.now();
+  if(autoWokeFrom&&statusOf(S.me).away){ setStatus(S.me,false,''); autoWokeFrom=null; }
+}
+setInterval(()=>{
+  if(!S||S.autoAway===false) return;
+  if(statusOf(S.me).away) return;
+  if(Date.now()-lastPoke > AUTO_AWAY_MIN*60000){
+    autoWokeFrom=S.me;
+    setStatus(S.me,true,'Away from the desk');
+  }
+},30000);
+['click','keydown','touchstart'].forEach(ev=>
+  document.addEventListener(ev,pokeIdle,{passive:true}));
+
+function wireDockGestures(){
+  const panel=$('#dock-panel'), grab=$('#dock-grab'), body=$('#im-body');
+  if(!panel||!grab) return;
+
+  let y0=0, dy=0, dragging=false;
+  const start=e=>{ if(!isPhone())return;
+    y0=e.touches?e.touches[0].clientY:e.clientY; dy=0; dragging=true;
+    panel.classList.add('dragging'); };
+  const move=e=>{ if(!dragging)return;
+    const y=e.touches?e.touches[0].clientY:e.clientY;
+    dy=Math.max(0,y-y0);
+    panel.style.transform=`translateY(${dy}px)`;
+    if(e.cancelable) e.preventDefault(); };
+  const end=()=>{ if(!dragging)return;
+    dragging=false; panel.classList.remove('dragging');
+    const far=dy>110;
+    panel.style.transform=far?'translateY(100%)':'';
+    if(far) setTimeout(()=>{ panel.style.transform=''; closeDock(); },180);
+    dy=0; };
+
+  grab.addEventListener('touchstart',start,{passive:true});
+  grab.addEventListener('touchmove',move,{passive:false});
+  grab.addEventListener('touchend',end);
+  grab.addEventListener('touchcancel',end);
+  grab.addEventListener('mousedown',e=>{start(e);
+    const mm=ev=>move(ev), mu=()=>{end();document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);};
+    document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);});
+
+  const done=$('#dock-done'); if(done) done.onclick=closeDock;
+
+  /* desktop has no swipe, so right-click reveals the same Delete */
+  if(body) body.addEventListener('contextmenu',e=>{
+    const r=e.target.closest('[data-row]'), m=e.target.closest('[data-msg]');
+    const id=r?r.dataset.row:(m?m.dataset.msg:null);
+    if(!id) return;
+    e.preventDefault(); rowOpen=rowOpen===id?null:id; renderDock();
+  });
+
+  /* sideways swipe: right goes back to the list, left reveals Delete */
+  if(body){
+    let sx=0, sy=0, tracking=false, rowId=null;
+    body.addEventListener('touchstart',e=>{
+      if(!isPhone()){tracking=false;return;}
+      sx=e.touches[0].clientX; sy=e.touches[0].clientY; tracking=true;
+      const r=e.target.closest('[data-row]'), m=e.target.closest('[data-msg]');
+      rowId = r ? r.dataset.row : (m ? m.dataset.msg : null);
+    },{passive:true});
+    body.addEventListener('touchend',e=>{
+      if(!tracking)return; tracking=false;
+      const t=e.changedTouches[0];
+      const dx=t.clientX-sx, ady=Math.abs(t.clientY-sy);
+      if(ady>45) return;
+      if(dx<-55&&rowId){ rowOpen=rowOpen===rowId?null:rowId; renderDock(); return; }
+      if(dx>55){
+        if(rowOpen){ rowOpen=null; renderDock(); return; }
+        if(S.dockThread){ S.dockThread=null; tbOpen=null; save(); renderDock(); }
+      }
+    },{passive:true});
+  }
+}
+
 function initDock(){
   const inp=$('#dock-in');
   const grow=()=>{inp.style.height='auto';inp.style.height=Math.min(110,inp.scrollHeight)+'px';};
   const send=()=>{
     const v=inp.value; if(!v.trim())return;
-    postLog(v,S.me,S.dockThread||'t-main'); inp.value=''; grow(); renderDock();
-    if((view==='log'||view==='board')&&!openCard&&!activePerson) render();
+    const tid=S.dockThread||'t-main';
+    postLog(v,S.me,tid); autoReply(tid); save();
+    inp.value=''; grow(); stopTyping(); renderDock();
+    setTimeout(()=>{ lastSentId=null; },400);
+    if((view==='focus'||view==='board')&&!openCard&&!activePerson) render();
   };
-  inp.oninput=grow;
+  inp.oninput=()=>{grow(); if(inp.value.trim()) announceTyping(); else stopTyping();};
   inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}};
   $('#dock-send').onclick=send;
+  $('#dock-plus').onclick=()=>{ mediaTarget='message'; $('#media-in').click(); };
   $('#dock-pill').onclick=()=>{S.dockOpen=true;save();renderDock();};
   $('#im-q').oninput=e=>{imQ=e.target.value;const p=e.target.selectionStart;renderDock();
     const n=$('#im-q');if(n){n.focus();n.setSelectionRange(p,p);}};
   document.addEventListener('click',e=>{
     if(tbOpen&&!e.target.closest('.tb-pop')&&!e.target.closest('[data-bub]')){tbOpen=null;renderDock();}
+    if(rowOpen&&!e.target.closest('.rowdel')&&!e.target.closest('.swipe')&&!e.target.closest('.brow')){
+      rowOpen=null; renderDock();
+    }
+    /* On desktop the panel floats, so clicking off it should put it away.
+       On a phone it is the whole screen and there is nothing to click off onto. */
+    if(S.dockOpen&&!isPhone()&&!modal&&
+       !e.target.closest('#dock, #tabs, .scrim, .dock-pill, [data-go]')){
+      closeDock();
+    }
   });
+  wireDockGestures();
 }
 
 /* ================= MODALS ================= */
@@ -3977,10 +4885,11 @@ $('#file-in').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new Fi
       save();saveA();openCard=null;activePerson=null;render();}}
     catch(_){alert('That file did not parse.');}};
   r.readAsText(f);};
-$('#btn-print').onclick=()=>{if(view==='log'&&!openCard&&!activePerson)printDay(todayISO());else window.print();};
+$('#btn-print').onclick=()=>window.print();
 $('#media-in').onchange=e=>{
   if(e.target.files.length){
-    if(view==='grid'&&S.grid&&S.grid.fillMode){ S.grid.fillMode=false; addMedia(e.target.files,'fill'); }
+    if(mediaTarget==='message'){ mediaTarget=null; addMedia(e.target.files,'message'); }
+    else if(view==='grid'&&S.grid&&S.grid.fillMode){ S.grid.fillMode=false; addMedia(e.target.files,'fill'); }
     else if(view==='grid'){ normBoard(); const B=S.board;
       const w=document.querySelector('#bwrap');
       const r=w?w.getBoundingClientRect():{width:900,height:600};
@@ -4011,6 +4920,11 @@ document.addEventListener('keydown',e=>{
   }
   if(e.key==='Escape'&&!modal&&(SELS.size||SEL||OPEN_LINKS||HIDDEN.size)){
     SELS=new Set();SEL=null;OPEN_LINKS=null;HIDDEN=new Set();render();return;}
+  if(e.key==='Escape'&&!modal&&S.dockOpen){
+    if(tbOpen){ tbOpen=null; renderDock(); return; }
+    if(S.dockThread){ S.dockThread=null; save(); renderDock(); return; }
+    closeDock(); return;
+  }
   if(e.key==='Escape'&&!modal){ if(openCard||activePerson){openCard=null;activePerson=null;render();} else if(view!=='home'){goHome();} }
   if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){
     e.preventDefault();const qi=$('#q');if(qi)qi.focus();}
@@ -4024,6 +4938,10 @@ window.addEventListener('resize',()=>{
   if(now!==__wasMobile){ __wasMobile=now; if(view==='grid') render(); }
 });
 boot();
+
+/* ================= INSTALLABLE ================= */
+/* Only runs on a real web address. Opened as a file from your computer,
+   this does nothing and everything else behaves exactly as before. */
 </script>
 </body>
 </html>
