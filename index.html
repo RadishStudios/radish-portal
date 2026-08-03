@@ -499,7 +499,6 @@ tr:hover td{background:#fafafa;}
 .pf-id{text-align:center;padding:54px 0 6px;}
 .pf-handle{font-size:31px;line-height:1.1;letter-spacing:-.02em;font-weight:400;}
 .pf-role{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:9px;}
-.pf-away{font-style:italic;color:#B4830B;text-transform:none;letter-spacing:.04em;}
 .pf-nums{display:flex;gap:22px;justify-content:center;margin-top:16px;
   font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
 .pf-nums b{font-weight:400;font-size:13px;color:var(--ink);margin-right:4px;
@@ -527,9 +526,6 @@ tr:hover td{background:#fafafa;}
 .pf-foot button{font-size:9px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px;margin-left:auto;}
 .pf-tag{border-bottom:2px solid var(--tc);color:var(--ink);}
-.me-set{width:26px;height:26px;border-radius:50%;border:.5px solid var(--rule);
-  color:var(--dim);font-size:13px;line-height:1;flex:none;}
-.me-set:hover{border-color:var(--ink);color:var(--ink);}
 @media(max-width:820px){
   .pf-banner{margin:-26px -22px 0;height:104px;}
   .pf-handle{font-size:25px;}
@@ -537,7 +533,6 @@ tr:hover td{background:#fafafa;}
   .pf-id{padding:48px 0 6px;}
   .pf-quote{font-size:19px;}
   .pf-text{font-size:15px;}
-  .me-set{width:32px;height:32px;font-size:15px;}
 }
 
 /* ================= THE CAMERA ================= */
@@ -667,23 +662,106 @@ tr:hover td{background:#fafafa;}
   width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;
   font-size:15px;display:flex;align-items:center;justify-content:center;}
 .b.hasmedia{position:relative;}
-.folderpick{display:flex;flex-wrap:wrap;gap:6px;}
-.folderpick button{display:flex;align-items:center;gap:7px;border:.5px solid var(--rule);
-  padding:6px 11px;font-size:11px;}
-.folderpick button span{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
-.folderpick button.on{border-color:var(--ink);}
-.folderpick button.clear{border-style:dashed;color:var(--dim);}
+/* ---- folders, nested ---- */
+.fp-tree{display:flex;flex-direction:column;border-top:.5px solid var(--rule-soft);}
+.fp-row{display:flex;align-items:center;gap:10px;text-align:left;padding:9px 4px;
+  padding-left:calc(4px + var(--d,0) * 20px);border-bottom:.5px solid var(--rule-soft);}
+.fp-row:last-child{border-bottom:none;}
+.fp-row:hover{background:#fafafa;}
+.fp-row.on{background:#f4f4f4;}
+.fp-row.on .fp-n{text-decoration:underline;text-underline-offset:3px;}
+.fp-n{flex:1;min-width:0;font-size:12px;}
+.fp-c{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;flex:none;}
+.fp-acts{display:flex;gap:9px;flex:none;opacity:0;transition:opacity .12s ease;}
+.fp-row:hover .fp-acts{opacity:1;}
+.fp-acts i{font-style:normal;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);}
+.fp-acts i:hover{color:var(--pink);}
+.fp-link{display:flex;align-items:center;gap:8px;font-size:10.5px;
+  padding:5px 4px 5px calc(22px + var(--d,0) * 20px);
+  border-bottom:.5px solid var(--rule-soft);}
+.fp-link a{color:var(--dim);text-decoration:underline;text-underline-offset:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fp-link a:hover{color:var(--pink);}
+.fp-link i{font-style:normal;color:var(--dimmer);margin-left:auto;}
+.fp-link i:hover{color:#FF10F0;}
+.stor{border-top:.5px solid var(--rule-soft);}
+.stor-row{display:flex;justify-content:space-between;gap:16px;padding:9px 2px;
+  border-bottom:.5px solid var(--rule-soft);font-size:11px;}
+.stor-row span{color:var(--dim);}
+.stor-row b{font-weight:400;text-align:right;}
+.stor-row b.ok{color:#0a7d3f;} .stor-row b.warn{color:#B4830B;}
+.stor-note{font-size:11px;line-height:1.55;color:var(--dim);margin-top:12px;max-width:58ch;}
 .newfold{display:flex;gap:8px;align-items:center;}
 .newfold input{flex:1;border:none;border-bottom:.5px solid var(--rule);background:none;padding:4px 0;}
+@media(max-width:820px){
+  .fp-acts{opacity:1;}
+  .fp-n{font-size:14px;}
+  .fp-row{padding-top:12px;padding-bottom:12px;}
+}
 .lv-folders{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 2px;flex:none;}
 .lv-fold{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim);
   border:.5px solid var(--rule-soft);padding:4px 9px;}
+.lv-fold[style*='--d:1']{opacity:.86;} .lv-fold[style*='--d:2']{opacity:.74;}
 .lv-fold span{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;}
 .lv-fold.on{color:var(--ink);border-color:var(--ink);}
 @media(max-width:820px){
   .light-bar button{font-size:11px;}
   .lw-txt b{font-size:13px;}
   .lv-fold{font-size:11.5px;padding:5px 11px;}
+}
+
+/* ================= THE FOLDERS SCREEN ================= */
+.fv{max-width:900px;}
+.fv-top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:9px;}
+.fv-crumb{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:13px;}
+.fv-crumb button{font-size:13px;color:var(--dim);}
+.fv-crumb button:last-child{color:var(--ink);}
+.fv-crumb button:hover{color:var(--pink);}
+.fv-crumb i{font-style:normal;color:var(--dimmer);font-size:11px;}
+.fv-new{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--ink);padding-bottom:2px;}
+.fv-new:hover{color:var(--pink);border-color:var(--pink);}
+.fv-meta{display:flex;align-items:center;gap:12px;margin-top:11px;
+  font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);}
+.fv-meta button{font-size:9px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--dim);border-bottom:.5px solid var(--rule);padding-bottom:1px;}
+.fv-meta button:hover{color:var(--ink);border-color:var(--ink);}
+.fv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+  gap:18px 16px;margin-top:24px;}
+.fv-grid.shots{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;}
+.fv-cell{position:relative;transition:opacity .14s ease;}
+.fv-cell.dragging{opacity:.4;}
+.fv-cell.over .fv-thumb{box-shadow:0 0 0 2px var(--pink);}
+.fv-thumb{display:block;width:100%;aspect-ratio:4/3;overflow:hidden;background:#f4f4f4;
+  position:relative;border:.5px solid var(--rule-soft);}
+.fv-grid.shots .fv-thumb{aspect-ratio:1/1;}
+.fv-thumb img,.fv-thumb video{width:100%;height:100%;object-fit:cover;display:block;}
+.fv-cell.fold .fv-thumb{border-top-width:9px;border-top-style:solid;border-top-color:var(--ink);
+  background:#fafafa;}
+.fv-empty{display:block;width:100%;height:100%;}
+.fv-badge{position:absolute;right:6px;bottom:6px;font-size:8px;letter-spacing:.1em;
+  background:rgba(255,255,255,.92);border:.5px solid var(--rule-soft);padding:1px 5px;}
+.fv-aud{display:flex;width:100%;height:100%;align-items:center;justify-content:center;
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--dimmer);}
+.fv-name{margin-top:7px;font-size:11.5px;line-height:1.3;word-break:break-word;cursor:text;}
+.fv-name:hover{text-decoration:underline;text-underline-offset:3px;}
+.fv-name.editing{outline:none;background:#FFFBEF;box-shadow:0 0 0 2px #E8B21E;
+  text-decoration:none;padding:1px 3px;}
+.fv-links{margin-top:22px;border-top:.5px solid var(--rule-soft);}
+.fv-link{display:flex;align-items:center;gap:10px;padding:9px 2px;
+  border-bottom:.5px solid var(--rule-soft);font-size:11.5px;}
+.fv-link a{color:var(--dim);text-decoration:underline;text-underline-offset:2px;}
+.fv-link a:hover{color:var(--pink);}
+.fv-link i{font-style:normal;color:var(--dimmer);margin-left:auto;}
+.fv-link i:hover{color:#FF10F0;}
+@media(max-width:820px){
+  .fv-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:14px 10px;}
+  .fv-grid.shots{grid-template-columns:repeat(3,1fr);}
+  .fv-crumb,.fv-crumb button{font-size:15px;}
+  .fv-name{font-size:13px;}
+  .fv-meta,.fv-meta button,.fv-new{font-size:11px;}
 }
 
 /* ================= LIVE ================= */
@@ -881,10 +959,11 @@ main{-webkit-overflow-scrolling:touch;}
 .mwrap.me .b{background:color-mix(in srgb, var(--pc) 26%, #fff);
   box-shadow:inset 0 0 0 1px var(--pc);}
 @supports not (color: color-mix(in srgb, red 50%, blue)){
+  .mwrap .bname,.forwho,.tl-o{color:var(--ink);}
   .mwrap .b{background:#f4f4f4;box-shadow:inset 0 0 0 1px var(--pc);}
   .mwrap.me .b{background:#ececec;}
 }
-.mwrap .bname{color:var(--pc);}
+.mwrap .bname{color:color-mix(in srgb, var(--pc) 74%, #000);}
 .mwrap.me.tail .b{border-bottom-right-radius:5px;}
 .mwrap.them.tail .b{border-bottom-left-radius:5px;}
 .b .mention{font-weight:600;text-decoration:underline;}
@@ -925,7 +1004,7 @@ main{-webkit-overflow-scrolling:touch;}
   display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--ink);opacity:.42;}
 .wav.on{opacity:1;box-shadow:0 0 0 1.5px var(--ink);}
 .wav.none{background:none;border:.5px solid var(--rule);color:var(--dimmer);}
-.forwho{font-weight:400;color:var(--pc);margin-left:6px;}
+.forwho{font-weight:400;color:color-mix(in srgb, var(--pc) 74%, #000);margin-left:6px;}
 .forwho:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;
   background:var(--pc);margin-right:4px;vertical-align:middle;}
 .tgb{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
@@ -933,6 +1012,40 @@ main{-webkit-overflow-scrolling:touch;}
 .tgb:hover{color:var(--ink);}
 .tgb.on{color:var(--ink);border-color:var(--tc,var(--ink));box-shadow:inset 0 -2px 0 var(--tc,var(--ink));}
 .tb-r1{display:flex;align-items:center;gap:2px;}
+
+/* ---- the new message screen ---- */
+.cm{display:flex;flex-direction:column;}
+.cm-to{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:12px 14px;border-bottom:.5px solid var(--rule-soft);}
+.cm-lab{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dimmer);flex:none;}
+.cm-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.cm-pill{display:flex;align-items:center;gap:6px;border:.5px solid var(--pc,var(--rule));
+  border-radius:13px;padding:4px 9px;font-size:11px;}
+.cm-pill i{font-style:normal;color:var(--dimmer);}
+.cm-pill:hover i{color:var(--ink);}
+.cm-to input{flex:1;min-width:120px;border:none;background:none;padding:5px 0;font-size:15px;}
+.cm-to input::placeholder{color:var(--dimmer);}
+.cm-sug{display:flex;flex-direction:column;}
+.cm-row{display:flex;align-items:center;gap:11px;padding:11px 14px;text-align:left;
+  border-bottom:.5px solid var(--rule-soft);}
+.cm-row:last-child{border-bottom:none;}
+.cm-row:hover{background:#fafafa;}
+.cm-av{width:32px;height:32px;border-radius:50%;background:var(--pc,#ececec);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:9.5px;color:var(--ink);}
+.cm-av.grp{background:none;border:.5px dashed var(--rule);color:var(--dimmer);font-size:13px;}
+.cm-n{min-width:0;}
+.cm-n b{display:block;font-size:13px;font-weight:500;}
+.cm-n span{display:block;font-size:10.5px;color:var(--dim);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cm-none{padding:22px 14px;font-size:11px;color:var(--dimmer);}
+.dock-foot textarea:disabled{opacity:.55;}
+@media(max-width:820px){
+  .cm-to{padding:14px 16px;}
+  .cm-to input{font-size:16px;}
+  .cm-row{padding:13px 16px;}
+  .cm-av{width:38px;height:38px;font-size:11px;}
+  .cm-n b{font-size:15px;}
+}
 
 /* ---- new message: To line ---- */
 .tofield{display:flex;flex-wrap:wrap;gap:5px;align-items:center;
@@ -973,43 +1086,6 @@ main{-webkit-overflow-scrolling:touch;}
 .bmiss{padding:16px 12px;font-size:9px;letter-spacing:.06em;color:var(--dimmer);
   background:#f6f6f6;border-radius:14px;text-align:center;}
 .daydiv b{font-weight:500;color:var(--dim);}
-
-/* ---- your own status, at the top of the list where AIM had it ---- */
-.mestrip{display:flex;align-items:center;gap:10px;padding:12px 12px 13px;
-  border-bottom:.5px solid var(--rule-soft);}
-.me-av{width:34px;height:34px;border-radius:50%;background:var(--pc);flex:none;
-  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink);}
-.mestrip.away .me-av{opacity:.45;}
-.me-txt{flex:1;min-width:0;text-align:left;}
-.me-txt b{display:block;font-size:12px;font-weight:500;}
-.me-txt span{display:block;font-size:11px;color:var(--dim);margin-top:1px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.mestrip.away .me-txt span{color:#B4830B;font-style:italic;}
-.me-dice{width:30px;height:30px;border-radius:50%;border:.5px dashed #E8B21E;color:#B4830B;
-  font-size:15px;line-height:1;flex:none;transition:transform .35s ease,background .15s ease;}
-.me-dice:hover{background:#FFFBEF;}
-.me-dice:active{transform:rotate(180deg);}
-.me-back{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
-  border:.5px solid var(--rule);padding:5px 9px;border-radius:12px;flex:none;}
-.me-back:hover{border-color:var(--ink);color:var(--ink);}
-
-/* ---- away messages ---- */
-.awaybtn{border:.5px solid var(--rule);padding:4px 9px;letter-spacing:.1em;}
-.awaybtn.on{border-color:#E8B21E;color:#B4830B;}
-.awaydot{display:inline-block;width:6px;height:6px;border-radius:50%;
-  background:#E8B21E;margin-right:5px;vertical-align:middle;}
-.awaylbl{font-style:italic;color:var(--dim);margin-right:6px;}
-.awaybar{border-bottom:.5px solid var(--rule-soft);background:#FFFDF5;padding:9px 12px;}
-.awayrow{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:10.5px;line-height:1.4;}
-.awayrow i{width:7px;height:7px;border-radius:50%;background:#E8B21E;flex:none;
-  align-self:center;}
-.awayrow b{font-weight:400;}
-.awpre{display:flex;flex-wrap:wrap;gap:5px;}
-.awpre button{border:.5px solid var(--rule);padding:4px 9px;font-size:10px;color:var(--dim);}
-.awpre button:hover{border-color:var(--ink);color:var(--ink);}
-.awpre .shuf{border-style:dashed;border-color:#E8B21E;color:#B4830B;}
-.awpre .shuf:hover{background:#FFFBEF;border-color:#B4830B;color:#B4830B;}
-.trow.isaway .av{opacity:.5;}
 
 /* ---- typing ---- */
 .mwrap.typing{opacity:.95;}
@@ -1125,56 +1201,115 @@ main{-webkit-overflow-scrolling:touch;}
   text-decoration:underline;text-underline-offset:3px;}
 /* crossed off, kept, dimmed, at the bottom */
 .tdy-row.off .tdy-t{text-decoration:line-through;color:var(--dimmer);}
-.tdy-sec.done .tdy-lab,.ftd-p.done .ftd-name{color:var(--dimmer);}
+.tdy-sec.done .tdy-lab{color:var(--dimmer);}
 .tdy-row.off .check.owned{opacity:.4;}
-.ftd-p.done{opacity:.72;}
+
+/* ================= ASSIGNMENTS ================= */
+.as{max-width:720px;}
+.as-tabs{display:flex;gap:16px;flex-wrap:wrap;padding-bottom:12px;}
+.as-tab{padding:0;opacity:.42;transition:opacity .14s ease,box-shadow .14s ease;}
+.as-tab i{width:34px;height:34px;border-radius:50%;background:var(--pc);display:flex;
+  align-items:center;justify-content:center;font-style:normal;font-size:11px;color:var(--ink);}
+.as-tab.on{opacity:1;box-shadow:0 0 0 1.5px var(--ink);border-radius:50%;}
+.as-tab.add{width:34px;height:34px;border-radius:50%;border:.5px dashed var(--rule);
+  color:var(--dimmer);font-size:16px;opacity:1;}
+.as-tab.add:hover{border-color:var(--ink);color:var(--ink);}
+.as-dot{width:9px;height:9px;border-radius:50%;background:var(--pc);
+  display:inline-block;margin-right:8px;vertical-align:middle;}
+.as-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--ink);padding-bottom:8px;}
+.as-head span{color:var(--dimmer);letter-spacing:.1em;}
+.as-n.d0{margin-top:26px;}
+.as-row{display:flex;align-items:center;gap:11px;padding:10px 0;
+  border-bottom:.5px solid var(--rule-soft);}
+.as-n.d0 > .as-row{border-bottom:1px solid var(--ink);}
+.as-n.d0 > .as-row .as-t{font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+.as-t{flex:1;min-width:0;font-size:12.5px;line-height:1.4;}
+.as-c{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;flex:none;}
+.as-note{font-size:10.5px;color:var(--dim);line-height:1.5;padding:2px 0 8px 25px;max-width:56ch;}
+.as-kids{padding-left:25px;}
+.as-n.off > .as-row > .as-t{text-decoration:line-through;color:var(--dimmer);}
+.as-n.d0.off > .as-row > .as-t{text-decoration:none;opacity:.45;}
+@media(max-width:820px){
+  .as-t{font-size:14px;}
+  .as-n.d0 > .as-row .as-t{font-size:12px;}
+  .as-tab i{width:40px;height:40px;font-size:13px;}
+  .as-tab.add{width:40px;height:40px;}
+  .id-o{width:30px;height:30px;font-size:11px;}
+  .as-kids{padding-left:20px;}
+  .as-note{font-size:12px;padding-left:20px;}
+}
+
+/* ================= CONTENT IDEAS ================= */
+.id{max-width:720px;}
+.id-add{display:flex;gap:10px;align-items:center;padding-bottom:12px;
+  border-bottom:1px solid var(--ink);}
+.id-add input{flex:1;border:none;background:none;padding:5px 0;font-size:13px;}
+.id-add input::placeholder{color:var(--dimmer);}
+.id-grp{margin-top:26px;}
+.id-name{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink);padding-bottom:7px;
+  border-bottom:.5px solid var(--rule-soft);}
+.id-name i{width:9px;height:9px;border-radius:50%;background:var(--pc,var(--rule));flex:none;}
+.id-name i.none{background:none;border:.5px solid var(--rule);}
+.id-name b{font-weight:400;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.id-row{display:flex;align-items:center;gap:11px;padding:11px 0;
+  border-bottom:.5px solid var(--rule-soft);}
+.id-grp .id-row:last-child{border-bottom:none;}
+.id-t{flex:1;min-width:0;font-size:12.5px;line-height:1.4;cursor:text;}
+.id-t:hover{text-decoration:underline;text-underline-offset:3px;}
+.id-ch{font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;flex:none;
+  border:.5px solid var(--rule-soft);padding:3px 8px;color:var(--dim);}
+.id-ch:hover{border-color:var(--ink);color:var(--ink);}
+.id-o{width:24px;height:24px;border-radius:50%;flex:none;font-size:9px;
+  border:.5px dashed var(--rule);color:var(--dimmer);}
+.id-o.has{background:var(--pc);border:none;color:var(--ink);}
+.id-o:hover{border-color:var(--ink);color:var(--ink);}
+.id-o.has:hover{box-shadow:0 0 0 1.5px var(--ink);}
+.id-x{font-size:14px;line-height:1;color:var(--dimmer);flex:none;padding:0 2px;opacity:0;
+  transition:opacity .12s ease;}
+.id-row:hover .id-x{opacity:1;}
+.id-x:hover{color:#FF10F0;}
+.id-row.off .id-t{text-decoration:line-through;color:var(--dimmer);}
+.id-grp.done{opacity:.72;}
+@media(max-width:820px){
+  .id-t{font-size:14px;}
+  .id-add input{font-size:16px;}
+  .id-ch,.id-o{font-size:10px;padding:4px 9px;}
+  .id-x{opacity:1;}
+  .id-name{font-size:11.5px;}
+}
 
 /* ================= THE TIMELINE ================= */
 .tl{max-width:720px;}
 .tl-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
   font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
-  border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:6px;}
+  border-bottom:1px solid var(--ink);padding-bottom:8px;}
 .tl-head span{color:var(--dimmer);letter-spacing:.1em;}
-.tl-n.d0{margin-top:26px;}
-.tl-n.d1{margin-top:16px;}
-.tl-row{display:flex;align-items:center;gap:11px;padding:9px 0;
+.tl-rail{margin-top:30px;}
+.tl-rname{display:flex;align-items:baseline;gap:9px;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);padding-bottom:7px;
   border-bottom:.5px solid var(--rule-soft);}
-.tl-n.d0 > .tl-row{border-bottom:none;padding-bottom:4px;}
-.tl-n.d0 > .tl-row .tl-t{font-size:14px;letter-spacing:-.01em;}
-.tl-n.d1 > .tl-row .tl-t{font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
-.tl-n.d1 > .tl-row{border-bottom-color:var(--ink);border-bottom-width:1px;}
-.tl-t{flex:1;min-width:0;font-size:12.5px;line-height:1.4;}
-.tl-o{font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--pc);flex:none;}
-.tl-c{font-size:9px;color:var(--dimmer);font-variant-numeric:tabular-nums;flex:none;}
-.tl-note{font-size:11px;line-height:1.5;color:var(--dim);padding:2px 0 10px 25px;max-width:56ch;}
-.tl-kids{padding-left:25px;}
-.tl-n.off > .tl-row > .tl-t{text-decoration:line-through;color:var(--dimmer);}
-.tl-n.d0.off > .tl-row > .tl-t,.tl-n.d1.off > .tl-row > .tl-t{text-decoration:none;opacity:.45;}
+.tl-rname b{font-weight:400;color:var(--dimmer);font-variant-numeric:tabular-nums;}
+.tl-step{margin-top:2px;}
+.tl-row{display:flex;align-items:center;gap:11px;padding:11px 0;
+  border-bottom:.5px solid var(--rule-soft);}
+.tl-step:last-child .tl-row:last-child{border-bottom:none;}
+.tl-row.head .tl-t{font-size:13px;}
+.tl-row.part{padding:8px 0;}
+.tl-row.part .tl-t{font-size:11.5px;color:var(--dim);}
+.tl-parts{padding-left:25px;}
+.tl-t{flex:1;min-width:0;line-height:1.4;}
+.tl-o{font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--pc) 74%, #000);flex:none;}
+.tl-row.off .tl-t{text-decoration:line-through;color:var(--dimmer);}
+.tl-row.off .check.owned{opacity:.4;}
 @media(max-width:820px){
-  .tl-t{font-size:14px;}
-  .tl-n.d0 > .tl-row .tl-t{font-size:16px;}
-  .tl-n.d1 > .tl-row .tl-t{font-size:12px;}
-  .tl-kids{padding-left:20px;}
-  .tl-note{font-size:12.5px;padding-left:20px;}
-}
-
-/* ---- what the chart is asking for ---- */
-.ftd{margin-top:34px;padding-top:16px;border-top:1px solid var(--ink);max-width:720px;}
-.ftd-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
-  margin-bottom:6px;}
-.ftd-h span{color:var(--dimmer);letter-spacing:.1em;}
-.ftd-p{margin-top:22px;}
-.ftd-name{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink);padding-bottom:7px;}
-.ftd-name i{width:9px;height:9px;border-radius:50%;background:var(--pc,var(--rule));flex:none;}
-.ftd-name i.none{background:none;border:.5px solid var(--rule);}
-.ftd-name b{font-weight:400;color:var(--dimmer);font-variant-numeric:tabular-nums;}
-.ftd-rows{border-top:.5px solid var(--rule-soft);}
-.ftd-rows .tdy-row:last-child{border-bottom:none;}
-@media(max-width:820px){
-  .ftd-name{font-size:11.5px;}
-  .ftd{margin-top:26px;}
+  .tl-row.head .tl-t{font-size:15px;}
+  .tl-row.part .tl-t{font-size:13px;}
+  .tl-rname{font-size:11.5px;}
+  .tl-parts{padding-left:20px;}
 }
 
 /* ================= THE GRID, ON A PHONE ================= */
@@ -1278,7 +1413,6 @@ main{-webkit-overflow-scrolling:touch;}
   .hdid .ttl{font-size:15px;line-height:1.15;font-weight:500;}
   .hdid .sub{font-size:10px;display:block;margin-top:2px;letter-spacing:.06em;}
   .im-back{font-size:30px;line-height:1;padding:0 6px 0 0;margin-top:-2px;}
-  .awaybtn{padding:6px 11px;font-size:10px;border-radius:13px;}
   #im-close{padding:6px 12px;border-radius:13px;font-size:10px;}
   #im-pdf,#im-info{font-size:11px;padding:6px 3px;}
   .dock-grab{padding:12px 0 6px;}
@@ -1288,16 +1422,8 @@ main{-webkit-overflow-scrolling:touch;}
   .im-thread{padding:14px 14px 8px;}
   .daydiv{margin:18px 0 12px;}
   .pinbar{padding:11px 14px 12px;}
-  .awaybar{padding:12px 14px;}
-  .awayrow{font-size:12px;}
   .bmedia{max-width:250px;max-height:320px;}
   .trow{padding:15px 14px;gap:12px;}
-  .mestrip{padding:14px 14px 15px;gap:12px;}
-  .me-av{width:40px;height:40px;font-size:12px;}
-  .me-txt b{font-size:14px;}
-  .me-txt span{font-size:12.5px;}
-  .me-dice{width:36px;height:36px;font-size:18px;}
-  .me-back{font-size:10px;padding:7px 11px;}
   .dock-foot textarea{max-height:150px;}
   .im-head button{font-size:11px;padding:6px 2px;}
   .im-head #im-close{display:none;}     /* Done and the drag bar replace it */
@@ -1341,6 +1467,10 @@ main{-webkit-overflow-scrolling:touch;}
 }
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+.me-open{width:26px;height:26px;border-radius:50%;background:var(--pc);flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:8.5px;color:var(--ink);}
+@media(max-width:820px){ .me-open{width:32px;height:32px;font-size:10px;} }
 
 /* ===== PREVIEW ONLY - desktop ===== */
 html{background:#f2f2f2;}
@@ -1507,16 +1637,74 @@ function paintFileBadge(){
 (function(){ try{ const k='__probe'; localStorage.setItem(k,'1');
   STORAGE_OK = localStorage.getItem(k)==='1'; localStorage.removeItem(k);
 }catch(e){ STORAGE_OK=false; } })();
+/* ================= WHERE IT IS KEPT ================= */
+/* IndexedDB is the real store: hundreds of megabytes rather than five, and it is
+   not the first thing a browser throws away. localStorage is kept as a mirror so
+   an older copy still opens, and so there are two places to recover from. */
+const KV_DB='radish-store', KV_ST='kv';
+let kvReady=null, STORE_WHERE='memory', LAST_SAVE=0, PERSISTED=false;
+function kvOpen(){
+  if(kvReady) return kvReady;
+  kvReady=new Promise((res,rej)=>{ try{
+    const r=indexedDB.open(KV_DB,1);
+    r.onupgradeneeded=()=>{ if(!r.result.objectStoreNames.contains(KV_ST)) r.result.createObjectStore(KV_ST); };
+    r.onsuccess=()=>res(r.result);
+    r.onerror=()=>rej(r.error);
+  }catch(e){ rej(e); } });
+  return kvReady;
+}
+async function kvGet(k){
+  try{ const db=await kvOpen(); return await new Promise(res=>{
+    const t=db.transaction(KV_ST,'readonly');
+    const q=t.objectStore(KV_ST).get(k);
+    q.onsuccess=()=>res(q.result===undefined?null:q.result);
+    q.onerror=()=>res(null);
+  }); }catch(e){ return null; }
+}
+async function kvSet(k,v){
+  try{ const db=await kvOpen(); return await new Promise(res=>{
+    const t=db.transaction(KV_ST,'readwrite');
+    t.objectStore(KV_ST).put(v,k);
+    t.oncomplete=()=>res(true); t.onerror=()=>res(false); t.onabort=()=>res(false);
+  }); }catch(e){ return false; }
+}
+/* ask the browser not to evict us. Chrome and Firefox grant it outright; Safari
+   grants it once the site is bookmarked or added to a home screen. */
+async function askToPersist(){
+  try{
+    if(navigator.storage&&navigator.storage.persisted){
+      PERSISTED=await navigator.storage.persisted();
+      if(!PERSISTED&&navigator.storage.persist) PERSISTED=await navigator.storage.persist();
+    }
+  }catch(e){}
+  return PERSISTED;
+}
+async function storageReport(){
+  let quota=0,usage=0;
+  try{ if(navigator.storage&&navigator.storage.estimate){
+    const e=await navigator.storage.estimate(); quota=e.quota||0; usage=e.usage||0; } }catch(e){}
+  return {where:STORE_WHERE,persisted:PERSISTED,quota,usage,last:LAST_SAVE,file:FH_NAME||''};
+}
+
 const Store={
   async get(k){
-    try{ if(window.storage){const r=await window.storage.get(k,false); if(r&&r.value) return JSON.parse(r.value);} }catch(e){}
-    try{ const v=localStorage.getItem(k); if(v) return JSON.parse(v);}catch(e){}
+    const v=await kvGet(k);
+    if(v!=null){ STORE_WHERE='this browser (IndexedDB)'; try{ return JSON.parse(v); }catch(e){} }
+    try{ if(window.storage){const r=await window.storage.get(k,false);
+      if(r&&r.value){ STORE_WHERE='this browser'; return JSON.parse(r.value);} } }catch(e){}
+    try{ const s=localStorage.getItem(k);
+      if(s){ STORE_WHERE='this browser (localStorage)'; return JSON.parse(s);} }catch(e){}
     return mem[k]||null;
   },
   async set(k,d){
     const s=JSON.stringify(d); mem[k]=d;
-    try{ if(window.storage){ await window.storage.set(k,s,false); return true;} }catch(e){}
-    try{ localStorage.setItem(k,s); return true;}catch(e){ return false; }
+    let ok=await kvSet(k,s);
+    if(ok) STORE_WHERE='this browser (IndexedDB)';
+    /* mirror, best effort. A full localStorage must not stop the real save. */
+    try{ localStorage.setItem(k,s); if(!ok){ ok=true; STORE_WHERE='this browser (localStorage)'; } }catch(e){}
+    try{ if(!ok&&window.storage){ await window.storage.set(k,s,false); ok=true; STORE_WHERE='this browser'; } }catch(e){}
+    if(ok) LAST_SAVE=Date.now();
+    return ok;
   }
 };
 
@@ -1787,6 +1975,7 @@ async function boot(){
   S.people.forEach(p=>{p.tools||=[];p.dailies||=[];});
   const SEEDCOL={deb:'#F276F8',anna:'#2AC8FC',ruby:'#CBFA28'};
   S.people.forEach(p=>{if(!p.color)p.color=SEEDCOL[p.name.toLowerCase()]||'#dcdcdc';});
+  S.people.forEach(p=>{if(p.color==='#00BF63')p.color='#CBFA28';});
   if(!S.dropMSD){
     const gone=['marta','shea','david'];
     S.people=S.people.filter(p=>!gone.includes(p.name.toLowerCase()));
@@ -2041,8 +2230,10 @@ async function boot(){
     S.annaWeek=true;
   }
 
+  askToPersist();
   A=await Store.get(AKEY)||{assets:[],order:[]};
-  A.assets||=[]; A.order||=[];
+  A.assets||=[]; A.order||=[]; A.folders||=[];
+  A.folders.forEach(f=>{ if(f.parent===undefined) f.parent=''; });
   hydrateMedia();
   if(!hadSaved && bakList().length){ setTimeout(()=>restoreModal(true),400); }
   save();
@@ -2132,7 +2323,7 @@ function wedges(cx,cy,r,cols){
 const VIEWS=[['focus','Today'],['grid','Grid']];
 /* Calendar, Archive and Money are gone as screens. Meetings still attach to cards,
    the log still lives in Messages, payments still live on each person's page. */
-const SHEET=[['focus','Today'],['live','Live'],['voices','Said out loud'],['grid','Grid'],['people','People'],['board','All cards']];
+const SHEET=[['focus','Today'],['live','Live'],['folders','Folders'],['voices','Said out loud'],['grid','Grid'],['people','People'],['board','All cards']];
 const TABS=[['home','Home'],['focus','Today'],['live','Live'],['grid','Grid'],['messages','Messages']];
 function goHome(){view='home';openCard=null;activePerson=null;activeObj=null;render();window.scrollTo(0,0);}
 function render(){
@@ -2156,6 +2347,7 @@ function render(){
   else if(view==='grid') m.innerHTML=viewGrid();
   else if(view==='live') m.innerHTML=viewLive();
   else if(view==='voices') m.innerHTML=viewVoices();
+  else if(view==='folders') m.innerHTML=viewFolders();
   else if(view==='profile') m.innerHTML=viewProfile(profileWho||S.me);
   else if(view==='people') m.innerHTML=viewPeople();
   wire(); autosizeAll(); renderDock(); renderTabs();
@@ -2195,8 +2387,36 @@ function renderTabs(){
     view=k; openCard=null; activePerson=null; activeObj=null; render(); window.scrollTo(0,0);
   });
 }
+async function storageModal(){
+  const r=await storageReport();
+  const mb=n=>n?(n/1048576).toFixed(n>10485760?0:1)+' MB':'unknown';
+  const when=r.last?fmtTime(r.last):'not yet this session';
+  showModal(`<h3>Where your work is kept</h3>
+    <div class="stor">
+      <div class="stor-row"><span>Saved in</span><b>${esc(r.where)}</b></div>
+      <div class="stor-row"><span>Last save</span><b>${esc(when)}</b></div>
+      <div class="stor-row"><span>Using</span><b>${mb(r.usage)}${r.quota?' of '+mb(r.quota):''}</b></div>
+      <div class="stor-row"><span>Kept by the browser</span>
+        <b class="${r.persisted?'ok':'warn'}">${r.persisted?'yes, it will not be cleared':'not guaranteed'}</b></div>
+      <div class="stor-row"><span>Save file</span><b>${r.file?esc(r.file):'not connected'}</b></div>
+    </div>
+    <div class="stor-note">${r.persisted
+      ? 'The browser has agreed to keep this. It still lives on this device only, so keep a save file or an export as the real backup.'
+      : 'A browser can clear an ordinary site\u2019s storage on its own, and Safari does so after about a week without a visit. Add this to your home screen or bookmark it, and connect a save file below.'}</div>
+    <div class="modal-acts">
+      <button class="btn" id="st-file">Save to a file</button>
+      <button class="btn" id="st-export">Export a copy</button>
+      <button class="btn p" id="st-close">Close</button>
+    </div>`, s=>{
+    s.querySelector('#st-close').onclick=closeModal;
+    s.querySelector('#st-file').onclick=()=>{closeModal();const b=$('#btn-file');if(b)b.click();};
+    s.querySelector('#st-export').onclick=()=>{closeModal();const b=$('#btn-export');if(b)b.click();};
+  });
+}
 function moreSheet(){
-  const util=[['export','Export'],['import','Import'],['restore','Restore'],['lock','Lock'],
+  const util=[['folders','Folders'],['storage','Where it is kept'],
+              ['sound',(S.sound===false?'Sound off':'Sound on')],
+              ['export','Export'],['import','Import'],['restore','Restore'],['lock','Lock'],
               ['file','Save to a file'],['openfile','Open a file'],['print','Print']];
   showModal(`<div class="sheet">
     <div class="sheet-h">Go to</div>
@@ -2210,6 +2430,14 @@ function moreSheet(){
       closeModal(); view=b.dataset.sgo; openCard=null; activePerson=null; activeObj=null;
       render(); window.scrollTo(0,0);});
     sc.querySelectorAll('[data-sdo]').forEach(b=>b.onclick=()=>{
+      if(b.dataset.sdo==='folders'){ closeModal(); foldersModal(); return; }
+      if(b.dataset.sdo==='storage'){ closeModal(); storageModal(); return; }
+      if(b.dataset.sdo==='sound'){
+        S.sound = S.sound===false; save();
+        flashMsg(S.sound===false?'Sound off':'Sound on',1500);
+        if(S.sound!==false) dingSend();
+        closeModal(); return;
+      }
       const id={export:'btn-export',import:'btn-import',restore:'btn-restore',lock:'btn-lock',
                 file:'btn-file',openfile:'btn-openfile',print:'btn-print'}[b.dataset.sdo];
       closeModal(); const t=document.getElementById(id); if(t) t.click();});
@@ -2430,179 +2658,230 @@ function undoLast(){
 }
 function flashMsg(t,ms){const f=$('#flash');f.textContent=t;f.classList.add('on');
   setTimeout(()=>{f.classList.remove('on');setTimeout(()=>f.textContent='Saved',300);},ms||2000);}
-function flowMobile(o){
-  const card=objCards(o).find(c=>c.group==='Flow');
-  if(!card) return '';
-  ensureSides(card);
-  const rails=card.rails;
-  const doneN=card.items.filter(i=>i.status==='done').length;
-  const body=rails.map(r=>{
-    const list=card.items.filter(i=>i.side===r.key);
-    const d=list.filter(i=>i.status==='done').length;
-    return `<div class="mfsec">
-      <div class="mfhead"><span>${esc(r.name)}</span><span class="mono">${d}/${list.length}</span></div>
-      ${list.map((it,idx)=>{
-        const cols=ownersOf(it.owner).map(personColor);
-        const nlinks=(it.files||[]).length+((it.link&&it.link.trim())?1:0);
-        const dot = it.dot
-          ? `<span class="mfdot small" style="background:${cols[0]||'#000'}"></span>`
-          : `<span class="mfdot" style="background:${cols[0]||'#e2e2e2'};${cols[1]?'box-shadow:inset -7px 0 0 '+cols[1]+';':''}"></span>`;
-        return `<div class="mfrow ${it.status==='done'?'done':''} ${it.dot?'sub':''}" data-mfrow="${it.id}">
-          <button class="mftick" data-mftick="${it.id}">${dot}</button>
-          <span class="mftxt">${esc(it.text)}</span>
-          ${nlinks?`<button class="mfchip" data-mflink="${it.id}">${nlinks} link${nlinks>1?'s':''}</button>`:''}
-          ${(it.comments&&it.comments.length)?`<button class="mfchip dark" data-mfcom="${it.id}">${it.comments.length}</button>`:''}
-          <button class="mfmore" data-mfmore="${it.id}">···</button>
-        </div>`;}).join('')||'<div class="empty" style="padding:10px 0">Nothing on this line.</div>'}
-      <button class="mfadd" data-mfadd="${card.id}:${r.key}">+ Step on ${esc(r.name)}</button>
-    </div>`;
-  }).join('');
-  return `<div class="mfbar"><span class="tiny dim">${doneN} of ${card.items.length} done</span>
-      <span class="tiny dim">Tap the dot to cross off, ··· for everything else</span></div>
-    ${body}`;
-}
-/* ================= THE TIMELINE ================= */
-/* A plan with weeks, not a chart. Everything is checkable at every depth, and a
-   parent shows how much of itself is finished. Owners are set where they were named. */
-const TL=(t,x={})=>Object.assign({id:uid(),t,o:'',done:false,k:[]},x);
-function timelineSeed(){
-  return [
-    TL('Step 1: The setup',{note:'Aug Week 1 \u2014 setup, content planning, creation and posting. '+
-      'Hold on emails and sending: the back end and front end of Instagram, Substack and the website '+
-      'should be in top shape before we send products.',k:[
-      TL('Setup, in order',{k:[
-        TL('Google search ops',{k:[
-          TL('Google Search Console',{o:'Anna'}),
-          TL('SE Ranking \u2014 pull in the info')
-        ]}),
-        TL('Website code fixing',{k:[
-          TL('Index pages'),
-          TL('Add SEO articles'),
-          TL('Reviews page'),
-          TL('Key search words')
-        ]}),
-        TL('Sponsor ads & paid ads',{k:[
-          TL('Strategy for Cheyenne'),
-          TL('Meeting with Cheyenne',{o:'Anna'})
-        ]}),
-        TL('Substack @radish',{k:[
-          TL('Set up radish'),
-          TL('Monday, acquire from tubi girl'),
-          TL('Content doc strategy \u2014 direct and fact based',{k:[
-            TL('8 SEO articles',{k:[TL('e.g. what is a gourmand')]}),
-            TL('6 Substacks, personal',{k:[
-              TL('Making a fragrance with a film'),
-              TL('CHARM sweepstakes')
-            ]})
-          ]})
-        ]}),
-        TL('TikTok @clubradish'),
-        TL('Instagram @maddiessecretedp',{k:[
-          TL('Link back to Maddie\u2019s Secret EDP')
-        ]}),
-        TL('radish website',{k:[
-          TL('At least a blurb and email acquisition'),
-          TL('Clean up the Instagram and the links')
-        ]})
+/* ================= ASSIGNMENTS ================= */
+/* One brief per person, kept apart from the shared lists. Everything is checkable
+   at any depth, and ticking a heading ticks what sits under it. */
+let assignWho=null;
+const AS=(t,x={})=>Object.assign({id:uid(),t,note:'',done:false,k:[]},x);
+
+function assignSeed(){
+  return {Ruby:[
+    AS('Planning & organising',{k:[
+      AS('Figma board, the Maddie\u2019s Secret aesthetic',{note:'Start it, show Deb, then share with Marta.',k:[
+        AS('Marta begins exploring the radish logo'),
+        AS('Marta begins the Maddie\u2019s Secret social nine')
       ]}),
-      TL('Content & posting',{k:[
-        TL('Plan out the content strategy'),
-        TL('2 videos \u2014 Instagram, TikTok'),
-        TL('2 SEO articles \u2014 website'),
-        TL('2 Substack intros')
-      ]}),
-      TL('CHARM, gifting, sweepstakes & press strategy',{k:[
-        TL('Once everything looks great and is set up right'),
-        TL('CHARM and capsule as the entry point for the email blast')
+      AS('Content doc ideas and social planning',{note:'e.g. Ruby goes to Luckyscent.'}),
+      AS('Outreach & gifting doc, on paper'),
+      AS('CHARM, Deb and Ruby'),
+      AS('Do a shoot again')
+    ]}),
+    AS('Content library',{k:[
+      AS('Videos'),
+      AS('Pictures of the bottle, focus'),
+      AS('Editing')
+    ]}),
+    AS('Writing, website SEO',{k:[
+      AS('What is a gourmand',{note:'Week 1'}),
+      AS('Anti-vanilla gourmand',{note:'Week 1'}),
+      AS('Other ideas',{k:[
+        AS('What is a gourmand fragrance'),
+        AS('What is niche fragrance'),
+        AS('What is a skin scent'),
+        AS('History of the gourmand'),
+        AS('Chocolate milk perfumes'),
+        AS('How to layer fragrance'),
+        AS('Actors & fragrances'),
+        AS('When a film makes a fragrance'),
+        AS('Rice in perfume'),
+        AS('Pistachio and nut gourmands, crazy')
       ]})
     ]}),
-    TL('Aug Week 2 \u2014 CHARM, gift & press strategy')
-  ];
+    AS('Substack, personal, from radish',{k:[
+      AS('Welcome, what this is',{note:'Week 1'}),
+      AS('Making a fragrance with a film',{note:'Week 1 \u00b7 Ruby + Deb'}),
+      AS('CHARM sweepstakes',{note:'Week 2, the blast'}),
+      AS('Against the vanilla monoculture'),
+      AS('Marissa Q&A + the LA video'),
+      AS('When food trends eat perfume, with the Dubai pistachio guy')
+    ]})
+  ]};
 }
-function normTimeline(o){
-  if(!o.timeline){
-    o.timeline = (o.title||'').toLowerCase().includes('maddie') ? timelineSeed() : [];
-  }
-  return o.timeline;
+function normAssign(o){
+  if(!o.assign) o.assign = (o.title||'').toLowerCase().includes('maddie') ? assignSeed() : {};
+  return o.assign;
 }
-const tlWalk=(nodes,fn)=>{ (nodes||[]).forEach(n=>{ fn(n); tlWalk(n.k,fn); }); };
-function tlFind(nodes,id){
-  for(const n of nodes||[]){
-    if(n.id===id) return n;
-    const hit=tlFind(n.k,id);
-    if(hit) return hit;
-  }
+const asWalk=(ns,fn)=>{ (ns||[]).forEach(n=>{ fn(n); asWalk(n.k,fn); }); };
+function asFind(ns,id){
+  for(const n of ns||[]){ if(n.id===id) return n; const hit=asFind(n.k,id); if(hit) return hit; }
   return null;
 }
-function tlCount(n){
+function asCount(ns){
   let done=0,total=0;
-  tlWalk(n.k,x=>{ if(!x.k.length){ total++; if(x.done) done++; } });
-  if(!n.k.length){ total=1; done=n.done?1:0; }
+  asWalk(ns,n=>{ if(!n.k.length){ total++; if(n.done) done++; } });
   return {done,total};
 }
-function viewTimeline(o){
-  const tl=normTimeline(o);
-  if(!tl.length) return '<div class="empty">Nothing planned here yet.</div>';
+function assignTotals(o){
+  const a=normAssign(o);
+  let done=0,total=0;
+  Object.keys(a).forEach(k=>{ const c=asCount(a[k]); done+=c.done; total+=c.total; });
+  return {done,total};
+}
+function viewAssign(o){
+  const a=normAssign(o);
+  const who=Object.keys(a).filter(k=>(a[k]||[]).length);
+  const others=names().filter(n=>!who.includes(n));
+  if(!who.length) return '<div class="empty">No briefs yet.</div>';
+  const cur = who.includes(assignWho) ? assignWho : who[0];
+  const list = a[cur]||[];
+  const c = asCount(list);
 
   const node=(n,depth)=>{
-    const c=tlCount(n), leaf=!n.k.length;
-    const off=leaf?n.done:(c.total>0&&c.done===c.total);
-    return `<div class="tl-n d${Math.min(depth,3)} ${off?'off':''}" ${n.o?`style="--pc:${personColor(n.o)}"`:''}>
-      <div class="tl-row">
-        <button class="check ${n.o?'owned':''} ${off?'on':''}" data-tl="${o.id}:${n.id}"
-          title="${esc(n.o||'Nobody yet')}"></button>
-        <span class="tl-t">${esc(n.t)}</span>
-        ${n.o?`<span class="tl-o">${esc(n.o)}</span>`:''}
-        ${!leaf?`<span class="tl-c">${c.done}/${c.total}</span>`:''}
+    const kids=n.k||[];
+    const sub=kids.length?asCount([n]):null;
+    const off = kids.length ? (sub.total>0&&sub.done===sub.total) : n.done;
+    return `<div class="as-n d${Math.min(depth,2)} ${off?'off':''}">
+      <div class="as-row">
+        <button class="check ${off?'on':''}" data-as="${o.id}:${cur}:${n.id}"></button>
+        <span class="as-t">${esc(n.t)}</span>
+        ${kids.length?`<span class="as-c">${sub.done}/${sub.total}</span>`:''}
       </div>
-      ${n.note?`<div class="tl-note">${esc(n.note)}</div>`:''}
-      ${n.k.length?`<div class="tl-kids">${n.k.map(x=>node(x,depth+1)).join('')}</div>`:''}
+      ${n.note?`<div class="as-note">${esc(n.note)}</div>`:''}
+      ${kids.length?`<div class="as-kids">${kids.map(x=>node(x,depth+1)).join('')}</div>`:''}
     </div>`;
   };
-  const all=tlCount({k:tl});
-  return `<div class="tl">
-    <div class="tl-head">August<span>${all.done}/${all.total} done</span></div>
-    ${tl.map(n=>node(n,0)).join('')}
+
+  return `<div class="as">
+    <div class="as-tabs">
+      ${who.map(n=>`<button class="as-tab ${n===cur?'on':''}" data-aswho="${esc(n)}"
+        style="--pc:${personColor(n)}" title="${esc(n)}"><i>${esc(initials(n))}</i></button>`).join('')}
+      ${others.length?`<button class="as-tab add" data-asnew="1" title="Another brief">+</button>`:''}
+    </div>
+    <div class="as-head"><i class="as-dot" style="--pc:${personColor(cur)}"></i>${esc(cur)}, week one
+      <span>${c.done}/${c.total} done</span></div>
+    ${list.map(n=>node(n,0)).join('')}
   </div>`;
 }
 
-function flowTodo(o){
-  const card=objCards(o).find(c=>c.group==='Flow');
-  if(!card) return '';
-  const all=card.items||[];
-  const open=all.filter(i=>i.status!=='done');
-  const doneAll=all.filter(i=>i.status==='done').sort((a,b)=>(b.doneAt||0)-(a.doneAt||0));
-  if(!all.length) return '';
-
-  /* group by whoever it is on, unassigned last */
-  const names=[...new Set(open.map(i=>i.owner||''))]
+/* ================= CONTENT IDEAS ================= */
+/* Somewhere to put an idea before it is a task. Each one carries where it goes
+   and whose it is; tap either to change it. Made ones drop to the bottom. */
+const CHANNELS=['Instagram','TikTok','Substack','SEO','Press','Film'];
+const IDEA=(text,x={})=>Object.assign({id:uid(),text,owner:'',channel:'',made:false},x);
+function ideaSeed(){
+  return [
+    IDEA('What is a gourmand',{channel:'SEO'}),
+    IDEA('Making a fragrance with a film',{channel:'Substack',owner:'Deb'}),
+    IDEA('CHARM sweepstakes',{channel:'Substack'}),
+    IDEA('Link back to the EDP',{channel:'Instagram',owner:'Anna'}),
+    IDEA('Two videos, cut from the shoot',{channel:'TikTok',owner:'Ruby'}),
+    IDEA('Events ideas',{owner:'Anna'})
+  ];
+}
+function normIdeas(o){
+  if(!o.ideas) o.ideas = (o.title||'').toLowerCase().includes('maddie') ? ideaSeed() : [];
+  return o.ideas;
+}
+function ideaCount(o){
+  const l=normIdeas(o);
+  return {made:l.filter(i=>i.made).length,total:l.length};
+}
+function viewIdeas(o){
+  const list=normIdeas(o);
+  const open=list.filter(i=>!i.made);
+  const made=list.filter(i=>i.made);
+  const byPerson=[...new Set(open.map(i=>i.owner||''))]
     .sort((a,b)=>(a?0:1)-(b?0:1)||a.localeCompare(b));
-  const doneN=doneAll.length;
-  const line=(i,n)=>`<div class="tdy-row ${i.status==='done'?'off':''}">
-    <button class="check ${i.flag?'flag':''} ${n?'owned':''} ${i.status==='done'?'on':''}"
-      data-tog="${card.id}:${i.id}" title="${esc(n||'Nobody yet')}"></button>
-    <div class="tdy-t">${esc(i.text)}</div>
+
+  const row=i=>`<div class="id-row ${i.made?'off':''}" ${i.owner?`style="--pc:${personColor(i.owner)}"`:''}>
+    <button class="check ${i.owner?'owned':''} ${i.made?'on':''}" data-idea="${o.id}:${i.id}"
+      title="${esc(i.owner||'Nobody yet')}"></button>
+    <span class="id-t" data-idedit="${o.id}:${i.id}">${esc(i.text)}</span>
+    <button class="id-ch" data-idch="${o.id}:${i.id}">${esc(i.channel||'where?')}</button>
+    <button class="id-o ${i.owner?'has':''}" data-idow="${o.id}:${i.id}"
+      title="${esc(i.owner||'Nobody yet')}">${i.owner?esc(initials(i.owner)):'+'}</button>
+    <button class="id-x" data-iddel="${o.id}:${i.id}" aria-label="Remove">&times;</button>
   </div>`;
 
-  return `<div class="ftd">
-    <div class="ftd-h">What the chart is asking for
-      <span>${open.length} open${doneN?` \u00b7 ${doneN} done`:''}</span></div>
-    ${names.map(n=>{
+  return `<div class="id">
+    <div class="id-add">
+      <input id="id-new" placeholder="An idea\u2026">
+      <button class="btn p sm" id="id-put">Add</button>
+    </div>
+    ${byPerson.map(n=>{
       const mine=open.filter(i=>(i.owner||'')===n);
-      return `<div class="ftd-p" ${n?`style="--pc:${personColor(n)}"`:''}>
-        <div class="ftd-name">${n?`<i></i>${esc(n)}`:'<i class="none"></i>Nobody yet'}
-          <b>${mine.length}</b></div>
-        <div class="ftd-rows">${mine.map(i=>line(i,n)).join('')}</div>
+      return `<div class="id-grp" ${n?`style="--pc:${personColor(n)}"`:''}>
+        <div class="id-name">${n?`<i></i>${esc(n)}`:'<i class="none"></i>Nobody yet'}<b>${mine.length}</b></div>
+        ${mine.map(row).join('')}
       </div>`;
     }).join('')}
-    ${doneN?`<div class="ftd-p done">
-      <div class="ftd-name"><i class="none"></i>Done<b>${doneN}</b></div>
-      <div class="ftd-rows">${doneAll.map(i=>line(i,i.owner||'')).join('')}</div>
-    </div>`:''}
+    ${made.length?`<div class="id-grp done">
+      <div class="id-name"><i class="none"></i>Made<b>${made.length}</b></div>
+      ${made.map(row).join('')}</div>`:''}
+    ${!list.length?'<div class="empty">No ideas yet. Put one in above.</div>':''}
   </div>`;
 }
+function ideaFind(oid,iid){
+  const o=S.objectives.find(x=>x.id===oid); if(!o) return {};
+  return {o,i:(o.ideas||[]).find(x=>x.id===iid)};
+}
+
+/* ================= THE TIMELINE ================= */
+/* Not a separate list. This is the chart read top to bottom: each rail is a phase,
+   each hero circle is a step, and the small dots beneath it are its parts. The
+   checkboxes are the chart's own items, so ticking here ticks there. */
+function flowGroups(card){
+  ensureSides(card);
+  const out=[];
+  (card.rails||[]).forEach(r=>{
+    const list=(card.items||[]).filter(i=>i.side===r.key);
+    const steps=[];
+    list.forEach(it=>{
+      if(it.dot && steps.length) steps[steps.length-1].parts.push(it);
+      else steps.push({head:it,parts:[]});
+    });
+    if(list.length) out.push({rail:r,steps,list});
+  });
+  return out;
+}
+function viewTimeline(o){
+  const card=objCards(o).find(c=>c.group==='Flow');
+  if(!card) return '';
+  const groups=flowGroups(card);
+  if(!groups.length) return '<div class="empty">Nothing on the chart yet.</div>';
+
+  const all=card.items||[];
+  const doneN=all.filter(i=>i.status==='done').length;
+
+  const line=(it,cls)=>{
+    const cols=ownersOf(it.owner);
+    const off=it.status==='done';
+    return `<div class="tl-row ${cls} ${off?'off':''}" ${cols[0]?`style="--pc:${personColor(cols[0])}"`:''}>
+      <button class="check ${it.flag?'flag':''} ${cols[0]?'owned':''} ${off?'on':''}"
+        data-tog="${card.id}:${it.id}" title="${esc(it.owner||'Nobody yet')}"></button>
+      <span class="tl-t">${esc(it.text)}</span>
+      ${it.owner?`<span class="tl-o">${esc(it.owner)}</span>`:''}
+    </div>`;
+  };
+
+  return `<div class="tl">
+    <div class="tl-head">${esc(card.kicker||'The plan')}<span>${doneN}/${all.length} done</span></div>
+    ${groups.map(g=>{
+      const d=g.list.filter(i=>i.status==='done').length;
+      return `<div class="tl-rail">
+        <div class="tl-rname">${esc(g.rail.name)}<b>${d}/${g.list.length}</b></div>
+        ${g.steps.map(s=>`<div class="tl-step">
+          ${line(s.head,'head')}
+          ${s.parts.length?`<div class="tl-parts">${s.parts.map(x=>line(x,'part')).join('')}</div>`:''}
+        </div>`).join('')}
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
 function flowHTML(o){
-  if(isMobile()) return flowMobile(o);
+  /* the chart itself renders everywhere now. On a phone it sits in a frame you
+     scroll sideways, which is what the note under it has always said. */
   const card=objCards(o).find(c=>c.group==='Flow');
   if(!card) return '';
   ensureSides(card);
@@ -2937,10 +3216,14 @@ function viewObjective(id){
       +funnelBody(o)});
   /* the funnel says what we are doing, the to do is what it turns into,
      the flow is how the project runs, folders are where it ends up */
-  const tl=normTimeline(o);
-  if(tl.length){ const c=tlCount({k:tl});
-    secs.push({k:'time',t:'Timeline',m:`${c.done}/${c.total}`,h:()=>viewTimeline(o)}); }
-  if(flowCards.length) secs.push({k:'flow',t:'Project flow',m:cnt(flowCards),h:()=>flowHTML(o)+flowTodo(o)});
+  if(flowCards.length) secs.push({k:'time',t:'The chart, in order',m:cnt(flowCards),h:()=>viewTimeline(o)});
+  {const c=ideaCount(o);
+   if(c.total) secs.push({k:'ideas',t:'Content ideas',
+     m:`${c.made}/${c.total}`,h:()=>viewIdeas(o)});}
+  {const c=assignTotals(o);
+   if(c.total) secs.push({k:'assign',t:'To do',
+     m:`${c.done}/${c.total}`,h:()=>viewAssign(o)});}
+  if(flowCards.length) secs.push({k:'flow',t:'Sequential timeline',m:cnt(flowCards),h:()=>flowHTML(o)});
   if(pipe) secs.push({k:'pipe',t:'What is coming in',m:'',h:()=>pipeBlock});
   secs.push({k:'folders',t:'Folders',m:'',h:()=>foldersBody(o)});
 
@@ -3008,7 +3291,7 @@ function viewFocus(){
   else if(filterOwner) items=items.filter(i=>i.owner===filterOwner);
   if(q){const s=q.toLowerCase();items=items.filter(i=>i.text.toLowerCase().includes(s));}
 
-  /* who has what — the row of names you tap to narrow the day */
+  /* who has what: the row of names you tap to narrow the day */
   const chatAll=openFromChat();
   const countFor=n=>n==='__none__'
     ? all.filter(i=>!i.owner).length + chatAll.filter(m=>!msgOwner(m)).length
@@ -3122,7 +3405,7 @@ function tagRow(id,cur,flagged,pinned,owner){
     <span class="whol">For</span>
     ${S.people.map(pp=>`<button data-setowner="${id}:${esc(pp.name)}" title="${esc(pp.name)}"
       class="wav ${owner===pp.name?'on':''}" style="--pc:${pp.color||DEFCOL}">${esc(initials(pp.name))}</button>`).join('')}
-    <button data-setowner="${id}:" class="wav none ${!owner?'on':''}" title="Nobody">\u2014</button>
+    <button data-setowner="${id}:" class="wav none ${!owner?'on':''}" title="Nobody">none</button>
   </div>`;
 }
 function filterChips(){
@@ -3398,7 +3681,7 @@ async function addMedia(files,mode,at){
   if(mode==='message'){
     const tid=S.dockThread||'t-main';
     made.forEach(id=>broadcastMsg(postLog('',S.me,tid,id)));
-    autoReply(tid);
+   
     saveA(); save(); renderDock();
     flashMsg(made.length>1?`${made.length} sent`:'Sent',1400);
     return;
@@ -3957,9 +4240,9 @@ function wire(){
       const c=S.cards.find(x=>x.id===cid); if(!c)return;
       const t=prompt('What is the step?'); if(!t)return;
       c.items.push(P(t.trim(),'',{side:key})); save(); render();});
-    return;
+  } else {
+    wireFlowDrag();
   }
-  wireFlowDrag();
   (function(){
     const svg=document.querySelector('.flowwrap svg'); if(!svg) return;
     const vb=svg.getAttribute('viewBox').split(' ').map(Number);
@@ -4195,14 +4478,61 @@ function wire(){
     it.status=it.status==='done'?'todo':'done';
     it.doneAt=it.status==='done'?Date.now():0;
     save();render();});
-  document.querySelectorAll('[data-tl]').forEach(b=>b.onclick=()=>{
-    const [oid,nid]=b.dataset.tl.split(':');
+  {
+    const put=$('#id-put'), inp=$('#id-new');
+    if(put&&inp){
+      const add=()=>{ const v=inp.value.trim(); if(!v) return;
+        const o=S.objectives.find(x=>x.id===activeObj); if(!o) return;
+        normIdeas(o).unshift(IDEA(v)); save(); render();
+        const f=$('#id-new'); if(f) f.focus(); };
+      put.onclick=add;
+      inp.onkeydown=e=>{ if(e.key==='Enter'){e.preventDefault();add();} };
+    }
+  }
+  document.querySelectorAll('[data-aswho]').forEach(b=>b.onclick=()=>{
+    assignWho=b.dataset.aswho; render();});
+  document.querySelectorAll('[data-asnew]').forEach(b=>b.onclick=()=>{
+    const o=S.objectives.find(x=>x.id===activeObj); if(!o) return;
+    const a=normAssign(o);
+    const left=names().filter(n=>!(a[n]||[]).length);
+    const n=prompt('A brief for who?  '+left.join(', '),left[0]||'');
+    if(!n||!names().includes(n)) return;
+    a[n]=[AS('Planning & organising',{k:[AS('First thing')]})];
+    assignWho=n; save(); render();});
+  document.querySelectorAll('[data-as]').forEach(b=>b.onclick=()=>{
+    const [oid,who,nid]=b.dataset.as.split(':');
     const o=S.objectives.find(x=>x.id===oid); if(!o) return;
-    const n=tlFind(o.timeline,nid); if(!n) return;
+    const n=asFind((o.assign||{})[who],nid); if(!n) return;
     const next=!n.done;
     n.done=next;
-    tlWalk(n.k,x=>{ x.done=next; });   /* checking a heading checks what is under it */
+    asWalk(n.k,x=>{ x.done=next; });
     save(); render();});
+  document.querySelectorAll('[data-idea]').forEach(b=>b.onclick=()=>{
+    const [oid,iid]=b.dataset.idea.split(':');
+    const {i}=ideaFind(oid,iid); if(!i) return;
+    i.made=!i.made; save(); render();});
+  document.querySelectorAll('[data-idch]').forEach(b=>b.onclick=()=>{
+    const [oid,iid]=b.dataset.idch.split(':');
+    const {i}=ideaFind(oid,iid); if(!i) return;
+    const order=['',...CHANNELS];
+    i.channel=order[(order.indexOf(i.channel||'')+1)%order.length];
+    save(); render();});
+  document.querySelectorAll('[data-idow]').forEach(b=>b.onclick=()=>{
+    const [oid,iid]=b.dataset.idow.split(':');
+    const {i}=ideaFind(oid,iid); if(!i) return;
+    const order=['',...names()];
+    i.owner=order[(order.indexOf(i.owner||'')+1)%order.length];
+    save(); render();});
+  document.querySelectorAll('[data-idedit]').forEach(b=>b.onclick=()=>{
+    const [oid,iid]=b.dataset.idedit.split(':');
+    const {i}=ideaFind(oid,iid); if(!i) return;
+    const t=prompt('The idea',i.text); if(t===null) return;
+    if(t.trim()){ i.text=t.trim(); save(); render(); }});
+  document.querySelectorAll('[data-iddel]').forEach(b=>b.onclick=()=>{
+    const [oid,iid]=b.dataset.iddel.split(':');
+    const {o,i}=ideaFind(oid,iid); if(!o||!i) return;
+    snap('idea'); o.ideas=o.ideas.filter(x=>x.id!==iid); save(); render();
+    flashMsg('Removed. Cmd Z to undo',2000);});
   document.querySelectorAll('[data-tog2]').forEach(b=>b.onclick=()=>{const it=S.cards.find(c=>c.id===openCard).items.find(i=>i.id===b.dataset.tog2);
     it.status=it.status==='done'?'todo':'done';
     it.doneAt=it.status==='done'?Date.now():0;
@@ -4279,6 +4609,66 @@ function wire(){
   document.querySelectorAll('[data-person-page]').forEach(b=>b.onclick=()=>{
     profileWho=b.getAttribute('data-person-page'); profileDay=null; view='profile';
     openCard=null; activePerson=null; render(); window.scrollTo(0,0);});
+  document.querySelectorAll('[data-fgo]').forEach(b=>b.onclick=()=>{
+    folderAt=b.dataset.fgo; render(); window.scrollTo(0,0);});
+  document.querySelectorAll('[data-fopen]').forEach(b=>b.onclick=()=>{
+    folderAt=b.dataset.fopen; render(); window.scrollTo(0,0);});
+  document.querySelectorAll('[data-aopen]').forEach(b=>b.onclick=()=>openLight(b.dataset.aopen));
+  {
+    const nf=$('#fv-new');
+    if(nf) nf.onclick=()=>{ const n=prompt('Name the folder'); if(!n) return;
+      newFolder(n,folderAt); render(); };
+    const nl=$('#fv-link');
+    if(nl) nl.onclick=()=>{ const u=prompt('Paste the link'); if(!u) return;
+      const l=prompt('Call it what?',''); addFolderLink(folderAt,l,u); render(); };
+  }
+  document.querySelectorAll('[data-fldrop2]').forEach(b=>b.onclick=()=>{
+    const [fid,lid]=b.dataset.fldrop2.split(':'); dropFolderLink(fid,lid); render();});
+
+  /* double click a name to rewrite it, in place */
+  document.querySelectorAll('[data-fname]').forEach(el=>{
+    el.ondblclick=()=>{
+      const id=el.dataset.fname, was=el.textContent.trim();
+      el.contentEditable='true'; el.classList.add('editing'); el.focus();
+      try{ const r=document.createRange(); r.selectNodeContents(el);
+        const s=getSelection(); s.removeAllRanges(); s.addRange(r); }catch(_){}
+      const done=save_=>{
+        el.contentEditable='false'; el.classList.remove('editing');
+        const v=el.textContent.trim();
+        if(save_&&v&&v!==was){ renameFolder(id,v); render(); } else el.textContent=was;
+      };
+      el.onblur=()=>done(true);
+      el.onkeydown=e=>{
+        if(e.key==='Enter'){ e.preventDefault(); el.blur(); }
+        if(e.key==='Escape'){ e.preventDefault(); el.onblur=null; done(false); }
+      };
+    };
+  });
+
+  /* drag a folder or a picture onto a folder to move it in */
+  document.querySelectorAll('[data-fdrag],[data-adrag]').forEach(el=>{
+    el.addEventListener('dragstart',e=>{
+      const kind=el.dataset.fdrag?'f':'a';
+      const id=el.dataset.fdrag||el.dataset.adrag;
+      try{ e.dataTransfer.setData('text/plain',kind+':'+id); }catch(_){}
+      e.dataTransfer.effectAllowed='move';
+      el.classList.add('dragging');
+    });
+    el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+  });
+  document.querySelectorAll('[data-fdrop]').forEach(el=>{
+    el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('over');});
+    el.addEventListener('dragleave',()=>el.classList.remove('over'));
+    el.addEventListener('drop',e=>{
+      e.preventDefault(); el.classList.remove('over');
+      let d=''; try{ d=e.dataTransfer.getData('text/plain'); }catch(_){}
+      const to=el.dataset.fdrop, kind=d.slice(0,1), id=d.slice(2);
+      if(!id) return;
+      if(kind==='f'){ if(!moveFolder(id,to)) return flashMsg('A folder cannot go inside itself',2200); }
+      else fileAsset(id,to);
+      render();
+    });
+  });
   document.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{
     liveMedia=b.dataset.lv==='media'; liveStick=true; render();});
   document.querySelectorAll('[data-fold]').forEach(b=>b.onclick=()=>{
@@ -4481,46 +4871,129 @@ function renderDock(){
   panel.hidden=!S.dockOpen;
   $('#dock-pill').style.display=S.dockOpen?'none':'flex';
   if(!S.dockOpen) return;
+  if(composeMode){ renderCompose(); return; }
   const t=S.dockThread?thread(S.dockThread):null;
   if(S.dockThread&&!t){S.dockThread=null;}
   t?renderThread(thread(S.dockThread)):renderThreadList();
 }
 
+let composeMode=false, composeTo=[], composeQ='';
+
+/* Tap the pencil and this is what you get: a To field with the cursor in it.
+   Type a person or a project, pick it, write the message, send. The thread is
+   made on send, not before, so backing out leaves nothing behind. */
+function composeMatches(){
+  const q=composeQ.trim().toLowerCase();
+  const out=[];
+  names().filter(n=>n!==S.me&&!composeTo.some(x=>x.k==='p'&&x.v===n))
+    .filter(n=>!q||n.toLowerCase().includes(q))
+    .forEach(n=>out.push({k:'p',v:n,label:n,sub:(personBy(n)||{}).role||''}));
+  if(!composeTo.length){
+    S.threads.filter(t=>!t.dm).filter(t=>{
+      const nm=threadName(t).toLowerCase();
+      return !q||nm.includes(q);
+    }).forEach(t=>out.push({k:'t',v:t.id,label:threadName(t),sub:(t.members||[]).join(', ')}));
+  }
+  return out.slice(0,12);
+}
+function renderCompose(){
+  $('#list-foot').hidden=true; $('#dock-foot').hidden=false; $('#dock-hint').hidden=true;
+  $('#im-head').innerHTML=`<button class="im-back" id="cm-cancel">\u2039</button>
+    <span class="ttl">New message</span><button id="im-close" title="Close">Done</button>`;
+  $('#im-close').onclick=closeDock;
+  $('#cm-cancel').onclick=()=>{ composeMode=false; composeTo=[]; composeQ=''; renderDock(); };
+
+  const sug=composeMatches();
+  $('#im-body').innerHTML=`<div class="cm">
+    <div class="cm-to">
+      <span class="cm-lab">To</span>
+      <span class="cm-pills">${composeTo.map((x,n)=>`<button class="cm-pill" data-cmdrop="${n}"
+        ${x.k==='p'?`style="--pc:${personColor(x.v)}"`:''}>${esc(x.label)} <i>&times;</i></button>`).join('')}</span>
+      <input id="cm-q" placeholder="${composeTo.length?'':'Name or project'}" value="${esc(composeQ)}">
+    </div>
+    <div class="cm-sug">${sug.length?sug.map(s=>`
+      <button class="cm-row" data-cmpick="${s.k}:${esc(String(s.v))}">
+        ${s.k==='p'?`<span class="cm-av" style="--pc:${personColor(s.v)}">${esc(initials(s.v))}</span>`
+                   :`<span class="cm-av grp">#</span>`}
+        <span class="cm-n"><b>${esc(s.label)}</b>${s.sub?`<span>${esc(s.sub)}</span>`:''}</span>
+      </button>`).join(''):`<div class="cm-none">Nobody by that name.</div>`}</div>
+  </div>`;
+
+  const q=$('#cm-q');
+  q.oninput=()=>{ composeQ=q.value; renderCompose(); };
+  q.onkeydown=e=>{
+    if(e.key==='Enter'){ e.preventDefault();
+      const first=composeMatches()[0];
+      if(first) pickCompose(first.k, String(first.v));
+    }
+    if(e.key==='Backspace'&&!q.value&&composeTo.length){
+      composeTo.pop(); composeQ=''; renderCompose();
+    }
+  };
+  setTimeout(()=>{ try{ q.focus(); q.setSelectionRange(q.value.length,q.value.length); }catch(_){} },30);
+
+  $('#im-body').querySelectorAll('[data-cmpick]').forEach(b=>b.onclick=()=>{
+    const s=b.dataset.cmpick; const i=s.indexOf(':');
+    pickCompose(s.slice(0,i), s.slice(i+1));});
+  $('#im-body').querySelectorAll('[data-cmdrop]').forEach(b=>b.onclick=()=>{
+    composeTo.splice(+b.dataset.cmdrop,1); renderCompose();});
+
+  const inp=$('#dock-in');
+  inp.placeholder = composeTo.length ? 'Message' : 'Pick who it goes to first';
+  inp.disabled = !composeTo.length;
+}
+function pickCompose(kind,val){
+  if(kind==='t'){                       /* an existing project thread: just open it */
+    composeMode=false; composeTo=[]; composeQ='';
+    openThread(val); return;
+  }
+  composeTo.push({k:'p',v:val,label:val});
+  composeQ='';
+  renderCompose();
+}
+/* called by the composer when there is something to send */
+function composeSend(text){
+  const people=composeTo.filter(x=>x.k==='p').map(x=>x.v);
+  if(!people.length) return null;
+  const members=[S.me,...people];
+  /* one person means their DM, not any group that happens to hold the two of us */
+  let t = people.length===1
+    ? S.threads.find(x=>x.dm&&x.members.includes(people[0]))
+    : S.threads.find(x=>!x.dm&&x.members.length===members.length&&
+        members.every(m=>x.members.includes(m)));
+  if(!t){
+    t=people.length===1
+      ? {id:uid(),dm:true,name:people[0],members}
+      : {id:uid(),dm:false,name:people.join(' & '),members};
+    S.threads.push(t);
+  }
+  composeMode=false; composeTo=[]; composeQ='';
+  S.dockThread=t.id;
+  return t.id;
+}
+
 function renderThreadList(){
   $('#dock-foot').hidden=true; $('#dock-hint').hidden=true; $('#list-foot').hidden=false;
   $('#im-head').innerHTML=`<span class="ttl big">Messages</span>
-    <span class="sub">as</span><i class="mesw" style="--pc:${personColor(S.me)}"></i>
+    <button class="me-open" id="me-page" title="Your page"
+      style="--pc:${personColor(S.me)}">${esc(initials(S.me))}</button>
+    <span class="sub">as</span>
     <select class="who-sel" id="im-as">${names().map(n=>`<option ${S.me===n?'selected':''}>${esc(n)}</option>`).join('')}</select>
-    <button id="im-away" class="awaybtn ${statusOf(S.me).away?'on':''}" title="Set an away message">${
-      statusOf(S.me).away?'Away':'Available'}</button>
-    <button id="im-new" title="New message">✎</button><button id="im-close" title="Close">Done</button>`;
+    <button id="im-close" title="Close">Done</button>`;
   const rows=[...S.threads].map(t=>{
     const ms=threadMsgs(t.id), last=ms[ms.length-1], un=threadUnread(t);
     if(imQ){const s=imQ.toLowerCase();
       if(!(threadName(t).toLowerCase().includes(s)||ms.some(m=>m.text.toLowerCase().includes(s)))) return '';}
     return {t,last,un,sort:last?last.ts:0};
   }).filter(Boolean).sort((a,b)=>b.sort-a.sort);
-  const mine=statusOf(S.me);
-  const mestrip=`<div class="mestrip ${mine.away?'away':''}">
-    <span class="me-av" style="--pc:${personColor(S.me)}">${esc(initials(S.me))}</span>
-    <button class="me-txt" id="me-page">
-      <b>${esc(handleOf(S.me))}</b>
-      <span>${mine.away?esc(mine.text):'Available \u00b7 open your page'}</span>
-    </button>
-    <button class="me-set" id="me-status" title="Set an away message">\u22ef</button>
-    <button class="me-dice" id="me-dice" title="Give me an away message">\u21bb</button>
-    ${mine.away?`<button class="me-back" id="me-back">I\u2019m back</button>`:''}
-  </div>`;
-  $('#im-body').innerHTML=mestrip+`<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
+  $('#im-body').innerHTML=`<div class="im-list">`+(rows.length?rows.map(({t,last,un})=>`
     <div class="swipe ${rowOpen===t.id?'open':''}" data-row="${t.id}">
       <button class="rowdel" data-delthread="${t.id}" aria-label="Delete conversation">&times;</button>
-      <button class="trow ${un?'unread':''} ${(t.members||[]).some(n=>n!==S.me&&statusOf(n).away)?'isaway':''}" data-thread="${t.id}">
+      <button class="trow ${un?'unread':''}" data-thread="${t.id}">
         ${avatarHTML(t)}
         <span style="overflow:hidden">
           <span class="tname">${esc(threadName(t))}</span>
-          <span class="tprev">${(()=>{const o=t.dm?t.members.find(n=>n!==S.me):null;
-              const st=o?statusOf(o):null;
-              return (st&&st.away)?`<i class="awaydot"></i><em class="awaylbl">${esc(st.text)}</em>`:'';})()}${typingIn(t.id).length
+          <span class="tprev">${typingIn(t.id).length
             ? `<i class="mesw" style="--pc:${personColor(typingIn(t.id)[0])}"></i><em class="typinglbl">${esc(typingIn(t.id).join(' and '))} typing\u2026</em>`
             : (last?`<i class="mesw" style="--pc:${personColor(last.author)}"></i>`+esc((last.author===S.me?'You: ':(t.dm?'':last.author+': '))+last.text).slice(0,60):'No messages yet')}</span>
         </span>
@@ -4529,20 +5002,10 @@ function renderThreadList(){
     </div>`).join(''):`<div class="im-empty">No conversations match.</div>`)+`</div>`;
 
   $('#im-as').onchange=e=>{S.me=e.target.value;save();renderDock();};
-  $('#im-away').onclick=awayModal;
   $('#im-close').onclick=closeDock;
-  $('#im-new').onclick=newThreadModal;
-  $('#im-compose').onclick=newThreadModal;
-  $('#me-status').onclick=awayModal;
+  $('#im-compose').onclick=()=>{ composeMode=true; composeTo=[]; composeQ=''; renderDock(); };
   $('#me-page').onclick=()=>{ profileWho=S.me; profileDay=null; view='profile';
     S.dockOpen=false; save(); renderDock(); render(); window.scrollTo(0,0); };
-  $('.mestrip .me-av').onclick=()=>{ profileWho=S.me; profileDay=null; view='profile';
-    S.dockOpen=false; save(); renderDock(); render(); window.scrollTo(0,0); };
-  $('#me-dice').onclick=()=>{
-    const cur=statusOf(S.me);
-    setStatus(S.me,true,quirk(cur.away?cur.text:''));
-    flashMsg('Away · '+statusOf(S.me).text,2600);};
-  const mb=$('#me-back'); if(mb) mb.onclick=()=>{setStatus(S.me,false,'');flashMsg('You are back',1600);};
   $('#im-body').querySelectorAll('[data-thread]').forEach(b=>b.onclick=()=>{
     if(rowOpen){ rowOpen=null; renderDock(); return; }
     openThread(b.dataset.thread);});
@@ -4606,12 +5069,6 @@ function renderThread(t){
     if(tail&&mine&&i===ms.length-1) html+=`<div class="receipt">Delivered</div>`;
     lastStamp=Math.max(lastStamp,m.ts);
   });
-  const otherAway=(t.members||[]).filter(n=>n!==S.me&&statusOf(n).away);
-  const awaybar=otherAway.length?`<div class="awaybar">${otherAway.map(n=>{
-    const st=statusOf(n);
-    return `<div class="awayrow" style="--pc:${personColor(n)}"><i></i>
-      <b>${esc(n)} is away</b> ${esc(st.text)}
-      <span class="dim">${awaySince(st)?'· '+awaySince(st):''}</span></div>`;}).join('')}</div>`:'';
   const pins=pinnedIn(t.id);
   const pinbar=pins.length?`<div class="pinbar">
     <div class="pinbar-h">Pinned · ${pins.length}</div>
@@ -4623,7 +5080,7 @@ function renderThread(t){
   </div>`:'';
   const typers=typingIn(t.id);
   const threadHTML = html||`<div class="im-empty">${mFilter?'Nothing tagged that way yet.':'Start the conversation.'}</div>`;
-  $('#im-body').innerHTML=filterChips()+awaybar+pinbar+`<div class="im-thread">${threadHTML}${typingBubble(typers)}</div>`;
+  $('#im-body').innerHTML=filterChips()+pinbar+`<div class="im-thread">${threadHTML}${typingBubble(typers)}</div>`;
   const body=$('#im-body'); if(!mFilter) body.scrollTop=body.scrollHeight;
 
   body.querySelectorAll('[data-mf]').forEach(b=>b.onclick=()=>{mFilter=b.dataset.mf;renderDock();});
@@ -4700,54 +5157,6 @@ function taskFromMsg(id){
 function openThread(id){S.dockThread=id;tbOpen=null;save();renderDock();setTimeout(()=>$('#dock-in').focus(),30);}
 function closeDock(){S.dockOpen=false;tbOpen=null;save();renderDock();renderTabs();}
 
-function newThreadModal(){
-  showModal(`<h3>New message</h3>
-    <div class="f"><label>To</label>
-      <div class="tofield" id="nt-to"><span class="topills" id="nt-pills"></span><input id="nt-q" placeholder="Type a name"></div>
-      <div class="tosug" id="nt-sug"></div></div>
-    <div class="f"><label>Group name (optional)</label><input id="nt-name" placeholder="Leave blank for a direct message"></div>
-    <div class="modal-acts"><button class="btn" id="nt-cancel">Cancel</button><button class="btn p" id="nt-save">Start</button></div>`,s=>{
-    const picked=new Set();
-    const q=s.querySelector('#nt-q'), pills=s.querySelector('#nt-pills'), sug=s.querySelector('#nt-sug');
-    const paint=()=>{
-      pills.innerHTML=[...picked].map(n=>
-        `<button class="topill" data-drop="${esc(n)}" style="--pc:${personColor(n)}">${esc(n)} <i>&times;</i></button>`).join('');
-      pills.querySelectorAll('[data-drop]').forEach(b=>b.onclick=()=>{picked.delete(b.dataset.drop);paint();});
-      const term=q.value.trim().toLowerCase();
-      const left=names().filter(n=>n!==S.me&&!picked.has(n)&&(!term||n.toLowerCase().includes(term)));
-      sug.innerHTML=left.map(n=>
-        `<button data-add="${esc(n)}"><i class="sw" style="background:${personColor(n)}"></i>${esc(n)}</button>`).join('')
-        ||`<span class="tiny dim">No one else matches.</span>`;
-      sug.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{
-        picked.add(b.dataset.add); q.value=''; paint(); q.focus();});
-    };
-    q.oninput=paint;
-    q.onkeydown=e=>{
-      if(e.key==='Enter'){
-        e.preventDefault();
-        const term=q.value.trim().toLowerCase();
-        const hit=names().find(n=>n!==S.me&&!picked.has(n)&&n.toLowerCase().startsWith(term));
-        if(term&&hit){picked.add(hit);q.value='';paint();}
-      }
-      if(e.key==='Backspace'&&!q.value&&picked.size){
-        picked.delete([...picked].pop()); paint();
-      }
-    };
-    paint(); setTimeout(()=>q.focus(),40);
-    s.querySelector('#nt-cancel').onclick=closeModal;
-    s.querySelector('#nt-save').onclick=()=>{
-      const mem=[...picked]; if(!mem.length){alert('Pick at least one person.');return;}
-      const nm=s.querySelector('#nt-name').value.trim();
-      if(mem.length===1&&!nm){
-        const ex=S.threads.find(t=>t.dm&&t.members.includes(mem[0])&&t.members.includes(S.me));
-        if(ex){closeModal();openThread(ex.id);return;}
-        S.threads.push({id:uid(),dm:true,name:mem[0],members:[S.me,mem[0]]});
-      } else {
-        S.threads.push({id:uid(),dm:false,name:nm||mem.join(' & '),members:[S.me,...mem]});
-      }
-      const t=S.threads[S.threads.length-1]; save(); closeModal(); openThread(t.id);};
-  });
-}
 function threadInfoModal(id){
   const t=thread(id); if(!t) return;
   showModal(`<h3>${esc(threadName(t))}</h3>
@@ -4874,151 +5283,6 @@ const doorClose =()=>tone([784,392],0.18);           /* someone went away */
 const dingSend  =()=>tone([880],0.09,0.04);
 const dingRecv  =()=>tone([660,990],0.11,0.05);
 
-/* ================= AWAY MESSAGES ================= */
-/* Straight out of AIM. You set a message, your name goes yellow-dot, and the first
-   person to write to you gets it back automatically. Status lives on the person
-   record, so it saves with the file and travels with an Export. */
-const AWAY_PRESETS=['on a shoot','on a call','writing, back later','out for the day',
-                    'brb','head down, ping if urgent'];
-/* the ones AIM was actually for */
-const AWAY_QUIRKS=[
-  'gone to the perfume mines',
-  'in a meeting about a meeting',
-  'raising money, back when rich',
-  'brb, becoming a different person',
-  'at the post office. pray for me',
-  'thinking about the fragrance waterfall',
-  'on set. do not perceive me',
-  'reading the group chat but not replying',
-  'touching grass, allegedly',
-  'in my villain era (spreadsheets)',
-  'somewhere between an idea and a deck',
-  'back in 5. this is a lie',
-  'writing an email that should be a text',
-  'negotiating with a vendor and losing',
-  'do not open the P&L. i am in there',
-  'became a fragrance. brb',
-  'on a call i could have skipped',
-  'at the studio pretending to know lighting',
-  'currently a problem for future me',
-  'reading a contract with my whole chest',
-  'out here manifesting a wire transfer',
-  'brb, having a thought about the brand',
-  'gone feral over a font',
-  'in the group chat, spiritually'
-];
-const quirk=(not)=>{ let x=not; while(x===not) x=AWAY_QUIRKS[Math.floor(Math.random()*AWAY_QUIRKS.length)]; return x; };
-const AUTO_AWAY_MIN=12;
-let lastPoke=Date.now(), autoWokeFrom=null;
-
-function statusOf(name){
-  const p=S.people.find(x=>x.name===name);
-  return (p&&p.status)||{away:false,text:'',since:0};
-}
-function setStatus(name,away,text){
-  const p=S.people.find(x=>x.name===name); if(!p) return;
-  const was=(p.status&&p.status.away)||false;
-  p.status={away:!!away,text:away?(text||'Away'):'',since:away?Date.now():0};
-  if(was!==!!away){ away?doorClose():doorOpen(); }
-  if(!away) autoWokeFrom=null;
-  save();
-  try{ if(statusCh) statusCh.postMessage({name,status:p.status}); }catch(e){}
-  if(S.dockOpen) renderDock();
-}
-let statusCh=null;
-try{ statusCh=new BroadcastChannel('radish-status'); }catch(e){ statusCh=null; }
-if(statusCh) statusCh.onmessage=e=>{
-  const d=e.data; if(!d||!d.name) return;
-  const p=S.people.find(x=>x.name===d.name); if(!p) return;
-  const was=(p.status&&p.status.away)||false;
-  p.status=d.status;
-  if(was!==!!(d.status&&d.status.away)) (d.status&&d.status.away)?doorClose():doorOpen();
-  if(S.dockOpen) renderDock();
-};
-
-function awaySince(s){
-  if(!s||!s.since) return '';
-  const mins=Math.round((Date.now()-s.since)/60000);
-  if(mins<1) return 'just now';
-  if(mins<60) return mins+' min';
-  const hrs=Math.round(mins/60);
-  return hrs+(hrs>1?' hours':' hour');
-}
-/* AIM answered for you. So does this, once per conversation per away session. */
-function autoReply(tid){
-  const t=thread(tid); if(!t||!t.dm) return;
-  const other=t.members.find(n=>n!==S.me); if(!other) return;
-  const s=statusOf(other); if(!s.away) return;
-  const already=S.log.some(l=>l.kind==='note'&&l.autoFor===other&&
-    (l.threadId||'t-main')===tid&&l.awaySince===s.since);
-  if(already) return;
-  S.log.push({id:uid(),ts:Date.now()+1,date:todayISO(),author:other,kind:'note',
-    threadId:tid,text:other+' is away · '+s.text,autoFor:other,awaySince:s.since});
-}
-function awayModal(){
-  const me=S.me, s=statusOf(me);
-  showModal(`<h3>Your status</h3>
-    <div class="f"><div class="member-list">
-      <button id="aw-here" class="${s.away?'':'on'}">Available</button>
-      <button id="aw-away" class="${s.away?'on':''}">Away</button></div></div>
-    <div class="f"><label>Away message</label>
-      <textarea id="aw-text" rows="2" placeholder="Back in an hour">${esc(s.text||'')}</textarea></div>
-    <div class="f"><label>Or pick one</label>
-      <div class="awpre">${AWAY_PRESETS.map(x=>`<button data-pre="${esc(x)}">${esc(x)}</button>`).join('')}
-        <button id="aw-shuffle" class="shuf">give me one \u21bb</button></div></div>
-    <div class="f"><label>Door sounds</label>
-      <div class="member-list">
-        <button id="aw-snd-on" class="${S.sound!==false?'on':''}">On</button>
-        <button id="aw-snd-off" class="${S.sound===false?'on':''}">Off</button></div>
-      <div class="tiny dim" style="margin-top:6px">The open and close, when someone comes back or steps away.</div></div>
-    <div class="f"><label>Set me away on my own</label>
-      <div class="member-list">
-        <button id="aw-auto-on" class="${S.autoAway!==false?'on':''}">After ${AUTO_AWAY_MIN} min idle</button>
-        <button id="aw-auto-off" class="${S.autoAway===false?'on':''}">Never</button></div></div>
-    <div class="modal-acts"><button class="btn" id="aw-cancel">Cancel</button>
-      <button class="btn p" id="aw-save">Save</button></div>`, sc=>{
-    let away=s.away, auto=S.autoAway!==false, snd=S.sound!==false;
-    const ta=sc.querySelector('#aw-text');
-    const paint=()=>{
-      sc.querySelector('#aw-here').classList.toggle('on',!away);
-      sc.querySelector('#aw-away').classList.toggle('on',away);
-      sc.querySelector('#aw-auto-on').classList.toggle('on',auto);
-      sc.querySelector('#aw-auto-off').classList.toggle('on',!auto);
-      sc.querySelector('#aw-snd-on').classList.toggle('on',snd);
-      sc.querySelector('#aw-snd-off').classList.toggle('on',!snd);
-    };
-    sc.querySelector('#aw-here').onclick=()=>{away=false;paint();};
-    sc.querySelector('#aw-away').onclick=()=>{away=true;paint();ta.focus();};
-    sc.querySelector('#aw-auto-on').onclick=()=>{auto=true;paint();};
-    sc.querySelector('#aw-auto-off').onclick=()=>{auto=false;paint();};
-    sc.querySelector('#aw-snd-on').onclick=()=>{snd=true;S.sound=true;paint();doorOpen();};
-    sc.querySelector('#aw-snd-off').onclick=()=>{snd=false;S.sound=false;paint();};
-    sc.querySelector('#aw-shuffle').onclick=()=>{
-      ta.value=quirk(ta.value); away=true; paint();};
-    sc.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{
-      ta.value=b.dataset.pre; away=true; paint();});
-    sc.querySelector('#aw-cancel').onclick=closeModal;
-    sc.querySelector('#aw-save').onclick=()=>{
-      S.autoAway=auto; S.sound=snd;
-      setStatus(S.me,away,ta.value.trim()||'Away');
-      closeModal(); flashMsg(away?'You are away':'You are back',1800);};
-  });
-}
-/* idle watch */
-function pokeIdle(){
-  lastPoke=Date.now();
-  if(autoWokeFrom&&statusOf(S.me).away){ setStatus(S.me,false,''); autoWokeFrom=null; }
-}
-setInterval(()=>{
-  if(!S||S.autoAway===false) return;
-  if(statusOf(S.me).away) return;
-  if(Date.now()-lastPoke > AUTO_AWAY_MIN*60000){
-    autoWokeFrom=S.me;
-    setStatus(S.me,true,quirk(''));
-  }
-},30000);
-['click','keydown','touchstart'].forEach(ev=>
-  document.addEventListener(ev,pokeIdle,{passive:true}));
 
 /* ================= GIF ================= */
 /* A real GIF89a encoder. 216-colour cube plus greys, LZW, looping forever.
@@ -5184,7 +5448,7 @@ async function shoot(){
 function sendAsset(id){
   const tid=S.dockThread||'t-main';
   broadcastMsg(postLog('',S.me,tid,id));
-  autoReply(tid); save();
+  save();
   S.dockOpen=true; renderDock(); renderTabs(); dingSend();
   flashMsg('Sent',1500);
   if(view==='live'&&!openCard&&!activePerson) render();
@@ -5246,7 +5510,7 @@ function daysWith(name){
 }
 function viewProfile(name){
   const p=personBy(name)||{name};
-  const st=statusOf(name), mine=name===S.me;
+  const mine=name===S.me;
   const days=daysWith(name);
   const day=(profileDay&&days.includes(profileDay))?profileDay:(days[0]||todayISO());
   const items=dayEntries(name,day);
@@ -5282,7 +5546,7 @@ function viewProfile(name){
     </div>
     <div class="pf-id">
       <div class="pf-handle">${esc(handleOf(name))}</div>
-      <div class="pf-role">${esc(p.role||'')}${st.away?` \u00b7 <em class="pf-away">${esc(st.text)}</em>`:''}</div>
+      <div class="pf-role">${esc(p.role||'')}</div>
       <div class="pf-nums">
         <span><b>${items.length}</b> today</span>
         <span><b>${shots}</b> shot${shots===1?'':'s'}</span>
@@ -5410,14 +5674,64 @@ function viewVoices(){
 /* Tap any photo or clip anywhere and it opens full size, with somewhere to put it. */
 function folders(){ A.folders||=[]; return A.folders; }
 function folderName(id){ const f=folders().find(x=>x.id===id); return f?f.name:''; }
-function newFolder(name){
+function newFolder(name,parent){
   const n=String(name||'').trim(); if(!n) return null;
-  const ex=folders().find(f=>f.name.toLowerCase()===n.toLowerCase());
+  const p=parent||'';
+  const ex=folders().find(f=>f.name.toLowerCase()===n.toLowerCase()&&(f.parent||'')===p);
   if(ex) return ex.id;
-  const f={id:uid(),name:n,made:Date.now()};
+  const f={id:uid(),name:n,parent:p,made:Date.now()};
   A.folders.push(f); saveA(); return f.id;
 }
+const folderKids=id=>folders().filter(f=>(f.parent||'')===(id||''));
+function folderPath(id){
+  const out=[]; let f=folders().find(x=>x.id===id), guard=0;
+  while(f&&guard++<20){ out.unshift(f.name); f=folders().find(x=>x.id===(f.parent||'')); }
+  return out;
+}
+function folderDepth(id){ return Math.max(0,folderPath(id).length-1); }
+/* every folder, master first, each one followed by what is inside it */
+function folderTree(parent,depth,out){
+  out=out||[]; depth=depth||0;
+  folderKids(parent||'').sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>{
+    out.push({f,depth});
+    if(depth<6) folderTree(f.id,depth+1,out);
+  });
+  return out;
+}
+function folderCount(id){
+  const ids=new Set([id]);
+  const walk=x=>folderKids(x).forEach(k=>{ids.add(k.id);walk(k.id);});
+  walk(id);
+  return (A.assets||[]).filter(a=>ids.has(a.folder)).length;
+}
+function folderLinks(id){ const f=folders().find(x=>x.id===id); if(!f) return []; f.links||=[]; return f.links; }
+function addFolderLink(id,label,url){
+  const f=folders().find(x=>x.id===id); if(!f) return;
+  let u=String(url||'').trim(); if(!u) return;
+  if(!/^https?:\/\//i.test(u)) u='https://'+u;
+  f.links||=[]; f.links.push({id:uid(),label:String(label||'').trim()||u.replace(/^https?:\/\//,'').slice(0,40),url:u});
+  saveA();
+}
+function dropFolderLink(fid,lid){
+  const f=folders().find(x=>x.id===fid); if(!f||!f.links) return;
+  f.links=f.links.filter(l=>l.id!==lid); saveA();
+}
+function renameFolder(id,name){
+  const n=String(name||'').trim(); if(!n) return;
+  const f=folders().find(x=>x.id===id); if(!f) return;
+  f.name=n; saveA();
+}
+/* deleting a folder keeps everything: children and shots move up a level */
+function deleteFolder(id){
+  const f=folders().find(x=>x.id===id); if(!f) return;
+  const up=f.parent||'';
+  folders().forEach(x=>{ if((x.parent||'')===id) x.parent=up; });
+  (A.assets||[]).forEach(a=>{ if(a.folder===id) a.folder=up; });
+  A.folders=folders().filter(x=>x.id!==id);
+  saveA();
+}
 function fileAsset(assetId,folderId){
+  if(!assetId) return;              /* the manager opens the picker with nothing selected */
   const a=asset(assetId); if(!a) return;
   a.folder=folderId||''; saveA();
   flashMsg(folderId?('Filed in '+folderName(folderId)):'Taken out of the folder',1800);
@@ -5481,33 +5795,136 @@ function closeLight(){
   document.removeEventListener('keydown',lightKey);
 }
 function folderPicker(assetId){
-  const a=asset(assetId)||{};
-  showModal(`<h3>Put it in a folder</h3>
-    <div class="f"><div class="folderpick" id="fp-list">
-      ${folders().map(f=>`<button data-f="${f.id}" class="${a.folder===f.id?'on':''}">${esc(f.name)}
-        <span>${(A.assets||[]).filter(x=>x.folder===f.id).length}</span></button>`).join('')
-        ||'<span class="tiny dim">No folders yet. Make the first one below.</span>'}
-      ${a.folder?'<button data-f="" class="clear">Take it out</button>':''}
+  const draw=()=>{
+    const a=asset(assetId)||{};
+    const tree=folderTree('',0,[]);
+    return `<div class="f"><div class="fp-tree">
+      <button data-f="" class="fp-row ${!a.folder?'on':''}"><span class="fp-n">Not in a folder</span></button>
+      ${tree.map(({f,depth})=>`
+        <button data-f="${f.id}" class="fp-row ${a.folder===f.id?'on':''}" style="--d:${depth}">
+          <span class="fp-n">${esc(f.name)}</span><span class="fp-c">${folderCount(f.id)}</span>
+          <span class="fp-acts">
+            <i data-fren="${f.id}" title="Rename">rename</i>
+            <i data-fsub="${f.id}" title="Folder inside this one">+ inside</i>
+            <i data-flink="${f.id}" title="Attach a link">+ link</i>
+            <i data-fdel="${f.id}" title="Delete">\u00d7</i>
+          </span>
+        </button>
+        ${folderLinks(f.id).map(l=>`<span class="fp-link" style="--d:${depth}">
+          <a href="${esc(l.url)}" target="_blank" rel="noreferrer">${esc(l.label)}</a>
+          <i data-fldrop="${f.id}:${l.id}" title="Remove the link">\u00d7</i>
+        </span>`).join('')}`).join('')}
     </div></div>
-    <div class="f"><label>New folder</label>
-      <div class="newfold"><input id="fp-new" placeholder="Campaign, Behind the scenes, Press…">
-        <button class="btn" id="fp-add">Make it</button></div></div>
+    <div class="f"><label>New master folder</label>
+      <div class="newfold"><input id="fp-new" placeholder="Campaign, Behind the scenes, Press\u2026">
+        <button class="btn" id="fp-add">Make it</button></div></div>`;
+  };
+  const wire=s=>{
+    const redraw=()=>{ s.querySelector('.fp-body').innerHTML=draw(); wire(s); };
+    s.querySelectorAll('[data-f]').forEach(b=>b.onclick=e=>{
+      if(e.target.closest('[data-fren],[data-fsub],[data-fdel]')) return;
+      fileAsset(assetId,b.dataset.f); closeModal(); closeLight();
+      if(!openCard&&!activePerson&&view==='live') render();});
+    s.querySelectorAll('[data-fren]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const f=folders().find(x=>x.id===b.dataset.fren);
+      const n=prompt('Rename this folder',f?f.name:''); if(n===null) return;
+      renameFolder(b.dataset.fren,n); redraw();});
+    s.querySelectorAll('[data-fsub]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const n=prompt('Name the folder inside it'); if(!n) return;
+      newFolder(n,b.dataset.fsub); redraw();});
+    s.querySelectorAll('[data-flink]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const u=prompt('Paste the link'); if(!u) return;
+      const l=prompt('Call it what?','');
+      addFolderLink(b.dataset.flink,l,u); redraw();});
+    s.querySelectorAll('[data-fldrop]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const [fid,lid]=b.dataset.fldrop.split(':');
+      dropFolderLink(fid,lid); redraw();});
+    s.querySelectorAll('[data-fdel]').forEach(b=>b.onclick=e=>{e.stopPropagation();
+      const f=folders().find(x=>x.id===b.dataset.fdel); if(!f) return;
+      if(!confirm(`Delete "${f.name}"? What is inside moves up a level, nothing is lost.`)) return;
+      deleteFolder(b.dataset.fdel); redraw();});
+    const add=s.querySelector('#fp-add');
+    if(add) add.onclick=()=>{
+      const v=s.querySelector('#fp-new').value;
+      const id=newFolder(v,''); if(!id) return;
+      s.querySelector('#fp-new').value=''; redraw();};
+  };
+  showModal(`<h3>Folders</h3><div class="fp-body">${draw()}</div>
     <div class="modal-acts"><button class="btn" id="fp-close">Done</button></div>`, s=>{
-    const after=()=>{ closeModal(); closeLight();
-      if(!openCard&&!activePerson&&view==='live') render(); };
-    s.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ fileAsset(assetId,b.dataset.f); after(); });
-    s.querySelector('#fp-add').onclick=()=>{
-      const id=newFolder(s.querySelector('#fp-new').value);
-      if(!id) return;
-      fileAsset(assetId,id); after();};
+    wire(s);
     s.querySelector('#fp-close').onclick=closeModal;
   });
 }
+/* the same manager, reachable without opening a picture */
+function foldersModal(){
+  folderAt=''; view='folders'; openCard=null; activePerson=null;
+  render(); window.scrollTo(0,0);
+}
+/* ================= THE FOLDERS SCREEN ================= */
+/* Open one and you are inside it. Double click a name to rewrite it. Drag a folder
+   or a picture onto another folder to move it there. */
+let folderAt='';
+function assetsIn(fid){ return (A.assets||[]).filter(a=>(a.folder||'')===(fid||'')); }
+function isInside(child,maybeParent){
+  let f=folders().find(x=>x.id===child), n=0;
+  while(f&&n++<20){ if((f.parent||'')===maybeParent) return true; f=folders().find(x=>x.id===(f.parent||'')); }
+  return false;
+}
+function moveFolder(id,parent){
+  if(id===parent) return false;
+  if(parent&&isInside(parent,id)) return false;   /* no folder inside itself */
+  const f=folders().find(x=>x.id===id); if(!f) return false;
+  f.parent=parent||''; saveA(); return true;
+}
+function viewFolders(){
+  const here=folderAt&&folders().find(f=>f.id===folderAt)?folderAt:'';
+  const path=here?folderPath(here):[];
+  const subs=folderKids(here);
+  const shots=assetsIn(here);
+  const links=here?folderLinks(here):[];
+  const crumb=[`<button data-fgo="">All folders</button>`];
+  let acc=[]; let cur='';
+  folders().filter(f=>false);
+  if(here){
+    let chain=[], f=folders().find(x=>x.id===here), n=0;
+    while(f&&n++<20){ chain.unshift(f); f=folders().find(x=>x.id===(f.parent||'')); }
+    chain.forEach(c=>crumb.push(`<button data-fgo="${c.id}">${esc(c.name)}</button>`));
+  }
+
+  return `<div class="fv">
+    <div class="fv-top">
+      <div class="fv-crumb">${crumb.join('<i>\u203a</i>')}</div>
+      <button class="fv-new" id="fv-new">+ Folder</button>
+    </div>
+    ${here?`<div class="fv-meta">${folderCount(here)} inside \u00b7 ${shots.length} here${links.length?` \u00b7 ${links.length} link${links.length===1?'':'s'}`:''}
+      <button id="fv-link">+ link</button></div>`:''}
+
+    ${subs.length?`<div class="fv-grid">${subs.sort((a,b)=>a.name.localeCompare(b.name)).map(f=>{
+      const cover=(A.assets||[]).find(a=>a.folder===f.id&&(a.type==='image'||a.type==='gif'));
+      return `<div class="fv-cell fold" draggable="true" data-fdrag="${f.id}" data-fdrop="${f.id}">
+        <button class="fv-thumb" data-fopen="${f.id}">${cover?`<img src="${cover.src}" alt="">`
+          :'<span class="fv-empty"></span>'}<span class="fv-badge">${folderCount(f.id)}</span></button>
+        <div class="fv-name" data-fname="${f.id}" title="Double click to rename">${esc(f.name)}</div>
+      </div>`;}).join('')}</div>`:''}
+
+    ${links.length?`<div class="fv-links">${links.map(l=>`<div class="fv-link">
+      <a href="${esc(l.url)}" target="_blank" rel="noreferrer">${esc(l.label)}</a>
+      <i data-fldrop2="${here}:${l.id}">\u00d7</i></div>`).join('')}</div>`:''}
+
+    ${shots.length?`<div class="fv-grid shots">${shots.map(a=>`
+      <div class="fv-cell" draggable="true" data-adrag="${a.id}">
+        <button class="fv-thumb" data-aopen="${a.id}">${
+          a.type==='video'?`<video src="${a.src}" muted playsinline preload="metadata"></video>`
+          :a.type==='audio'?'<span class="fv-aud">audio</span>'
+          :`<img src="${a.src}" alt="">`}</button>
+      </div>`).join('')}</div>`:''}
+
+    ${!subs.length&&!shots.length&&!links.length
+      ? `<div class="empty">${here?'Nothing in here yet. Drag something in, or add a link.':'No folders yet. Make the first one.'}</div>`:''}
+  </div>`;
+}
 
 /* ================= LIVE ================= */
-/* Every message and every photo from every thread, in one stream, oldest to newest.
-   It is not a copy: it reads the same log the messenger writes, so it is already
-   saved and already travels with the file. */
 let liveMedia=false;     /* photos and video only */
 let liveFolder='';       /* '', a folder id, or __none__ */
 let liveStick=true;      /* follow the bottom until the reader scrolls up */
@@ -5562,8 +5979,9 @@ function viewLive(){
     </div>
     ${liveMedia?`<div class="lv-folders">
       <button class="lv-fold ${!liveFolder?'on':''}" data-fold="">All</button>
-      ${folders().map(f=>`<button class="lv-fold ${liveFolder===f.id?'on':''}" data-fold="${f.id}">${esc(f.name)}
-        <span>${(A.assets||[]).filter(x=>x.folder===f.id).length}</span></button>`).join('')}
+      ${folderTree('',0,[]).map(({f,depth})=>`<button class="lv-fold ${liveFolder===f.id?'on':''}"
+        data-fold="${f.id}" style="--d:${depth}">${depth?'› ':''}${esc(f.name)}
+        <span>${folderCount(f.id)}</span></button>`).join('')}
       <button class="lv-fold ${liveFolder==='__none__'?'on':''}" data-fold="__none__">Unfiled</button>
     </div>`:''}
     <div class="lv-feed" id="lv-feed">${body||`<div class="empty">${
@@ -5664,8 +6082,10 @@ function initDock(){
     inp.style.height=Math.min(isPhone()?150:110,inp.scrollHeight)+'px';};
   const send=()=>{
     const v=inp.value; if(!v.trim())return;
-    const tid=S.dockThread||'t-main';
-    broadcastMsg(postLog(v,S.me,tid)); autoReply(tid); save();
+    let tid;
+    if(composeMode){ tid=composeSend(v); if(!tid) return; }
+    else tid=S.dockThread||'t-main';
+    broadcastMsg(postLog(v,S.me,tid)); save();
     inp.value=''; grow(); stopTyping(); renderDock(); dingSend();
     setTimeout(()=>{ lastSentId=null; },400);
     if((view==='focus'||view==='board')&&!openCard&&!activePerson) render();
